@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Zásady ochrany osobných údajov – DENTALL Centrum, MUDr. Otília Kohajdová, Banská Bystrica. Informácie o spracúvaní osobných údajov podľa GDPR.">
+    <title>Ochrana osobných údajov · DENTALL Centrum</title>
+
+    <script>
+      (function(){
+        var t=localStorage.getItem('dac-theme')||(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+        if(t==='dark')document.documentElement.setAttribute('data-theme','dark');
+      })();
+      (function(){
+        if(localStorage.getItem('dac-cookie-consent')==='accepted'){
+          var pc1=document.createElement('link');pc1.rel='preconnect';pc1.href='https://fonts.googleapis.com';document.head.appendChild(pc1);
+          var pc2=document.createElement('link');pc2.rel='preconnect';pc2.href='https://fonts.gstatic.com';pc2.crossOrigin='anonymous';document.head.appendChild(pc2);
+          var f=document.createElement('link');f.rel='stylesheet';f.href='https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Great+Vibes&display=swap';document.head.appendChild(f);
+        }
+      })();
+    </script>
+
+    <style>
+        :root {
+            --orange:       #eb532f;
+            --orange-h:     #d44422;
+            --orange-light: #f06c4d;
+            --peach:        #fbddd6;
+            --peach-mid:    #f0b89a;
+            --cream:        #f8efea;
+            --cream-light:  #fef5f3;
+            --dark:         #1a1410;
+            --text:         #3a2e28;
+            --muted:        #8a7268;
+            --line:         rgba(235,83,47,0.15);
+            --white:        #ffffff;
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Jost', sans-serif;
+            font-weight: 300;
+            color: var(--text);
+            background: var(--white);
+            overflow-x: hidden;
+        }
+        img { max-width: 100%; display: block; }
+        a { color: inherit; text-decoration: none; }
+
+        /* ══ NAV ══ */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+            background: rgba(255,255,255,0.97);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--line);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.06);
+        }
+        .nav-inner {
+            display: flex; align-items: center;
+            padding: 0 5% 0 1.5rem;
+            gap: 2rem;
+        }
+
+        @property --beam-angle {
+            syntax: '<angle>';
+            initial-value: 0deg;
+            inherits: false;
+        }
+        @keyframes beam-travel { to { --beam-angle: 360deg; } }
+
+        .nav-brand {
+            display: flex; flex-direction: column; align-items: center;
+            padding: 0.6rem 2rem 1.8rem;
+            flex-shrink: 0;
+            background: var(--white);
+            border-radius: 0 0 24px 24px;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.1);
+            position: relative; z-index: 1;
+            margin-bottom: -3rem;
+            isolation: isolate;
+        }
+        .nav-brand::before {
+            content: '';
+            position: absolute; inset: -1px; top: 0;
+            border-radius: 0 0 25px 25px;
+            padding: 1.5px;
+            background: conic-gradient(
+                from var(--beam-angle) at 50% 50%,
+                transparent 0deg, transparent 160deg,
+                var(--orange) 220deg, #fbddd6 270deg,
+                transparent 320deg, transparent 360deg
+            );
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor; mask-composite: exclude;
+            animation: beam-travel 4s linear infinite;
+            pointer-events: none; z-index: -1;
+        }
+        .nav-logo-css { display: flex; align-items: center; }
+        .nav-logo-words { display: flex; flex-direction: column; line-height: 1; gap: 0.2rem; align-items: center; }
+        .nav-logo-name { font-size: 3.64rem; font-weight: 300; letter-spacing: 0.18em; color: var(--dark); }
+        .nav-logo-accent { color: var(--orange); }
+        .nav-logo-sub {
+            font-size: 1.31rem; font-weight: 300;
+            letter-spacing: 0.45em; text-transform: uppercase;
+            color: var(--muted);
+            border-top: 1px solid var(--line);
+            padding-top: 0.32rem; width: 100%; text-align: center;
+        }
+        .nav-doctor { font-size: 1.14rem; font-weight: 300; color: #4a3c34; letter-spacing: 0.08em; margin-top: 2.2rem; }
+
+        .nav-back {
+            display: flex; align-items: center; gap: 0.5rem;
+            font-size: 0.78rem; font-weight: 600;
+            letter-spacing: 0.2em; text-transform: uppercase;
+            color: var(--muted); transition: color 0.2s;
+            flex: 1;
+        }
+        .nav-back:hover { color: var(--orange); }
+        .nav-back svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+        .nav-end { display: flex; align-items: center; gap: 1.2rem; flex-shrink: 0; }
+        .nav-phone {
+            display: flex; align-items: center; gap: 0.4rem;
+            font-weight: 700; font-size: 0.82rem; letter-spacing: 0.04em;
+            color: var(--dark); white-space: nowrap;
+        }
+        .nav-phone svg { stroke: var(--orange); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+        /* ══ THEME TOGGLE ══ */
+        .theme-toggle {
+            position: relative; display: flex; align-items: center;
+            width: 84px; height: 50px; border-radius: 9999px; padding: 5px;
+            border: 2px solid rgba(203,213,225,0.6); cursor: pointer; outline: none;
+            background: radial-gradient(ellipse at top left, #ffffff 0%, #f1f5f9 40%, #cbd5e1 100%);
+            box-shadow: inset 5px 5px 12px rgba(148,163,184,0.5), inset -5px -5px 12px rgba(255,255,255,1),
+                        0 8px 16px rgba(0,0,0,0.08);
+            transition: background 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+            flex-shrink: 0;
+        }
+        .theme-toggle[aria-checked="true"] {
+            background: radial-gradient(ellipse at top left, #1e293b 0%, #0f172a 40%, #020617 100%);
+            border-color: rgba(51,65,85,0.6);
+            box-shadow: inset 5px 5px 12px rgba(0,0,0,0.9), inset -5px -5px 12px rgba(71,85,105,0.4),
+                        0 8px 16px rgba(0,0,0,0.4);
+        }
+        .toggle-bg-icons { position: absolute; inset: 0; display: flex; align-items: center; justify-content: space-between; padding: 0 13px; pointer-events: none; }
+        .toggle-bg-sun { color: #b45309; transition: color 0.3s; width: 16px; height: 16px; }
+        .toggle-bg-moon { color: #475569; transition: color 0.3s; width: 16px; height: 16px; }
+        .theme-toggle[aria-checked="true"] .toggle-bg-sun,
+        .theme-toggle[aria-checked="true"] .toggle-bg-moon { color: #fef9c3; }
+        .toggle-thumb {
+            position: relative; z-index: 10; width: 36px; height: 36px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; overflow: hidden;
+            background: linear-gradient(145deg, #ffffff 0%, #fefefe 50%, #f8fafc 100%);
+            border: 2px solid rgba(255,255,255,0.9);
+            box-shadow: inset 2px 2px 4px rgba(203,213,225,0.3), 0 8px 32px rgba(0,0,0,0.18);
+            transition: transform 0.45s cubic-bezier(0.34,1.56,0.64,1), background 0.3s ease;
+            transform: translateX(0);
+        }
+        .theme-toggle[aria-checked="true"] .toggle-thumb {
+            transform: translateX(34px);
+            background: linear-gradient(145deg, #64748b 0%, #475569 50%, #334155 100%);
+        }
+        .toggle-icon { position: absolute; transition: opacity 0.25s ease; width: 16px; height: 16px; }
+        .toggle-sun { opacity: 1; color: #f59e0b; }
+        .toggle-moon { opacity: 0; color: #e2e8f0; }
+        .theme-toggle[aria-checked="true"] .toggle-sun { opacity: 0; }
+        .theme-toggle[aria-checked="true"] .toggle-moon { opacity: 1; }
+
+        /* ══ PAGE HEADER ══ */
+        .page-header {
+            padding: 9rem 5% 4rem;
+            background: linear-gradient(160deg, var(--cream-light) 0%, var(--cream) 60%, var(--peach) 100%);
+            border-bottom: 1px solid var(--line);
+        }
+        .page-header .breadcrumb {
+            font-size: 0.72rem; font-weight: 600; letter-spacing: 0.2em;
+            text-transform: uppercase; color: var(--muted);
+            margin-bottom: 1.2rem;
+        }
+        .page-header .breadcrumb span { color: var(--orange); }
+        .page-header h1 {
+            font-size: clamp(2rem, 4vw, 3rem); font-weight: 300;
+            letter-spacing: 0.06em; color: var(--dark); line-height: 1.15;
+        }
+        .page-header .updated { margin-top: 1rem; font-size: 0.82rem; color: var(--muted); letter-spacing: 0.04em; }
+
+        /* ══ LEGAL CONTENT ══ */
+        .legal-wrap {
+            max-width: 820px; margin: 0 auto;
+            padding: 4rem 5% 6rem;
+        }
+        .legal-wrap h2 {
+            font-size: 1.05rem; font-weight: 700;
+            letter-spacing: 0.18em; text-transform: uppercase;
+            color: var(--orange);
+            margin-top: 3rem; margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--line);
+        }
+        .legal-wrap h2:first-child { margin-top: 0; }
+        .legal-wrap h3 {
+            font-size: 0.95rem; font-weight: 600;
+            letter-spacing: 0.08em; color: var(--dark);
+            margin-top: 1.5rem; margin-bottom: 0.6rem;
+        }
+        .legal-wrap p {
+            font-size: 1rem; line-height: 1.8;
+            color: var(--text); margin-bottom: 0.9rem;
+        }
+        .legal-wrap ul {
+            list-style: none; padding: 0; margin-bottom: 0.9rem;
+        }
+        .legal-wrap ul li {
+            font-size: 1rem; line-height: 1.8; color: var(--text);
+            padding-left: 1.4rem; position: relative; margin-bottom: 0.3rem;
+        }
+        .legal-wrap ul li::before {
+            content: '—'; position: absolute; left: 0;
+            color: var(--orange); font-weight: 400;
+        }
+        .legal-wrap .highlight-box {
+            background: var(--cream-light);
+            border-left: 3px solid var(--orange);
+            border-radius: 0 8px 8px 0;
+            padding: 1.2rem 1.5rem; margin: 1.5rem 0;
+        }
+        .legal-wrap .highlight-box p { margin-bottom: 0; }
+        .legal-wrap .rights-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1rem; margin: 1.5rem 0;
+        }
+        .legal-wrap .right-card {
+            background: var(--cream-light);
+            border: 1px solid var(--line);
+            border-radius: 10px; padding: 1rem 1.2rem;
+        }
+        .legal-wrap .right-card strong {
+            display: block; font-size: 0.8rem; font-weight: 700;
+            letter-spacing: 0.1em; text-transform: uppercase;
+            color: var(--orange); margin-bottom: 0.4rem;
+        }
+        .legal-wrap .right-card p {
+            font-size: 0.88rem; line-height: 1.6; margin-bottom: 0;
+        }
+        .legal-wrap a { color: var(--orange); text-decoration: underline; text-underline-offset: 3px; }
+        .legal-wrap a:hover { color: var(--orange-h); }
+        .legal-wrap strong { font-weight: 600; }
+
+        /* ══ FOOTER ══ */
+        footer {
+            background: #3d3028;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            padding: 2.5rem 5%;
+            display: flex; flex-direction: column; align-items: center;
+            gap: 1.5rem;
+        }
+        .footer-top {
+            width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1.2rem;
+        }
+        .footer-brand { display: flex; flex-direction: column; align-items: flex-start; gap: 0.4rem; margin-left: 2rem; }
+        .footer-logo-text { display: flex; flex-direction: column; line-height: 1; align-items: flex-start; gap: 0.2rem; }
+        .footer-logo-wordmark { font-size: 2rem; font-weight: 300; color: rgba(255,255,255,0.85); letter-spacing: 0.18em; }
+        .footer-logo-wordmark span { color: var(--orange); }
+        .footer-logo-centrum {
+            font-size: 0.6rem; font-weight: 300; letter-spacing: 0.45em; text-transform: uppercase;
+            color: rgba(255,255,255,0.45); border-top: 1px solid rgba(255,255,255,0.15);
+            padding-top: 0.28rem; width: 100%; text-align: center;
+        }
+        .footer-doctor { font-size: 0.85rem; font-weight: 300; color: rgba(255,255,255,0.4); letter-spacing: 0.08em; margin-top: 0.6rem; }
+        .footer-copy { font-size: 1rem; color: rgba(255,255,255,0.4); flex: 1; text-align: center; }
+        .footer-phone {
+            display: flex; align-items: center; gap: 0.5rem;
+            font-weight: 700; font-size: 1.6rem; color: rgba(255,255,255,0.85);
+            white-space: nowrap;
+        }
+        .footer-phone svg { stroke: var(--orange); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; width: 28px; height: 28px; flex-shrink: 0; }
+        .footer-legal {
+            width: 100%; display: flex; align-items: center; justify-content: center;
+            gap: 2rem; padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+        .footer-legal a {
+            font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em;
+            text-transform: uppercase; color: rgba(255,255,255,0.35);
+            transition: color 0.2s;
+        }
+        .footer-legal a:hover { color: var(--orange); }
+        .footer-legal a.active { color: rgba(255,255,255,0.6); }
+
+        /* ══ DARK MODE ══ */
+        html[data-theme="dark"] {
+            --white: #1b1410; --cream: #201915; --cream-light: #231c18;
+            --dark: #f0e4dc; --text: #d4c8c0; --muted: #a09088;
+            --line: rgba(235,83,47,0.2); --peach: #3d2820; --peach-mid: #5a3828;
+        }
+        html[data-theme="dark"] nav { background: rgba(27,20,16,0.97); }
+        html[data-theme="dark"] .nav-doctor { color: #b0a098; }
+        html[data-theme="dark"] .page-header {
+            background: linear-gradient(160deg, #201915 0%, #231c18 60%, #2d1f14 100%);
+        }
+        html[data-theme="dark"] .legal-wrap .highlight-box,
+        html[data-theme="dark"] .legal-wrap .right-card { background: #201915; }
+
+        /* ══ RESPONSIVE ══ */
+        .toggle-v-wrap {
+            width: 50px; height: 84px;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0; margin-right: -0.5rem;
+        }
+        .toggle-v-wrap .theme-toggle { transform: rotate(-90deg); flex-shrink: 0; }
+
+        @media (max-width: 640px) {
+            nav { overflow: hidden; }
+            .nav-inner { flex-direction: column; align-items: stretch; padding: 0; gap: 0; }
+            .nav-brand {
+                border-radius: 0; box-shadow: none; margin-bottom: 0;
+                padding: 0.7rem 5%; align-items: center;
+                border-bottom: 1px solid var(--line);
+            }
+            .nav-brand::before { display: none; }
+            .nav-logo-name { font-size: 1.9rem; }
+            .nav-logo-sub { font-size: 0.72rem; }
+            .nav-doctor { margin-top: 0.4rem; font-size: 0.78rem; }
+            .nav-back { justify-content: center; padding: 0.5rem 5%; font-size: 0.68rem; border-bottom: 1px solid var(--line); }
+            .nav-end { justify-content: space-between; padding: 0.55rem 5% 0.75rem; }
+            .page-header { padding: 7rem 5% 2.5rem; }
+            .legal-wrap .rights-grid { grid-template-columns: 1fr; }
+            .footer-top { flex-direction: column; align-items: center; text-align: center; }
+            .footer-brand { margin-left: 0; align-items: center; }
+            .footer-legal { flex-wrap: wrap; gap: 1rem; }
+        }
+        @media (max-width: 1200px) {
+            .theme-toggle { width: 76px; height: 46px; }
+            .theme-toggle[aria-checked="true"] .toggle-thumb { transform: translateX(30px); }
+        }
+
+        /* ══ COOKIE CONSENT ══ */
+        .cookie-banner {
+            position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999;
+            background: rgba(45,34,27,0.97);
+            backdrop-filter: blur(16px);
+            border-top: 1px solid rgba(235,83,47,0.25);
+            padding: 1.1rem 5%;
+            display: flex; align-items: center; gap: 2rem;
+            box-shadow: 0 -8px 40px rgba(0,0,0,0.3);
+            transform: translateY(100%); opacity: 0;
+            transition: opacity 0.4s ease, transform 0.45s cubic-bezier(0.34,1.56,0.64,1);
+        }
+        .cookie-banner.visible { transform: translateY(0); opacity: 1; }
+        .cookie-banner.hidden { transform: translateY(110%); opacity: 0; pointer-events: none; }
+        .cookie-text { flex: 1; }
+        .cookie-text strong {
+            font-size: 0.76rem; font-weight: 700; letter-spacing: 0.14em;
+            text-transform: uppercase; color: rgba(255,255,255,0.85);
+            display: block; margin-bottom: 0.25rem;
+        }
+        .cookie-text p { font-size: 0.8rem; color: rgba(255,255,255,0.5); line-height: 1.55; margin: 0; }
+        .cookie-text a { color: var(--orange); text-decoration: underline; text-underline-offset: 2px; }
+        .cookie-actions { display: flex; gap: 0.7rem; flex-shrink: 0; align-items: center; }
+        .cookie-btn {
+            padding: 0.55rem 1.3rem; border-radius: 6px; cursor: pointer;
+            font-family: 'Jost', sans-serif;
+            font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+            transition: background 0.2s, transform 0.15s, border-color 0.2s, color 0.2s;
+            white-space: nowrap;
+        }
+        .cookie-btn--accept { background: var(--orange); color: #fff; border: 1px solid var(--orange); }
+        .cookie-btn--accept:hover { background: var(--orange-h); border-color: var(--orange-h); transform: translateY(-1px); }
+        .cookie-btn--decline { background: transparent; color: rgba(255,255,255,0.45); border: 1px solid rgba(255,255,255,0.18); }
+        .cookie-btn--decline:hover { border-color: rgba(255,255,255,0.4); color: rgba(255,255,255,0.7); }
+        @media (max-width: 640px) {
+            .cookie-banner { flex-direction: column; align-items: flex-start; gap: 0.9rem; padding: 1.1rem 5% 1.4rem; }
+            .cookie-actions { width: 100%; }
+            .cookie-btn { flex: 1; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav id="navbar">
+    <div class="nav-inner">
+        <div class="toggle-v-wrap">
+            <button id="themeToggle" class="theme-toggle" aria-label="Prepnúť tmavý/svetlý režim" role="switch" aria-checked="false">
+                <div class="toggle-bg-icons">
+                    <svg class="toggle-bg-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                        <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                    </svg>
+                    <svg class="toggle-bg-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                </div>
+                <div class="toggle-thumb">
+                    <svg class="toggle-icon toggle-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                        <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                    </svg>
+                    <svg class="toggle-icon toggle-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                </div>
+            </button>
+        </div>
+
+        <a href="index.html" class="nav-brand">
+            <div class="nav-logo-css">
+                <div class="nav-logo-words">
+                    <span class="nav-logo-name">DENT<span class="nav-logo-accent">ALL</span></span>
+                    <span class="nav-logo-sub">Centrum</span>
+                </div>
+            </div>
+            <span class="nav-doctor">MUDr. Otília Kohajdová</span>
+        </a>
+
+        <a href="index.html" class="nav-back">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 12H5M12 5l-7 7 7 7"/>
+            </svg>
+            Späť na hlavnú stránku
+        </a>
+
+        <div class="nav-end">
+            <a href="tel:048414519" class="nav-phone">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.95 13a19.79 19.79 0 01-3.07-8.67A2 2 0 012.85 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+                </svg>
+                048 414 51 96
+            </a>
+        </div>
+    </div>
+</nav>
+
+<!-- ═══ PAGE HEADER ═══ -->
+<div class="page-header">
+    <div class="breadcrumb">DENTALL Centrum <span>·</span> Právne informácie</div>
+    <h1>Ochrana osobných údajov</h1>
+    <p class="updated">Platné od: 27. mája 2026 · V súlade s nariadením GDPR (EÚ) 2016/679</p>
+</div>
+
+<!-- ═══ LEGAL CONTENT ═══ -->
+<div class="legal-wrap">
+
+    <div class="highlight-box">
+        <p>Ochrana vašich osobných údajov je pre nás dôležitá. Tento dokument vysvetľuje, aké údaje spracúvame, prečo a aké máte práva. Vzťahuje sa na návštevníkov tejto webovej stránky.</p>
+    </div>
+
+    <h2>1. Prevádzkovateľ</h2>
+    <p>Prevádzkovateľom osobných údajov v zmysle čl. 4 ods. 7 nariadenia GDPR je:</p>
+    <ul>
+        <li><strong>Kohajda s.r.o.</strong></li>
+        <li>Adresa: Sielnica 499, 962 31 Sielnica</li>
+        <li>IČO: 36618799</li>
+        <li>Telefón: <a href="tel:048414519">048 414 51 96</a></li>
+        <li>E-mail: <a href="mailto:jozefkohajda@gmail.com">jozefkohajda@gmail.com</a></li>
+    </ul>
+
+    <h2>2. Aké údaje spracúvame</h2>
+    <p>Táto webová stránka <strong>neobsahuje kontaktný formulár</strong> a nevyžaduje registráciu ani prihlásenie. Osobné údaje návštevníkov spracúvame v minimálnom rozsahu:</p>
+
+    <h3>2.1 Serverové logy</h3>
+    <p>Webhostingový server automaticky zaznamenáva technické informácie o každej návšteve:</p>
+    <ul>
+        <li>IP adresa zariadenia</li>
+        <li>dátum a čas návštevy</li>
+        <li>navštívená URL adresa</li>
+        <li>typ prehliadača a operačný systém</li>
+        <li>zdrojová URL (odkiaľ ste prišli)</li>
+    </ul>
+    <p>Tieto údaje sú nevyhnutné na technickú prevádzku webu, slúžia na odhalenie chýb a bezpečnostných hrozieb. Uchováme ich po dobu <strong>maximálne 30 dní</strong>.</p>
+
+    <h3>2.2 Preferencie zobrazenia (lokálne úložisko)</h3>
+    <p>Web si pamätá vašu voľbu svetlého alebo tmavého režimu. Táto informácia (<code>dac-theme</code>) sa ukladá výlučne vo vašom zariadení prostredníctvom technológie <strong>localStorage</strong> — nejde o cookie, údaj sa neposiela na server a zostáva len vo vašom prehliadači. Môžete ho kedykoľvek vymazať vymazaním dát prehliadača.</p>
+
+    <h3>2.3 Google Fonts</h3>
+    <p>Na zobrazenie písma načítava web súbory zo serverov spoločnosti <strong>Google LLC</strong> (fonts.googleapis.com). Pri tomto načítaní môže Google zaznamenať vašu IP adresu. Spracovanie zo strany Google sa riadi <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Zásadami ochrany súkromia Google</a>.</p>
+
+    <h2>3. Účel a právny základ spracúvania</h2>
+    <ul>
+        <li><strong>Serverové logy</strong> — oprávnený záujem prevádzkovateľa (čl. 6 ods. 1 písm. f) GDPR): bezpečnosť webu, odhaľovanie chýb</li>
+        <li><strong>Google Fonts</strong> — oprávnený záujem (správne zobrazenie webu); prípadne súhlas implicitný používaním webu</li>
+        <li><strong>Lokálne úložisko</strong> — nevyhnutné pre fungovanie funkcie, nespracúva osobné údaje na serveri</li>
+    </ul>
+
+    <h2>4. Príjemcovia osobných údajov</h2>
+    <p>Vaše osobné údaje <strong>nepredávame ani neposkytujeme</strong> tretím stranám na marketingové účely. Údaje môžu byť sprístupnené:</p>
+    <ul>
+        <li><strong>Webhostingový poskytovateľ</strong> — technická prevádzka servera (spracovateľ podľa zmluvy o spracúvaní)</li>
+        <li><strong>Google LLC</strong> — iba v rozsahu načítania Google Fonts (IP adresa)</li>
+        <li><strong>Orgány verejnej moci</strong> — iba v prípadoch stanovených zákonom</li>
+    </ul>
+
+    <h2>5. Prenos osobných údajov do tretích krajín</h2>
+    <p>Osobné údaje návštevníkov <strong>nie sú prenášané do tretích krajín</strong> zo strany prevádzkovateľa ani webhostingového poskytovateľa.</p>
+    <p>Výnimkou je načítavanie písma prostredníctvom služby <strong>Google Fonts</strong> (Google LLC, USA). Pri každom načítaní stránky môže byť IP adresa návštevníka odoslaná na servery Google v USA. Spoločnosť Google LLC je certifikovaná v rámci mechanizmu <strong>Data Privacy Framework</strong> (rozhodnutie Európskej komisie zo dňa 10. júla 2023), ktorý zabezpečuje primeranú úroveň ochrany osobných údajov pri prenose do USA. Podrobnosti nájdete v <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Zásadách ochrany súkromia Google</a>.</p>
+
+    <h2>6. Doba uchovávania</h2>
+    <ul>
+        <li>Serverové logy: <strong>maximálne 30 dní</strong>, potom automaticky vymazané</li>
+        <li>Lokálne úložisko (localStorage): zostáva vo vašom zariadení, kým ho nevymažete</li>
+    </ul>
+
+    <h2>7. Vaše práva</h2>
+    <p>Podľa nariadenia GDPR máte nasledujúce práva:</p>
+
+    <div class="rights-grid">
+        <div class="right-card">
+            <strong>Právo na prístup</strong>
+            <p>Máte právo vedieť, či o vás spracúvame osobné údaje a získať ich kópiu.</p>
+        </div>
+        <div class="right-card">
+            <strong>Právo na opravu</strong>
+            <p>Môžete požiadať o opravu nesprávnych alebo neúplných údajov.</p>
+        </div>
+        <div class="right-card">
+            <strong>Právo na vymazanie</strong>
+            <p>Za určitých podmienok môžete požiadať o vymazanie svojich údajov („právo byť zabudnutý").</p>
+        </div>
+        <div class="right-card">
+            <strong>Právo na obmedzenie</strong>
+            <p>Môžete požiadať o obmedzenie spracúvania vašich osobných údajov.</p>
+        </div>
+        <div class="right-card">
+            <strong>Právo na prenosnosť</strong>
+            <p>Máte právo získať svoje údaje v štruktúrovanom, strojovo čitateľnom formáte.</p>
+        </div>
+        <div class="right-card">
+            <strong>Právo namietať</strong>
+            <p>Môžete namietať proti spracúvaniu na základe oprávneného záujmu.</p>
+        </div>
+    </div>
+
+    <p>Na uplatnenie svojich práv nás kontaktujte na adrese <a href="mailto:jozefkohajda@gmail.com">jozefkohajda@gmail.com</a> alebo telefonicky. Na vašu žiadosť odpovieme bez zbytočného odkladu, najneskôr do <strong>30 dní</strong>.</p>
+
+    <h2>8. Súbory cookie</h2>
+    <p>Táto webová stránka <strong>nepoužíva súbory cookie</strong> (cookies) vlastného pôvodu. Na uloženie preferencií zobrazenia používame technológiu localStorage, ktorá funguje výlučne lokálne vo vašom zariadení.</p>
+    <p>Načítavanie Google Fonts môže technicky využívať cookies tretích strán zo strany Google. Ich použitie sa riadi podmienkami spoločnosti Google.</p>
+
+    <h2>9. Bezpečnosť</h2>
+    <p>Prijímame primerané technické a organizačné opatrenia na ochranu osobných údajov pred neoprávneným prístupom, stratou alebo zneužitím, vrátane šifrovaného prenosu dát (HTTPS).</p>
+
+    <h2>10. Zmeny tohto dokumentu</h2>
+    <p>Tento dokument môžeme aktualizovať v súvislosti so zmenami v spracúvaní údajov alebo zmenami legislatívy. Aktuálna verzia je vždy dostupná na tejto stránke s dátumom poslednej úpravy.</p>
+
+    <h2>11. Právo podať sťažnosť</h2>
+    <p>Ak sa domnievate, že spracúvanie vašich osobných údajov porušuje nariadenie GDPR, máte právo podať sťažnosť dozornému orgánu:</p>
+    <div class="highlight-box">
+        <p>
+            <strong>Úrad na ochranu osobných údajov Slovenskej republiky</strong><br>
+            Hraničná 12, 820 07 Bratislava 27<br>
+            Tel.: <a href="tel:+421232313214">+421 / 2 / 3231 3214</a><br>
+            Web: <a href="https://dataprotection.gov.sk" target="_blank" rel="noopener">dataprotection.gov.sk</a>
+        </p>
+    </div>
+
+    <h2>12. Kontakt</h2>
+    <p>Pre otázky týkajúce sa ochrany osobných údajov nás kontaktujte:</p>
+    <ul>
+        <li>E-mail: <a href="mailto:jozefkohajda@gmail.com">jozefkohajda@gmail.com</a></li>
+        <li>Telefón: <a href="tel:048414519">048 414 51 96</a></li>
+        <li>Adresa: Sielnica 499, 962 31 Sielnica</li>
+    </ul>
+
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+    <div class="footer-top">
+        <div class="footer-brand">
+            <div class="footer-logo-text">
+                <div class="footer-logo-wordmark">DENT<span>ALL</span></div>
+                <div class="footer-logo-centrum">Centrum</div>
+            </div>
+            <span class="footer-doctor">MUDr. Otília Kohajdová</span>
+        </div>
+        <div class="footer-copy">
+            © 2026 DENTALL Centrum · Banská Bystrica<br>
+            <span style="font-size:0.8rem;">design <span style="color:var(--orange);font-style:italic;font-family:'Great Vibes',cursive;font-size:1.1rem;">by</span>&nbsp; Kohajda s.r.o</span>
+        </div>
+        <a href="tel:048414519" class="footer-phone">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.95 13a19.79 19.79 0 01-3.07-8.67A2 2 0 012.85 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            048 414 51 96
+        </a>
+    </div>
+    <div class="footer-legal">
+        <a href="terms.html">Podmienky používania</a>
+        <a href="privacy.html" class="active">Ochrana osobných údajov</a>
+    </div>
+</footer>
+
+<script>
+    const toggle = document.getElementById('themeToggle');
+    const html = document.documentElement;
+    const saved = localStorage.getItem('dac-theme');
+    const sys = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    let current = saved || sys;
+    if (current === 'dark') { html.setAttribute('data-theme', 'dark'); toggle.setAttribute('aria-checked', 'true'); }
+
+    toggle.addEventListener('click', () => {
+        current = current === 'dark' ? 'light' : 'dark';
+        if (current === 'dark') { html.setAttribute('data-theme', 'dark'); toggle.setAttribute('aria-checked', 'true'); }
+        else { html.removeAttribute('data-theme'); toggle.setAttribute('aria-checked', 'false'); }
+        localStorage.setItem('dac-theme', current);
+    });
+
+    // Cookie consent
+    (function() {
+        var CONSENT_KEY = 'dac-cookie-consent';
+        var banner = document.getElementById('cookieBanner');
+        if (localStorage.getItem(CONSENT_KEY)) { banner.style.display = 'none'; return; }
+
+        function loadFonts() {
+            var pc1=document.createElement('link');pc1.rel='preconnect';pc1.href='https://fonts.googleapis.com';document.head.appendChild(pc1);
+            var pc2=document.createElement('link');pc2.rel='preconnect';pc2.href='https://fonts.gstatic.com';pc2.crossOrigin='anonymous';document.head.appendChild(pc2);
+            var f=document.createElement('link');f.rel='stylesheet';f.href='https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Great+Vibes&display=swap';document.head.appendChild(f);
+        }
+        function hideBanner() {
+            banner.classList.remove('visible'); banner.classList.add('hidden');
+            setTimeout(function(){ banner.style.display='none'; }, 420);
+        }
+        setTimeout(function(){ banner.classList.add('visible'); }, 700);
+
+        document.getElementById('cookieAccept').addEventListener('click', function() {
+            localStorage.setItem(CONSENT_KEY, 'accepted'); loadFonts(); hideBanner();
+        });
+        document.getElementById('cookieDecline').addEventListener('click', function() {
+            localStorage.setItem(CONSENT_KEY, 'declined'); hideBanner();
+        });
+    })();
+</script>
+
+<!-- COOKIE CONSENT BANNER -->
+<div id="cookieBanner" class="cookie-banner" role="dialog" aria-label="Súhlas s externými zdrojmi">
+    <div class="cookie-text">
+        <strong>Externé zdroje &amp; súkromie</strong>
+        <p>Pre správne zobrazenie používame Google Fonts — vaša IP adresa môže byť prenesená na servery Google (USA). <a href="privacy.html">Zásady ochrany údajov</a></p>
+    </div>
+    <div class="cookie-actions">
+        <button id="cookieDecline" class="cookie-btn cookie-btn--decline">Len nevyhnutné</button>
+        <button id="cookieAccept" class="cookie-btn cookie-btn--accept">Prijať</button>
+    </div>
+</div>
+
+</body>
+</html>
