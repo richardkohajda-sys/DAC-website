@@ -38,7 +38,7 @@
         }
 
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
+        html { scroll-behavior: smooth; overflow-x: hidden; }
         body {
             font-family: 'Jost', sans-serif;
             font-weight: 300;
@@ -753,25 +753,62 @@
         #recenzie { padding: 7rem 10%; background: var(--dark); }
         #recenzie .section-header h2 { color: white; }
 
-        .reviews-grid {
-            display: grid; grid-template-columns: repeat(3, 1fr);
-            gap: 2px; margin-top: 4.5rem;
-            background: rgba(255,255,255,0.04);
+        .testimonials-columns-wrap {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 4rem;
+            max-height: 740px;
+            overflow: hidden;
+            -webkit-mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+            mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
         }
-        .review-card { background: rgba(255,255,255,0.02); padding: 3rem 2.5rem; }
-        .review-quote {
-            font-size: 5rem; font-weight: 800;
-            color: var(--orange); line-height: 0.8;
-            margin-bottom: 1.5rem; opacity: 0.5;
+        .testimonials-col {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            width: 320px;
+            flex-shrink: 0;
+        }
+        .testimonials-col:nth-child(2) { display: none; }
+        .testimonials-col:nth-child(3) { display: none; }
+        @media (min-width: 768px) { .testimonials-col:nth-child(2) { display: flex; } }
+        @media (min-width: 1024px) { .testimonials-col:nth-child(3) { display: flex; } }
+        .testimonials-track {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            animation: scrollUp linear infinite;
+        }
+        @keyframes scrollUp {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-50%); }
+        }
+        .review-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: 0 4px 32px rgba(0,0,0,0.18);
         }
         .review-text {
-            font-size: 0.93rem; line-height: 1.9;
-            color: rgba(255,255,255,0.6); font-style: italic; margin-bottom: 2rem;
+            font-size: 0.92rem; line-height: 1.75;
+            color: rgba(255,255,255,0.72); margin-bottom: 1.25rem;
         }
-        .review-stars { color: var(--orange); font-size: 0.85rem; margin-bottom: 0.6rem; }
-        .review-author {
-            font-size: 0.75rem; font-weight: 600;
-            letter-spacing: 0.12em; text-transform: uppercase; color: var(--orange);
+        .review-author-row {
+            display: flex; align-items: center; gap: 0.75rem;
+        }
+        .review-avatar {
+            width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+            color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 1rem; text-transform: uppercase;
+        }
+        .review-name {
+            font-weight: 600; font-size: 0.88rem; color: #fff; line-height: 1.3;
+        }
+        .review-role {
+            font-size: 0.78rem; color: rgba(255,255,255,0.5); line-height: 1.3;
         }
 
         /* ══ CENNÍK ══ */
@@ -995,25 +1032,31 @@
 
         @media (max-width: 640px) {
             /* ── NAV: stack vertically ── */
-            nav { overflow: hidden; }
-            .nav-inner { flex-direction: column; align-items: stretch; padding: 0; gap: 0; }
+            nav { overflow: visible; }
+            .nav-inner { display: grid; grid-template-areas: "toggle brand phone" "links links links"; grid-template-columns: 1fr auto 1fr; padding: 0; gap: 0; align-items: stretch; }
             .nav-brand {
-                border-radius: 0; box-shadow: none; margin-bottom: 0;
-                padding: 0.7rem 5%; align-items: center;
-                border-bottom: 1px solid var(--line);
+                grid-area: brand;
+                background: var(--white);
+                border-radius: 0 0 20px 20px;
+                box-shadow: 0 10px 32px rgba(0,0,0,0.09);
+                margin-bottom: 0;
+                padding: 0.6rem 1.4rem 1.3rem;
+                align-items: center;
+                border-bottom: none;
+                position: relative; z-index: 2; isolation: isolate;
             }
-            .nav-brand::before { display: none; }
+            .nav-brand::before { display: block; border-radius: 0 0 21px 21px; }
             .nav-logo-name { font-size: 1.9rem; }
             .nav-logo-sub { font-size: 0.72rem; }
             .nav-doctor { margin-top: 0.4rem; font-size: 0.78rem; }
             .nav-links {
+                grid-area: links;
                 flex-wrap: wrap; justify-content: center;
                 padding: 0.25rem 0;
-                border-bottom: 1px solid var(--line);
+                border-top: 1px solid var(--line);
             }
             .nav-links a { padding: 0.5rem 0.6rem; font-size: 0.62rem; }
             .nav-divider { display: none; }
-            .nav-phone { justify-content: center; padding: 0.55rem 0 0.75rem; font-size: 1.1rem; }
             /* ── FOOTER: stack on mobile ── */
             .footer-top { flex-direction: column; align-items: center; text-align: center; }
             .footer-brand { margin-left: 0 !important; align-items: center; }
@@ -1021,14 +1064,14 @@
             .footer-legal { flex-wrap: wrap; gap: 1rem; }
 
             /* ── HERO: shorter on mobile ── */
-            #hero { min-height: 55vh; padding-top: 185px; }
+            #hero { min-height: 55vh; padding-top: 135px; }
             .hero-badge { display: none; }
 
             /* ── REST ── */
             .services-grid { grid-template-columns: repeat(2, 1fr); }
             .team-members-grid { grid-template-columns: repeat(2, 1fr); }
             .team-banner { height: 400px; }
-            .reviews-grid { grid-template-columns: 1fr; }
+
             #kontakt { grid-template-columns: 1fr; }
             .contact-map iframe { min-height: 360px; }
         }
@@ -1274,10 +1317,11 @@
 
         /* Mobile nav-end */
         @media (max-width: 640px) {
-            .nav-end { justify-content: center; padding: 0.55rem 5% 0.75rem; }
-            .nav-end .nav-phone { padding: 0; font-size: 1.1rem; flex: 1; justify-content: center; }
-            .toggle-v-wrap { order: 4; width: auto; height: auto; margin: 0; padding: 0.3rem 0 0.6rem; }
-            .toggle-v-wrap .theme-toggle { transform: none; }
+            .nav-end { grid-area: phone; display: flex; align-items: center; justify-content: center; padding: 0 0.4rem 0 0.7rem; overflow: hidden; }
+            .nav-end .nav-phone { flex-direction: column; align-items: center; gap: 0.1rem; font-size: clamp(0.65rem, 2.4vw, 0.88rem); padding: 0; white-space: nowrap; }
+            .nav-end .nav-phone svg { width: clamp(14px, 4vw, 20px); height: clamp(14px, 4vw, 20px); }
+            .toggle-v-wrap { grid-area: toggle; order: unset; display: flex; align-items: center; justify-content: center; overflow: clip; width: auto; height: auto; align-self: stretch; justify-self: stretch; margin: 0; padding: 0 0.7rem 0 0.4rem; }
+            .toggle-v-wrap .theme-toggle { transform: rotate(-90deg); flex-shrink: 0; }
         }
         @media (max-width: 1200px) {
             .theme-toggle { width: 76px; height: 46px; }
@@ -1530,7 +1574,7 @@
                 </svg>
             </div>
             <div class="service-name">Záchovaná stomatológia</div>
-            <p>Preventívne prehliadky, pečatenie zubov, ošetrenie kazov</p>
+            <p>Výplne zubov, estetické dostavby, ošetrenie koreňových kanálikov</p>
         </div>
 
         <div class="service-card fade-up">
@@ -1545,7 +1589,7 @@
                 </svg>
             </div>
             <div class="service-name">Protetika</div>
-            <p>Zirkónové a keramické korunky, mostíky, protézy</p>
+            <p>Zirkónové a keramické korunky, mostíky, fazety, snímateľné protézy</p>
         </div>
 
         <div class="service-card fade-up d1">
@@ -1775,25 +1819,49 @@
         <h2 class="fade-up">Čo hovoria naši pacienti</h2>
     </div>
 
-    <div class="reviews-grid">
-        <div class="review-card fade-up">
-            <div class="review-quote">"</div>
-            <p class="review-text">Navštevujem DENTALL Centrum už roky a vždy odchádzam spokojná. Pani doktorka je veľmi milá a profesionálna. Ošetrenia sú skutočne bezbolestné – naozaj sa tu netreba báť.</p>
-            <div class="review-stars">★★★★★</div>
-            <div class="review-author">Marta K. · Banská Bystrica</div>
+    <div class="testimonials-columns-wrap">
+
+        <!-- Stĺpec 1 -->
+        <div class="testimonials-col">
+            <div class="testimonials-track" style="animation-duration:15s">
+                <div class="review-card"><p class="review-text">Navštevujem túto pani doktorku roky... pre mňa najlepšia zubná lekárka. TOP odbornosť, trpezlivosť a rešpekt k bolesti klienta. Dentálna hygiena skvelá doplňujúca vec 2x ročne. Po nej mám zuby v stave, aký som ešte nemal... Zo srdca odporúčam všetkým, ktorí si vážia seba, svoje zdravie a myslia na budúcnosť.</p><div class="review-author-row"><div class="review-avatar" style="background:#E07A5F">R</div><div><div class="review-name">Rastislav Kmeť</div><div class="review-role">Google recenzia</div></div></div></div>
+                <div class="review-card"><p class="review-text">Na slovenské pomery neskutočne kvalitná ambulancia pani dok. Kohajdovej a profesionálna dentálna hygiena, ktorej vďačím za to, že už niekoľko rokov netrpím na zápaly ďasien, s ktorými som predtým roky bojoval. Veľká vďaka!</p><div class="review-author-row"><img class="review-avatar" src="brand_assests/Screenshot 2026-05-29 at 16.25.00.png" alt="Zorien" style="object-fit:cover"><div><div class="review-name">Zorien</div><div class="review-role">Google recenzia</div></div></div></div>
+                <div class="review-card"><p class="review-text">Som veľmi spokojný s úrovňou zubného centra. Milý personál, vysoká odborná úroveň. A špeciálne super dentálna hygiena, ktorá mi zachránila chrup pred poškodením.</p><div class="review-author-row"><div class="review-avatar" style="background:#6A8F6A">V</div><div><div class="review-name">Vojtech Kováč</div><div class="review-role">Google recenzia</div></div></div></div>
+                <div class="review-card"><p class="review-text">Odporúčame vám pre deti.</p><div class="review-author-row"><div class="review-avatar" style="background:#9B72CF">J</div><div><div class="review-name">Jozef Kováčik</div><div class="review-role">Google recenzia</div></div></div></div>
+                <!-- duplicate for infinite loop -->
+                <div class="review-card"><p class="review-text">Navštevujem túto pani doktorku roky... pre mňa najlepšia zubná lekárka. TOP odbornosť, trpezlivosť a rešpekt k bolesti klienta. Dentálna hygiena skvelá doplňujúca vec 2x ročne. Po nej mám zuby v stave, aký som ešte nemal... Zo srdca odporúčam všetkým, ktorí si vážia seba, svoje zdravie a myslia na budúcnosť.</p><div class="review-author-row"><div class="review-avatar" style="background:#E07A5F">R</div><div><div class="review-name">Rastislav Kmeť</div><div class="review-role">Google recenzia</div></div></div></div>
+                <div class="review-card"><p class="review-text">Na slovenské pomery neskutočne kvalitná ambulancia pani dok. Kohajdovej a profesionálna dentálna hygiena, ktorej vďačím za to, že už niekoľko rokov netrpím na zápaly ďasien, s ktorými som predtým roky bojoval. Veľká vďaka!</p><div class="review-author-row"><img class="review-avatar" src="brand_assests/Screenshot 2026-05-29 at 16.25.00.png" alt="Zorien" style="object-fit:cover"><div><div class="review-name">Zorien</div><div class="review-role">Google recenzia</div></div></div></div>
+                <div class="review-card"><p class="review-text">Som veľmi spokojný s úrovňou zubného centra. Milý personál, vysoká odborná úroveň. A špeciálne super dentálna hygiena, ktorá mi zachránila chrup pred poškodením.</p><div class="review-author-row"><div class="review-avatar" style="background:#6A8F6A">V</div><div><div class="review-name">Vojtech Kováč</div><div class="review-role">Google recenzia</div></div></div></div>
+                <div class="review-card"><p class="review-text">Odporúčame vám pre deti.</p><div class="review-author-row"><div class="review-avatar" style="background:#9B72CF">J</div><div><div class="review-name">Jozef Kováčik</div><div class="review-role">Google recenzia</div></div></div></div>
+            </div>
         </div>
-        <div class="review-card fade-up d1">
-            <div class="review-quote">"</div>
-            <p class="review-text">Vynikajúca klinika s priateľskou atmosférou. Ocením moderné vybavenie a to, že mi vždy všetko podrobne vysvetlia pred aj počas ošetrenia. Odporúčam celej rodine.</p>
-            <div class="review-stars">★★★★★</div>
-            <div class="review-author">Peter M. · Radvaň</div>
+
+        <!-- Stĺpec 2 -->
+        <div class="testimonials-col">
+            <div class="testimonials-track" style="animation-duration:19s">
+                <div class="review-card"><p class="review-text">Pani doktorka je veľmi dobrá, milá, trpezlivá a má pekný, ľudský prístup. Ďakujem jej za zbavenie bolesti na zubnej pohotovosti, ktoré ma trápilo už od predchádzajúceho dňa.</p><div class="review-author-row"><div class="review-avatar" style="background:#C5834A">M</div><div><div class="review-name">Miroslav Markovič</div><div class="review-role">Google recenzia</div></div></div></div>
+                <div class="review-card"><p class="review-text">K pani doktorke chodím už niekoľko rokov a už chodia aj moje deti na dentálnu hygienu. Nedokážeme si predstaviť ísť niekam inam. Deti sa tešia a tým je povedané všetko :-).</p><div class="review-author-row"><div class="review-avatar" style="background:#5B8A6F">M</div><div><div class="review-name">Milada Rothová</div><div class="review-role">Google recenzia</div></div></div></div>
+                <div class="review-card"><p class="review-text">Citlivý prístup, profesionál vo svojom odbore. Odporúčam maximálne :)</p><div class="review-author-row"><div class="review-avatar" style="background:#A05C7B">M</div><div><div class="review-name">Miroslav Beňo</div><div class="review-role">Google recenzia</div></div></div></div>
+                <!-- duplicate -->
+                <div class="review-card"><p class="review-text">Pani doktorka je veľmi dobrá, milá, trpezlivá a má pekný, ľudský prístup. Ďakujem jej za zbavenie bolesti na zubnej pohotovosti, ktoré ma trápilo už od predchádzajúceho dňa.</p><div class="review-author-row"><div class="review-avatar" style="background:#C5834A">M</div><div><div class="review-name">Miroslav Markovič</div><div class="review-role">Google recenzia</div></div></div></div>
+                <div class="review-card"><p class="review-text">K pani doktorke chodím už niekoľko rokov a už chodia aj moje deti na dentálnu hygienu. Nedokážeme si predstaviť ísť niekam inam. Deti sa tešia a tým je povedané všetko :-).</p><div class="review-author-row"><div class="review-avatar" style="background:#5B8A6F">M</div><div><div class="review-name">Milada Rothová</div><div class="review-role">Google recenzia</div></div></div></div>
+                <div class="review-card"><p class="review-text">Rýchle termíny, príjemný personál a moderná ambulancia. Presne to, čo som hľadal. Konečne zubár, kde sa cítim pohodlne a v bezpečí.</p><div class="review-author-row"><div class="review-avatar" style="background:#6A8F6A">L</div><div><div class="review-name">Lukáš B.</div><div class="review-role">Sásová</div></div></div></div>
+            </div>
         </div>
-        <div class="review-card fade-up d2">
-            <div class="review-quote">"</div>
-            <p class="review-text">Konečne som našla zubára, ku ktorému sa teším ísť. Bielenie zubov dopadlo fantasticky – výsledok prekonalo moje očakávania. Profesionálny tím, čistá moderná ambulancia.</p>
-            <div class="review-stars">★★★★★</div>
-            <div class="review-author">Jana S. · Sásová</div>
+
+        <!-- Stĺpec 3 -->
+        <div class="testimonials-col">
+            <div class="testimonials-track" style="animation-duration:17s">
+                <div class="review-card"><p class="review-text">Som maximálne spokojná.</p><div class="review-author-row"><div class="review-avatar" style="background:#9B72CF">E</div><div><div class="review-name">Eva Leštinská</div><div class="review-role">Google recenzia</div></div></div></div>
+                <div class="review-card"><p class="review-text">Toto zubné centrum ma príjemne prekvapilo. Mal som z návštevy trochu strach, no celý proces prebehol naozaj pokojne a bez bolesti. Zubár pristupoval opatrne a vždy sa uistil, že je všetko v poriadku. Môžem úprimne odporučiť každému, kto zubára zvyčajne odkladá práve pre strach.</p><div class="review-author-row"><img class="review-avatar" src="brand_assests/svenco.jpeg" alt="Svenco Group" style="object-fit:cover"><div><div class="review-name">Svenco Group</div><div class="review-role">Google recenzia</div></div></div></div>
+                <div class="review-card"><p class="review-text">Pani doktorka Kohajdová mi pred 8 rokmi zachránila chrup. Vysoko profesionálny prístup a nadštandardná práca. Chodíme k nej pravidelne celá rodina aj na dentálnu hygienu. Už pri vstupe sa na Vás usmeje milá pani recepčná — toto je štandard aj u pani sestričiek. Pani doktorka je základ toho príjemného prostredia. Cítim sa tam vždy príjemne.</p><div class="review-author-row"><div class="review-avatar" style="background:#4A90A4">G</div><div><div class="review-name">Gabriela Kováčová</div><div class="review-role">Google recenzia</div></div></div></div>
+                <!-- duplicate -->
+                <div class="review-card"><p class="review-text">Som maximálne spokojná.</p><div class="review-author-row"><div class="review-avatar" style="background:#9B72CF">E</div><div><div class="review-name">Eva Leštinská</div><div class="review-role">Google recenzia</div></div></div></div>
+                <div class="review-card"><p class="review-text">Toto zubné centrum ma príjemne prekvapilo. Mal som z návštevy trochu strach, no celý proces prebehol naozaj pokojne a bez bolesti. Zubár pristupoval opatrne a vždy sa uistil, že je všetko v poriadku. Môžem úprimne odporučiť každému, kto zubára zvyčajne odkladá práve pre strach.</p><div class="review-author-row"><img class="review-avatar" src="brand_assests/svenco.jpeg" alt="Svenco Group" style="object-fit:cover"><div><div class="review-name">Svenco Group</div><div class="review-role">Google recenzia</div></div></div></div>
+                <div class="review-card"><p class="review-text">Čisté, moderné prostredie a tím ktorý vám naozaj naslúcha. Pred každým zákrokom mi vysvetlili čo bude nasledovať. Takýchto lekárov je málo.</p><div class="review-author-row"><div class="review-avatar" style="background:#A05C7B">M</div><div><div class="review-name">Monika R.</div><div class="review-role">Banská Bystrica</div></div></div></div>
+            </div>
         </div>
+
     </div>
 </section>
 
@@ -1901,7 +1969,7 @@
             </div>
         </div>
 
-        <img src="brand_assests/IMG_8696.jpg" alt="Budova Gallery" class="contact-building fade-up">
+        <img src="brand_assests/1D2E8178-F88A-4BB0-869F-91D69E9B3666.png" alt="Budova Gallery" class="contact-building fade-up">
 
         <div class="contact-row fade-up d3" style="margin-top: 3rem;">
             <div class="contact-ico">
