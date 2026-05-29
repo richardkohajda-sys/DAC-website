@@ -784,6 +784,10 @@
             0% { transform: translateY(0); }
             100% { transform: translateY(-50%); }
         }
+        @keyframes hero-marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
         .review-card {
             background: rgba(255,255,255,0.04);
             border: 1px solid rgba(255,255,255,0.08);
@@ -1068,7 +1072,61 @@
             .hero-bg { object-fit: cover; object-position: 72% 55%; }
             .hero-badge { display: none; }
 
+            /* ── HERO-SUB MARQUEE ── */
+            .hero-sub { overflow: hidden; padding: 0 0 2rem; text-align: left; }
+            .hero-marquee-wrap { overflow: hidden; padding: 1.75rem 0 0.75rem; }
+            .hero-marquee-track {
+                display: flex;
+                width: max-content;
+                white-space: nowrap;
+                animation: hero-marquee 22s linear infinite;
+            }
+            .hero-marquee-item {
+                font-family: 'Jost', sans-serif;
+                font-size: 1.05rem;
+                font-weight: 600;
+                letter-spacing: 0.22em;
+                text-transform: uppercase;
+                color: var(--muted);
+                white-space: nowrap;
+                padding-right: 5rem;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.3em;
+            }
+            .hero-marquee-item .hero-heart { color: var(--orange); width: 0.75em; height: 0.75em; display: inline-block; vertical-align: -0.05em; }
+
+            /* ── O NAS ── */
+            .about-content.about-content--full { grid-template-columns: 1fr; padding: 2.5rem 5% 3rem; gap: 0; }
+            .about-photo-placeholder { display: none; }
+            .about-content-inner { text-align: center; align-items: center; }
+            .about-content-inner .label,
+            .about-content-inner h2,
+            .about-content-inner p { text-align: center; }
+
+            /* ── PHOTO STRIP ── */
+            .photo-strip-text { top: 13%; left: 5%; transform: none; max-width: 80%; }
+            .photo-strip-text h3 { font-size: 2rem; text-align: center; margin-bottom: 3.5rem; }
+            .photo-strip-text p { max-width: 72%; text-align: left; }
+
             /* ── REST ── */
+            #sluzby { padding-top: 2.5rem; }
+            .komplexna-section .hero-sub-tagline { font-size: clamp(0.55rem, 3.8vw, 1.05rem); letter-spacing: clamp(0.05em, 0.8vw, 0.22em); white-space: nowrap; }
+            .text-reveal-wrap { padding-bottom: 2rem; }
+            #preco-my { padding-top: 2.5rem; }
+            .scroll-card { padding: 2rem 1.5rem; transform: none; border-radius: 20px; }
+            .process-step { gap: 1.2rem; padding-bottom: 2rem; }
+            .process-step p { font-size: 0.95rem; line-height: 1.65; }
+            .dh-section { padding: 2.5rem 5%; }
+            .dh-body { grid-template-columns: 1fr; gap: 2rem; }
+            .dh-text p { font-size: 0.95rem; line-height: 1.7; }
+            .dh-porovnanie { padding: 1.5rem; }
+            .dh-porovnanie-content { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
+            .dh-porovnanie-content p { font-size: 0.95rem; line-height: 1.6; }
+            .poistovne { margin-left: 0; margin-right: 0; padding: 2rem 0; }
+            .poistovne-logos { padding: 0.5rem; max-width: 100%; }
+            .poistovne-logos img { height: auto; object-fit: contain; }
+            .service-name { font-size: clamp(0.6rem, 3.2vw, 1.1rem); letter-spacing: 0.08em; }
             .services-grid { grid-template-columns: repeat(2, 1fr); }
             .team-members-grid { grid-template-columns: repeat(2, 1fr); }
             .team-banner { height: 400px; }
@@ -2056,6 +2114,29 @@
         entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.08 });
     document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    // Hero-sub marquee on mobile
+    (function () {
+        if (window.innerWidth > 640) return;
+        const heroSub = document.querySelector('.hero-sub');
+        const scriptInner = document.querySelector('.hero-script-inner');
+        const tagline = document.querySelector('.hero-sub-tagline');
+        if (!heroSub || !scriptInner || !tagline) return;
+
+        // Build content: clone inner span, strip underline SVG, keep heart SVG
+        const clone = scriptInner.cloneNode(true);
+        const underline = clone.querySelector('.hero-underline-svg');
+        if (underline) underline.remove();
+        const textHTML = clone.innerHTML.trim() + ' · ' + tagline.textContent.trim();
+
+        heroSub.innerHTML =
+            '<div class="hero-marquee-wrap">' +
+              '<div class="hero-marquee-track">' +
+                '<span class="hero-marquee-item">' + textHTML + '</span>' +
+                '<span class="hero-marquee-item" aria-hidden="true">' + textHTML + '</span>' +
+              '</div>' +
+            '</div>';
+    })();
 
     // Hero reveals on load
     setTimeout(() => {
