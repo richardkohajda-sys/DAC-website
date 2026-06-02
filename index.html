@@ -61,6 +61,11 @@
             color: var(--orange);
         }
 
+        /* anchor scroll offset – compensates for fixed nav */
+        #sluzby, #dentalna-hygiena, #cennik, #kontakt, #o-nas, #tym, #recenzie, #platenie, #cennik {
+            scroll-margin-top: 90px;
+        }
+
         /* ══ NAV ══ */
         nav {
             position: fixed; top: 0; left: 0; right: 0; z-index: 900;
@@ -364,6 +369,7 @@
             font-size: 1.4rem; line-height: 1.7;
             color: var(--muted); margin-bottom: 1.2rem;
         }
+        .about-content-inner p.d3 { margin-top: 1.8rem; }
         .about-phone {
             display: inline-flex; align-items: center; gap: 0.6rem;
             margin-top: 2rem; font-weight: 600; font-size: 0.95rem;
@@ -762,8 +768,31 @@
         }
         .platenie-img-placeholder svg { opacity: 0.3; }
         @media (max-width: 768px) {
+            .platenie-section { padding-left: 0; padding-right: 0; padding-bottom: 0; background: linear-gradient(to bottom, var(--white) 55%, #f8efea 100%); }
             .platenie-inner { flex-direction: column; gap: 3rem; }
-            .platenie-img { width: 100%; aspect-ratio: 4/3; }
+            .platenie-text { padding: 0 7%; }
+            .platenie-img {
+                width: 100%;
+                flex: none;
+                margin: 0;
+                border-radius: 0;
+                aspect-ratio: 4/3;
+                position: relative;
+            }
+            .platenie-img::after {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(
+                    to bottom,
+                    var(--white) 0%,
+                    transparent 18%,
+                    transparent 65%,
+                    rgba(248,239,234,0.5) 82%,
+                    #f8efea 100%
+                );
+                pointer-events: none;
+            }
         }
 
         #cennik { padding: 7rem 10% 0; background: var(--cream); }
@@ -939,11 +968,15 @@
         @media (max-width: 1200px) {
             .nav-links a { padding: 1.6rem 0.7rem; font-size: 0.66rem; }
             .nav-phone { font-size: 0.78rem; }
+            .contact-block .nav-phone { font-size: clamp(1.1rem, 3.5vw, 1.6rem); }
+            .contact-block .nav-phone svg { width: clamp(20px, 3.5vw, 26px); height: clamp(20px, 3.5vw, 26px); }
         }
 
         @media (max-width: 860px) {
             .nav-links a { padding: 1.4rem 0.5rem; font-size: 0.62rem; }
             .nav-phone { font-size: 0.72rem; }
+            .contact-block .nav-phone { font-size: clamp(1rem, 4vw, 1.4rem); }
+            .contact-block .nav-phone svg { width: clamp(18px, 4vw, 24px); height: clamp(18px, 4vw, 24px); }
         }
 
         @media (max-width: 640px) {
@@ -1015,6 +1048,7 @@
             .about-content-inner .label,
             .about-content-inner h2,
             .about-content-inner p { text-align: center; }
+            .about-content-inner p.d3 { margin-top: 0; }
 
             /* ── PHOTO STRIP ── */
             .photo-strip-text { top: 13%; left: 5%; transform: none; max-width: 80%; }
@@ -1163,6 +1197,19 @@
 
         /* ── platenie ── */
         html[data-theme="dark"] .platenie-img { background: #1c2128; }
+        @media (max-width: 768px) {
+            html[data-theme="dark"] .platenie-section { background: linear-gradient(to bottom, #161b22 55%, #1c2128 100%); }
+            html[data-theme="dark"] .platenie-img::after {
+                background: linear-gradient(
+                    to bottom,
+                    #161b22 0%,
+                    transparent 18%,
+                    transparent 65%,
+                    rgba(28,33,40,0.5) 82%,
+                    #1c2128 100%
+                );
+            }
+        }
 
         /* ══ THEME TOGGLE ══ */
         .nav-end {
@@ -1294,6 +1341,8 @@
             .nav-end .nav-phone svg { width: clamp(14px, 4vw, 20px); height: clamp(14px, 4vw, 20px); }
             .toggle-v-wrap { grid-area: toggle; order: unset; display: flex; align-items: center; justify-content: center; overflow: clip; width: auto; height: auto; align-self: stretch; justify-self: stretch; margin: 0; padding: 0 0.7rem 0 0.4rem; }
             .toggle-v-wrap .theme-toggle { transform: rotate(-90deg); flex-shrink: 0; }
+            .contact-block .nav-phone { font-size: clamp(1rem, 5vw, 1.3rem); }
+            .contact-block .nav-phone svg { width: clamp(18px, 5vw, 22px); height: clamp(18px, 5vw, 22px); }
         }
         @media (max-width: 1200px) {
             .theme-toggle { width: 76px; height: 46px; }
@@ -1850,12 +1899,7 @@
             <p class="fade-up d2">Od dohodnutého postupu sa odvíja cena prác a aj časový harmonogram tejto liečby. Nie všetko je potrebné stihnúť za mesiac - dva, niekedy sa liečba naplánuje na dlhšie obdobie napríklad na rok alebo aj viac.</p>
         </div>
         <div class="platenie-img fade-up d2">
-            <div class="platenie-img-placeholder">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
-                </svg>
-                foto
-            </div>
+            <img src="brand_assests/IMG_7577.JPG" alt="Platenie u zubára" style="width:100%;height:100%;object-fit:cover;">
         </div>
     </div>
 </section>
@@ -1928,7 +1972,15 @@
 <section id="kontakt">
     <div class="contact-block">
         <span class="label">Navštívte nás</span>
-        <h2 class="fade-up">Kontakt</h2>
+        <div class="fade-up" style="display:flex; align-items:center; gap:2rem; margin-bottom:2rem;">
+            <h2 style="margin:0;">Kontakt</h2>
+            <a href="tel:048414519" class="nav-phone">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.95 13a19.79 19.79 0 01-3.07-8.67A2 2 0 012.85 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+                </svg>
+                048 414 51 96
+            </a>
+        </div>
 
         <div class="contact-row fade-up d1">
             <div class="contact-ico">
@@ -2184,6 +2236,21 @@
         });
     })();
 
+</script>
+
+<!-- COOKIE CONSENT BANNER -->
+<div id="cookieBanner" class="cookie-banner" role="dialog" aria-label="Súhlas s externými zdrojmi">
+    <div class="cookie-text">
+        <strong>Externé zdroje &amp; súkromie</strong>
+        <p>Pre správne zobrazenie používame Google Fonts — vaša IP adresa môže byť prenesená na servery Google (USA). <a href="privacy.html">Zásady ochrany údajov</a></p>
+    </div>
+    <div class="cookie-actions">
+        <button id="cookieDecline" class="cookie-btn cookie-btn--decline">Len nevyhnutné</button>
+        <button id="cookieAccept" class="cookie-btn cookie-btn--accept">Prijať</button>
+    </div>
+</div>
+
+<script>
     // Cookie consent
     (function() {
         var CONSENT_KEY = 'dac-cookie-consent';
@@ -2209,18 +2276,6 @@
         });
     })();
 </script>
-
-<!-- COOKIE CONSENT BANNER -->
-<div id="cookieBanner" class="cookie-banner" role="dialog" aria-label="Súhlas s externými zdrojmi">
-    <div class="cookie-text">
-        <strong>Externé zdroje &amp; súkromie</strong>
-        <p>Pre správne zobrazenie používame Google Fonts — vaša IP adresa môže byť prenesená na servery Google (USA). <a href="privacy.html">Zásady ochrany údajov</a></p>
-    </div>
-    <div class="cookie-actions">
-        <button id="cookieDecline" class="cookie-btn cookie-btn--decline">Len nevyhnutné</button>
-        <button id="cookieAccept" class="cookie-btn cookie-btn--accept">Prijať</button>
-    </div>
-</div>
 
 </body>
 </html>
