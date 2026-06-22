@@ -281,34 +281,6 @@
             color: var(--muted);
         }
 
-        .hero-phone {
-            display: inline-flex; align-items: center; gap: 0.75rem;
-            font-weight: 700; font-size: 1.15rem;
-            color: white; letter-spacing: 0.02em;
-            padding: 1rem 2.2rem;
-            border: 2px solid rgba(255,255,255,0.5);
-            transition: all 0.25s;
-        }
-        .hero-phone svg { stroke: var(--peach); flex-shrink: 0; }
-        .hero-phone:hover {
-            background: var(--orange); border-color: var(--orange);
-        }
-
-        .hero-badge {
-            position: absolute; right: 10%; bottom: 12%; z-index: 2;
-            background: rgba(255,255,255,0.12);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.2);
-            padding: 1.8rem 2.2rem; text-align: center;
-        }
-        .hero-badge-num {
-            font-size: 3.5rem; font-weight: 800; color: white; line-height: 1;
-        }
-        .hero-badge-text {
-            font-size: 0.68rem; font-weight: 600; letter-spacing: 0.18em;
-            text-transform: uppercase; color: rgba(255,255,255,0.6);
-            margin-top: 0.4rem;
-        }
 
         /* ══ STATS ══ */
         #stats {
@@ -370,13 +342,6 @@
             color: var(--muted); margin-bottom: 1.2rem;
         }
         .about-content-inner p.d3 { margin-top: 1.8rem; }
-        .about-phone {
-            display: inline-flex; align-items: center; gap: 0.6rem;
-            margin-top: 2rem; font-weight: 600; font-size: 0.95rem;
-            color: var(--orange); border-bottom: 1px solid var(--orange);
-            padding-bottom: 0.2rem; align-self: flex-start;
-        }
-        .about-phone:hover { color: var(--orange-h); border-color: var(--orange-h); }
 
         /* ══ SEKCIA HEADER ══ */
         .section-header { text-align: center; margin-bottom: 4.5rem; }
@@ -612,39 +577,6 @@
             width: 100%; height: 100%;
             object-fit: cover; object-position: center 50%;
         }
-        .team-banner-placeholder {
-            position: absolute; inset: 0;
-            display: flex; align-items: center; justify-content: center;
-            flex-direction: column; gap: 0.8rem;
-            color: var(--muted); pointer-events: none;
-        }
-        .team-banner-placeholder svg { opacity: 0.25; }
-        .team-banner-placeholder span {
-            font-size: 0.72rem; font-weight: 600;
-            letter-spacing: 0.2em; text-transform: uppercase;
-            opacity: 0.4;
-        }
-        .team-banner-overlay {
-            position: absolute; inset: 0;
-            background: linear-gradient(to top,
-                rgba(26,20,16,0.72) 0%,
-                rgba(26,20,16,0.35) 45%,
-                rgba(26,20,16,0.05) 100%);
-        }
-        .team-banner-content {
-            position: relative; z-index: 2;
-            padding: 3.5rem 10%;
-            width: 100%;
-        }
-        .team-banner-content .label {
-            color: var(--orange);
-            margin-bottom: 0.9rem; display: block;
-        }
-        .team-banner-content h2 {
-            color: white;
-            font-size: clamp(2rem, 4vw, 3.2rem);
-            font-weight: 700; line-height: 1.15;
-        }
 
         /* Members list */
         .team-members {
@@ -660,7 +592,6 @@
             transition: background 0.2s;
         }
         .team-member:hover { background: transparent; }
-        .team-member-num { display: none; }
         .team-name {
             font-size: 1.05rem; font-weight: 700;
             color: var(--dark); margin-bottom: 0.45rem;
@@ -770,12 +701,6 @@
             display: flex; align-items: center; justify-content: center;
             overflow: hidden;
         }
-        .platenie-img-placeholder {
-            width: 100%; height: 100%;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            gap: 1rem; color: var(--muted); font-size: 0.9rem; letter-spacing: 0.1em;
-        }
-        .platenie-img-placeholder svg { opacity: 0.3; }
         @media (max-width: 768px) {
             .platenie-section { padding-left: 0; padding-right: 0; padding-bottom: 0; background: linear-gradient(to bottom, var(--white) 55%, #f8efea 100%); }
             .platenie-inner { flex-direction: column; gap: 3rem; }
@@ -1018,8 +943,6 @@
             /* ── HERO: shorter on mobile ── */
             #hero { min-height: 100vh; min-height: 100dvh; }
             .hero-bg { object-fit: cover; object-position: 72% 55%; }
-            .hero-badge { display: none; }
-
             /* ── HERO-SUB MARQUEE ── */
             .hero-sub { overflow: hidden; padding: 0 0 2rem; text-align: left; }
             .hero-marquee-wrap { overflow: hidden; padding: 1.75rem 0 0.75rem; }
@@ -1157,8 +1080,7 @@
         }
 
         /* ── dh gradient boxes ── */
-        html[data-theme="dark"] .dh-porovnanie,
-        html[data-theme="dark"] .dh-nasledky {
+        html[data-theme="dark"] .dh-porovnanie {
             background: linear-gradient(135deg, #181e26 0%, #1c2230 30%, #1e2535 60%, #1c2230 80%, #181e26 100%);
         }
 
@@ -1171,13 +1093,6 @@
             background:
                 linear-gradient(to bottom, #161b22 0%, rgba(22,27,34,0.6) 20%, transparent 42%, transparent 80%, #161b22 100%),
                 linear-gradient(to right, #161b22 0%, rgba(22,27,34,0.72) 18%, transparent 55%, rgba(22,27,34,0.55) 82%, #161b22 100%);
-        }
-
-        /* ── team banner vignette ── */
-        html[data-theme="dark"] .team-banner-overlay {
-            background:
-                linear-gradient(to bottom, #161b22 0%, transparent 22%, rgba(22,27,34,0.55) 65%, #161b22 100%),
-                linear-gradient(to right, #161b22 0%, transparent 18%, transparent 82%, #161b22 100%);
         }
 
         /* ── team banner ── */
@@ -1726,8 +1641,8 @@
         </div>
         <div class="dh-photo-right fade-up d1">
             <div class="dh-photos-stack">
-                <img src="brand_assests/159b0e1a-59d3-447f-8bfd-e8a4f06176b3.png" alt="Farbenie plaku - dentálna hygiena" class="dh-photo">
-                <img src="brand_assests/IMG_7619.jpg" alt="Farbenie plaku - zubný kameň" class="dh-photo">
+                <img src="brand_assests/159b0e1a-59d3-447f-8bfd-e8a4f06176b3.webp" alt="Farbenie plaku - dentálna hygiena" class="dh-photo">
+                <img src="brand_assests/IMG_7619.webp" alt="Farbenie plaku - zubný kameň" class="dh-photo">
                 <p class="dh-photo-caption"><span style="color:var(--orange)">po</span> nesprávnom umytí zubov</p>
             </div>
         </div>
@@ -1757,7 +1672,7 @@
     </div>
 
     <div class="team-banner">
-        <img class="team-banner-img" src="brand_assests/final%20form.jpg" alt="Náš tím">
+        <img class="team-banner-img" src="brand_assests/final-form.webp" alt="Náš tím">
     </div>
 
     <!-- Member names grid -->
@@ -1765,63 +1680,54 @@
         <div class="team-members-grid">
 
             <div class="team-member fade-up">
-                <div class="team-member-num">01</div>
-                <div class="team-name">MUDr. Otília Kohajdová</div>
+<div class="team-name">MUDr. Otília Kohajdová</div>
                 <div class="team-role">Vedúca lekárka</div>
                 <div class="team-cert">Zakladateľka DentAll Centra s viac ako 30-ročnou praxou · Parodontologička</div>
             </div>
 
             <div class="team-member fade-up d1">
-                <div class="team-member-num">02</div>
                 <div class="team-name">MDDr. Alexandra Diana Kišiková</div>
                 <div class="team-role">Lekárka</div>
                 <div class="team-cert">Zameranie — endodoncia</div>
             </div>
 
             <div class="team-member fade-up d2">
-                <div class="team-member-num">03</div>
                 <div class="team-name">MDDr. Ivana Polláková</div>
                 <div class="team-role">Lekárka</div>
                 <div class="team-cert">Zameranie — záchovná stomatológia</div>
             </div>
 
             <div class="team-member fade-up">
-                <div class="team-member-num">04</div>
                 <div class="team-name">Bc. Dominika Lisková</div>
                 <div class="team-role">Dentálna hygienička</div>
                 <div class="team-cert"></div>
             </div>
 
             <div class="team-member fade-up d1">
-                <div class="team-member-num">05</div>
                 <div class="team-name">Janka Ľachká</div>
                 <div class="team-role">Preventistka</div>
                 <div class="team-cert"></div>
             </div>
 
             <div class="team-member fade-up d2">
-                <div class="team-member-num">06</div>
                 <div class="team-name">Bc. Alena Brindzová</div>
                 <div class="team-role">Vrchná sestra</div>
                 <div class="team-cert"></div>
             </div>
 
             <div class="team-member fade-up">
-                <div class="team-member-num">07</div>
                 <div class="team-name">Monika Messerschmidtová</div>
                 <div class="team-role">Sestra</div>
                 <div class="team-cert"></div>
             </div>
 
             <div class="team-member fade-up d1">
-                <div class="team-member-num">08</div>
                 <div class="team-name">Mgr. Jana Žondová</div>
                 <div class="team-role">Recepčná</div>
                 <div class="team-cert"></div>
             </div>
 
             <div class="team-member fade-up d2">
-                <div class="team-member-num">09</div>
                 <div class="team-name">Michaela Gašparová</div>
                 <div class="team-role">Recepčná</div>
                 <div class="team-cert"></div>
@@ -1899,7 +1805,7 @@
             <p class="fade-up d2">Od dohodnutého postupu sa odvíja cena prác a aj časový harmonogram tejto liečby. Nie všetko je potrebné stihnúť za mesiac - dva, niekedy sa liečba naplánuje na dlhšie obdobie napríklad na rok alebo aj viac.</p>
         </div>
         <div class="platenie-img fade-up d2">
-            <img src="brand_assests/IMG_7577.JPG" alt="Platenie u zubára" style="width:100%;height:100%;object-fit:cover;">
+            <img src="brand_assests/IMG_7577.webp" alt="Platenie u zubára" style="width:100%;height:100%;object-fit:cover;">
         </div>
     </div>
 </section>
@@ -1962,7 +1868,7 @@
     <div class="poistovne fade-up">
         <p class="poistovne-label">Sme zmluvní partneri všetkých zdravotných poisťovní</p>
         <div class="poistovne-logos">
-            <img src="brand_assests/Screenshot 2026-05-26 at 14.30.11.png" alt="Zdravotné poisťovne" loading="lazy">
+            <img src="brand_assests/poistovne.webp" alt="Zdravotné poisťovne" loading="lazy">
         </div>
     </div>
 </section>
@@ -1995,7 +1901,7 @@
             </div>
         </div>
 
-        <img src="brand_assests/1D2E8178-F88A-4BB0-869F-91D69E9B3666.png" alt="Budova Gallery" class="contact-building fade-up" loading="lazy">
+        <img src="brand_assests/1D2E8178-F88A-4BB0-869F-91D69E9B3666.webp" alt="Budova Gallery" class="contact-building fade-up" loading="lazy">
 
         <div class="contact-row fade-up d3" style="margin-top: 3rem;">
             <div class="contact-ico">
