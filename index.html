@@ -592,19 +592,25 @@
         /* ══ TÍM ══ */
         #tym { padding: 0; background: var(--white); }
 
+        .team-header {
+            padding: 5rem 10% 2.5rem;
+            text-align: center;
+            background: var(--cream);
+        }
+        .team-header .label { color: var(--orange); margin-bottom: 0.9rem; display: block; }
+        .team-header h2 { font-size: clamp(2rem, 4vw, 3.2rem); color: var(--dark); }
+
         .team-banner {
             position: relative;
             width: 100%;
             height: 520px;
             overflow: hidden;
             background: linear-gradient(135deg, #f8efea 0%, #fbddd6 40%, #f0b89a 70%, #fbddd6 85%, #f8efea 100%);
-            display: flex;
-            align-items: flex-end;
         }
         .team-banner-img {
             position: absolute; inset: 0;
             width: 100%; height: 100%;
-            object-fit: cover; object-position: center 30%;
+            object-fit: cover; object-position: center 50%;
         }
         .team-banner-placeholder {
             position: absolute; inset: 0;
@@ -1745,21 +1751,13 @@
 <section id="tym">
 
     <!-- Shared team photo banner -->
+    <div class="team-header">
+        <span class="label fade-up">Náš tím</span>
+        <h2 class="fade-up">Ľudia, ktorým dôverujete</h2>
+    </div>
+
     <div class="team-banner">
-        <!-- swap src below for your team photo -->
-        <!-- <img class="team-banner-img" src="brand_assests/team.jpg" alt="Náš tím"> -->
-        <div class="team-banner-placeholder">
-            <svg width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5">
-                <circle cx="22" cy="20" r="8"/><circle cx="42" cy="20" r="8"/>
-                <path d="M4 52c0-10 8-18 18-18h20c10 0 18 8 18 18"/>
-            </svg>
-            <span>Spoločná fotografia tímu</span>
-        </div>
-        <div class="team-banner-overlay"></div>
-        <div class="team-banner-content">
-            <span class="label">Náš tím</span>
-            <h2 class="fade-up">Ľudia, ktorým dôverujete</h2>
-        </div>
+        <img class="team-banner-img" src="brand_assests/final%20form.jpg" alt="Náš tím">
     </div>
 
     <!-- Member names grid -->
