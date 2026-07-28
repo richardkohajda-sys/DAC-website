@@ -36,6 +36,8 @@
           var pc1=document.createElement('link');pc1.rel='preconnect';pc1.href='https://fonts.googleapis.com';document.head.appendChild(pc1);
           var pc2=document.createElement('link');pc2.rel='preconnect';pc2.href='https://fonts.gstatic.com';pc2.crossOrigin='anonymous';document.head.appendChild(pc2);
           var f=document.createElement('link');f.rel='stylesheet';f.href='https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Great+Vibes&family=Dancing+Script:wght@400;600;700&display=swap';document.head.appendChild(f);
+          var ga=document.createElement('script');ga.async=true;ga.src='https://www.googletagmanager.com/gtag/js?id=G-H6TRTWEFND';document.head.appendChild(ga);
+          window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('js', new Date());gtag('config', 'G-H6TRTWEFND');
         }
       })();
     </script>
@@ -2167,7 +2169,7 @@
 <div id="cookieBanner" class="cookie-banner" role="dialog" aria-label="Súhlas s externými zdrojmi">
     <div class="cookie-text">
         <strong>Externé zdroje &amp; súkromie</strong>
-        <p>Na našej stránke využívame Google Fonts. Pri jej načítaní môže dochádzať k spracovaniu vašej IP adresy spoločnosťou Google LLC. Viac informácií nájdete v našich <a href="privacy.html">zásadách ochrany údajov</a>.</p>
+        <p>Na našej stránke využívame Google Fonts a po vašom súhlase aj Google Analytics. Pri ich načítaní môže dochádzať k spracovaniu vašej IP adresy spoločnosťou Google LLC. Viac informácií nájdete v našich <a href="privacy.html">zásadách ochrany údajov</a>.</p>
     </div>
     <div class="cookie-actions">
         <button id="cookieDecline" class="cookie-btn cookie-btn--decline">Len nevyhnutné</button>
@@ -2187,6 +2189,10 @@
             var pc2=document.createElement('link');pc2.rel='preconnect';pc2.href='https://fonts.gstatic.com';pc2.crossOrigin='anonymous';document.head.appendChild(pc2);
             var f=document.createElement('link');f.rel='stylesheet';f.href='https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Great+Vibes&family=Dancing+Script:wght@400;600;700&display=swap';document.head.appendChild(f);
         }
+        function loadAnalytics() {
+            var ga=document.createElement('script');ga.async=true;ga.src='https://www.googletagmanager.com/gtag/js?id=G-H6TRTWEFND';document.head.appendChild(ga);
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('js', new Date());gtag('config', 'G-H6TRTWEFND');
+        }
         function hideBanner() {
             banner.classList.remove('visible'); banner.classList.add('hidden');
             setTimeout(function(){ banner.style.display='none'; }, 420);
@@ -2194,7 +2200,7 @@
         setTimeout(function(){ banner.classList.add('visible'); }, 700);
 
         document.getElementById('cookieAccept').addEventListener('click', function() {
-            localStorage.setItem(CONSENT_KEY, 'accepted'); loadFonts(); hideBanner();
+            localStorage.setItem(CONSENT_KEY, 'accepted'); loadFonts(); loadAnalytics(); hideBanner();
         });
         document.getElementById('cookieDecline').addEventListener('click', function() {
             localStorage.setItem(CONSENT_KEY, 'declined'); hideBanner();

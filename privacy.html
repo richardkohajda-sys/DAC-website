@@ -22,6 +22,8 @@
           var pc1=document.createElement('link');pc1.rel='preconnect';pc1.href='https://fonts.googleapis.com';document.head.appendChild(pc1);
           var pc2=document.createElement('link');pc2.rel='preconnect';pc2.href='https://fonts.gstatic.com';pc2.crossOrigin='anonymous';document.head.appendChild(pc2);
           var f=document.createElement('link');f.rel='stylesheet';f.href='https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Great+Vibes&display=swap';document.head.appendChild(f);
+          var ga=document.createElement('script');ga.async=true;ga.src='https://www.googletagmanager.com/gtag/js?id=G-H6TRTWEFND';document.head.appendChild(ga);
+          window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('js', new Date());gtag('config', 'G-H6TRTWEFND');
         }
       })();
     </script>
@@ -504,10 +506,14 @@
     <h3>2.3 Google Fonts</h3>
     <p>Na zobrazenie písma načítava web súbory zo serverov spoločnosti <strong>Google LLC</strong> (fonts.googleapis.com). Pri tomto načítaní môže Google zaznamenať vašu IP adresu. Spracovanie zo strany Google sa riadi <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Zásadami ochrany súkromia Google</a>.</p>
 
+    <h3>2.4 Google Analytics</h3>
+    <p>So súhlasom udeleným prostredníctvom cookie lišty používame službu <strong>Google Analytics</strong> (Google LLC) na meranie návštevnosti a správania používateľov na webe (napr. navštívené stránky, dĺžka návštevy, zariadenie). Služba na tento účel ukladá do vášho zariadenia cookies. Analytics spúšťame <strong>až po udelení súhlasu</strong> — ak súhlas neudelíte alebo ho odmietnete, táto služba sa nenačíta. Súhlas môžete kedykoľvek odvolať vymazaním dát prehliadača (localStorage) pre túto stránku. Spracovanie zo strany Google sa riadi <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Zásadami ochrany súkromia Google</a>.</p>
+
     <h2>3. Účel a právny základ spracúvania</h2>
     <ul>
         <li><strong>Serverové logy</strong> — oprávnený záujem prevádzkovateľa (čl. 6 ods. 1 písm. f) GDPR): bezpečnosť webu, odhaľovanie chýb</li>
         <li><strong>Google Fonts</strong> — oprávnený záujem (správne zobrazenie webu); prípadne súhlas implicitný používaním webu</li>
+        <li><strong>Google Analytics</strong> — súhlas (čl. 6 ods. 1 písm. a) GDPR), udelený kliknutím na „Prijať" v cookie lište</li>
         <li><strong>Lokálne úložisko</strong> — nevyhnutné pre fungovanie funkcie, nespracúva osobné údaje na serveri</li>
     </ul>
 
@@ -515,18 +521,19 @@
     <p>Vaše osobné údaje <strong>nepredávame ani neposkytujeme</strong> tretím stranám na marketingové účely. Údaje môžu byť sprístupnené:</p>
     <ul>
         <li><strong>Webhostingový poskytovateľ</strong> — technická prevádzka servera (spracovateľ podľa zmluvy o spracúvaní)</li>
-        <li><strong>Google LLC</strong> — iba v rozsahu načítania Google Fonts (IP adresa)</li>
+        <li><strong>Google LLC</strong> — v rozsahu načítania Google Fonts (IP adresa) a, pri udelení súhlasu, Google Analytics (údaje o návštevnosti)</li>
         <li><strong>Orgány verejnej moci</strong> — iba v prípadoch stanovených zákonom</li>
     </ul>
 
     <h2>5. Prenos osobných údajov do tretích krajín</h2>
     <p>Osobné údaje návštevníkov <strong>nie sú prenášané do tretích krajín</strong> zo strany prevádzkovateľa ani webhostingového poskytovateľa.</p>
-    <p>Výnimkou je načítavanie písma prostredníctvom služby <strong>Google Fonts</strong> (Google LLC, USA). Pri každom načítaní stránky môže byť IP adresa návštevníka odoslaná na servery Google v USA. Spoločnosť Google LLC je certifikovaná v rámci mechanizmu <strong>Data Privacy Framework</strong> (rozhodnutie Európskej komisie zo dňa 10. júla 2023), ktorý zabezpečuje primeranú úroveň ochrany osobných údajov pri prenose do USA. Podrobnosti nájdete v <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Zásadách ochrany súkromia Google</a>.</p>
+    <p>Výnimkou je načítavanie písma prostredníctvom služby <strong>Google Fonts</strong> a, pri udelení súhlasu, služba <strong>Google Analytics</strong> (obe Google LLC, USA). Pri týchto operáciách môžu byť údaje návštevníka odoslané na servery Google v USA. Spoločnosť Google LLC je certifikovaná v rámci mechanizmu <strong>Data Privacy Framework</strong> (rozhodnutie Európskej komisie zo dňa 10. júla 2023), ktorý zabezpečuje primeranú úroveň ochrany osobných údajov pri prenose do USA. Podrobnosti nájdete v <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Zásadách ochrany súkromia Google</a>.</p>
 
     <h2>6. Doba uchovávania</h2>
     <ul>
         <li>Serverové logy: <strong>maximálne 30 dní</strong>, potom automaticky vymazané</li>
         <li>Lokálne úložisko (localStorage): zostáva vo vašom zariadení, kým ho nevymažete</li>
+        <li>Google Analytics cookies: podľa nastavenia Google, štandardne do <strong>14 mesiacov</strong> od poslednej aktivity</li>
     </ul>
 
     <h2>7. Vaše práva</h2>
@@ -564,6 +571,7 @@
     <h2>8. Súbory cookie</h2>
     <p>Táto webová stránka <strong>nepoužíva súbory cookie</strong> (cookies) vlastného pôvodu. Na uloženie preferencií zobrazenia používame technológiu localStorage, ktorá funguje výlučne lokálne vo vašom zariadení.</p>
     <p>Načítavanie Google Fonts môže technicky využívať cookies tretích strán zo strany Google. Ich použitie sa riadi podmienkami spoločnosti Google.</p>
+    <p>Ak v cookie lište kliknete na „Prijať", spustí sa aj <strong>Google Analytics</strong>, ktorý do vášho zariadenia ukladá cookies tretej strany na účely merania návštevnosti. Ak kliknete na „Len nevyhnutné" alebo lištu zavriete bez potvrdenia, Google Analytics sa nenačíta a žiadne súvisiace cookies sa neuložia.</p>
 
     <h2>9. Bezpečnosť</h2>
     <p>Prijímame primerané technické a organizačné opatrenia na ochranu osobných údajov pred neoprávneným prístupom, stratou alebo zneužitím, vrátane šifrovaného prenosu dát (HTTPS).</p>
@@ -643,6 +651,10 @@
             var pc2=document.createElement('link');pc2.rel='preconnect';pc2.href='https://fonts.gstatic.com';pc2.crossOrigin='anonymous';document.head.appendChild(pc2);
             var f=document.createElement('link');f.rel='stylesheet';f.href='https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Great+Vibes&display=swap';document.head.appendChild(f);
         }
+        function loadAnalytics() {
+            var ga=document.createElement('script');ga.async=true;ga.src='https://www.googletagmanager.com/gtag/js?id=G-H6TRTWEFND';document.head.appendChild(ga);
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('js', new Date());gtag('config', 'G-H6TRTWEFND');
+        }
         function hideBanner() {
             banner.classList.remove('visible'); banner.classList.add('hidden');
             setTimeout(function(){ banner.style.display='none'; }, 420);
@@ -650,7 +662,7 @@
         setTimeout(function(){ banner.classList.add('visible'); }, 700);
 
         document.getElementById('cookieAccept').addEventListener('click', function() {
-            localStorage.setItem(CONSENT_KEY, 'accepted'); loadFonts(); hideBanner();
+            localStorage.setItem(CONSENT_KEY, 'accepted'); loadFonts(); loadAnalytics(); hideBanner();
         });
         document.getElementById('cookieDecline').addEventListener('click', function() {
             localStorage.setItem(CONSENT_KEY, 'declined'); hideBanner();
@@ -662,7 +674,7 @@
 <div id="cookieBanner" class="cookie-banner" role="dialog" aria-label="Súhlas s externými zdrojmi">
     <div class="cookie-text">
         <strong>Externé zdroje &amp; súkromie</strong>
-        <p>Pre správne zobrazenie používame Google Fonts — vaša IP adresa môže byť prenesená na servery Google (USA). <a href="privacy.html">Zásady ochrany údajov</a></p>
+        <p>Pre správne zobrazenie používame Google Fonts a po vašom súhlase aj Google Analytics — vaša IP adresa môže byť prenesená na servery Google (USA). <a href="privacy.html">Zásady ochrany údajov</a></p>
     </div>
     <div class="cookie-actions">
         <button id="cookieDecline" class="cookie-btn cookie-btn--decline">Len nevyhnutné</button>
