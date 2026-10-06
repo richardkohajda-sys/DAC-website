@@ -1139,8 +1139,11 @@
         html[data-theme="dark"] .poistovne-logos { background: #E6E1DE; border-color: transparent; box-shadow: none; }
         html[data-theme="dark"] .contact-map iframe { filter: invert(0.9) hue-rotate(180deg) grayscale(0.55) brightness(0.95); }
 
+        /* hlavné tlačidlá = odkrytá ružová vrstva aj v tmavom režime */
         html[data-theme="dark"] .cta-call,
-        html[data-theme="dark"] .call-bar { background: var(--surface); color: #FEFEFE; border: 1px solid rgba(var(--accent-rgb),0.45); }
+        html[data-theme="dark"] .call-bar { background: var(--pink); color: #212121; }
+        html[data-theme="dark"] .cta-call .cta-call-icon,
+        html[data-theme="dark"] .call-bar .cta-call-icon { background: #212121; }
         html[data-theme="dark"] .cookie-btn--accept,
         html[data-theme="dark"] .cookie-btn--decline { border-color: var(--pink); color: #FEFEFE; }
 
