@@ -247,7 +247,7 @@
             content: ''; width: 28px; height: 2px; background: var(--pink); border-radius: 2px;
         }
 
-        #sluzby, #dentalna-hygiena, #cennik, #kontakt, #o-nas, #tym, #recenzie, #platenie {
+        #sluzby, #dentalna-hygiena, #cennik, #kontakt, #o-nas, #tym, #recenzie {
             scroll-margin-top: calc(var(--nav-h) + 1rem);
         }
 
@@ -650,33 +650,23 @@
         .dh-porovnanie-texts strong { font-weight: 600; color: var(--text); text-decoration: none; }
 
         /* ══ TÍM ══ */
-        #tym { padding: 0; background: var(--cream); }
-        .team-header { padding: var(--s8) var(--pad-x) var(--s5); text-align: center; background: var(--cream); }
+        #tym { padding: 0 0 var(--s8); }
+        .team-header { padding: var(--s8) var(--pier) var(--s5); text-align: center; }
         .team-header .label { margin-bottom: var(--s2); }
         .team-header h2 {
             font-size: var(--t-h2);
             font-weight: 400; letter-spacing: -0.03em; line-height: 1.1;
             color: var(--text);
         }
-        .team-banner {
-            position: relative;
-            margin: 0 var(--pad-x);
-            height: clamp(320px, 52vw, 560px);
-            border-radius: var(--radius);
-            overflow: hidden;
-            background: var(--cream-3);
-            box-shadow: var(--shadow-3);
-        }
-        .team-banner-img {
-            position: absolute; inset: 0;
-            width: 100%; height: 100%;
-            object-fit: cover; object-position: center 50%;
-        }
-        .team-members { padding: var(--s6) var(--pad-x) var(--s8); }
+        /* široký nízky oblúk; pomer 8:5 drží hlavy mimo zaoblenia */
+        .team-banner { --arch-ratio: 8 / 5; width: min(100% - 2 * var(--pier), 1120px); margin: 0 auto; }
+        .team-banner-img { object-position: center 70%; }
+        .team-members { padding: var(--s6) var(--pier) 0; }
         .team-members-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 0 var(--s5);
+            max-width: 1120px; margin: 0 auto;
         }
         .team-member { padding: var(--s3) 0; border-top: 1px solid var(--line); }
         .team-name { font-size: var(--t-title); font-weight: 600; color: var(--text); margin-bottom: 0.35rem; line-height: 1.3; }
@@ -689,14 +679,8 @@
         .team-cert:empty { display: none; }
 
         /* ══ RECENZIE ══ */
-        #recenzie {
-            padding: var(--s8) var(--pad-x);
-            background:
-                radial-gradient(50% 60% at 50% 0%, rgba(var(--accent-rgb),0.06), transparent 70%),
-                var(--cream-2);
-            border-top: 1px solid var(--line);
-            border-bottom: 1px solid var(--line);
-        }
+        #recenzie { position: relative; padding: var(--s8) var(--pier); }
+        .frieze--edge { position: absolute; top: 0; left: 0; right: 0; }
         .testimonials-columns-wrap {
             display: flex; justify-content: center; gap: var(--s3);
             margin-top: var(--s5);
@@ -718,7 +702,7 @@
             display: flex; align-items: center; justify-content: center;
             width: 44px; height: 44px; margin: var(--s3) auto 0;
             border-radius: 50%; cursor: pointer;
-            background: var(--cream); border: 1px solid var(--line-pink);
+            background: transparent; border: 1px solid var(--line-pink);
             transition: transform 0.4s var(--ease-spring);
         }
         .reviews-pause:hover { transform: scale(1.06); }
@@ -741,17 +725,17 @@
             .review-card { flex: 0 0 min(84%, 340px); scroll-snap-align: start; }
             .reviews-pause { display: none; }
         }
+        /* tmavé karty o vrstvu vyššie než charcoal */
         .review-card {
-            background: var(--cream);
+            background: #2A2A2A;
             border: 1px solid var(--line);
             border-radius: var(--radius);
             padding: var(--s4);
-            box-shadow: var(--shadow-1);
             position: relative;
         }
         .review-card::before {
             content: '\201C'; position: absolute; top: 0.6rem; right: 1.4rem;
-            font-size: 3.6rem; line-height: 1; font-weight: 300; color: var(--pink); opacity: 0.45;
+            font-size: 3.6rem; line-height: 1; font-weight: 300; color: var(--pink);
         }
         .review-text { font-size: var(--t-body-sm); line-height: 1.65; color: var(--text); margin-bottom: 1.25rem; }
         .review-author-row { display: flex; align-items: center; gap: 0.75rem; }
@@ -761,58 +745,43 @@
             display: flex; align-items: center; justify-content: center;
             font-weight: 600; font-size: 1rem; text-transform: uppercase;
         }
-        .review-avatar[data-tone="accent"] { background: var(--cream); color: var(--text); box-shadow: inset 0 0 0 1.5px var(--pink); }
-        .review-avatar[data-tone="brown"]  { background: var(--text); color: var(--cream); }
+        .review-avatar[data-tone="accent"] { background: transparent; color: var(--text); box-shadow: inset 0 0 0 1.5px var(--pink); }
+        .review-avatar[data-tone="brown"]  { background: #76665E; color: #FEFAF9; }
         .review-name { font-weight: 600; font-size: var(--t-body-sm); color: var(--text); line-height: 1.3; }
         .review-role { font-size: var(--t-caps-sm); font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-text); line-height: 1.5; }
 
-        /* ══ PLATENIE ══ */
-        .platenie-section { padding: var(--s8) var(--pad-x); background: var(--cream); }
-        .platenie-inner { display: flex; align-items: center; gap: clamp(3rem, 7vw, 6rem); }
-        .platenie-text { flex: 1; min-width: 0; }
-        .platenie-text .label { margin-bottom: var(--s2); }
-        .platenie-text h2 {
+        /* ══ PLATENIE A CENNÍK ══ */
+        #cennik { padding-block: var(--s8); }
+        .pay { align-items: center; }
+        .pay-photo { grid-column: 1 / span 5; grid-row: 1; --arch-ratio: 4 / 5; }
+        .pay-photo img { object-position: 42% center; }
+        .pay-text { grid-column: 7 / span 6; grid-row: 1; }
+        .pay-text .label { margin-bottom: var(--s3); }
+        .pay-text h2 {
             font-size: var(--t-h2);
             font-weight: 400; letter-spacing: -0.03em; line-height: 1.1;
             color: var(--text); margin-bottom: var(--s4);
         }
-        .platenie-text p { font-size: var(--t-body); line-height: 1.7; color: var(--text); margin-bottom: 1em; max-width: var(--measure); }
-        .platenie-img {
-            flex: 1; min-width: 0;
-            aspect-ratio: 4/5;
-            border-radius: var(--radius);
-            background: var(--cream-3);
-            overflow: hidden;
-            box-shadow: var(--shadow-3);
-        }
-
-        /* ══ CENNÍK ══ */
-        #cennik {
-            padding: var(--s8) var(--pad-x) var(--s7);
-            background: var(--cream-2);
-            border-top: 1px solid var(--line);
-        }
+        .pay-text p { font-size: var(--t-body); line-height: 1.7; color: var(--text); margin-bottom: 1em; max-width: var(--measure); }
+        .price { margin-top: var(--s8); padding-inline: var(--pier); }
         #cennik .section-header { margin-bottom: var(--s3); }
         .cennik-note {
             text-align: center; font-size: var(--t-lead); color: var(--text);
             margin: 0 auto var(--s5); line-height: 1.7; max-width: 36em;
         }
-        .cennik-flat {
-            max-width: 820px; margin: 0 auto;
-            background: var(--cream);
-            border: 1px solid var(--line);
-            border-radius: var(--radius);
-            padding: var(--s3) clamp(1.25rem, 4vw, 3rem);
-            box-shadow: var(--shadow-2);
-        }
+        /* tabuľka bez karty: len jemné linky, ceny vpravo */
+        .cennik-flat { max-width: 820px; margin: 0 auto; border-top: 1px solid var(--line); }
         .cennik-row {
             display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline;
-            padding: 0.9rem 0; border-bottom: 1px solid var(--line);
-            column-gap: 1rem; row-gap: 0.2rem;
+            padding: 1.05rem 0; border-bottom: 1px solid var(--line);
+            column-gap: var(--s3); row-gap: 0.2rem;
         }
-        .cennik-row:last-child { border-bottom: none; }
         .cennik-name { flex: 1 1 12em; min-width: 0; font-size: var(--t-body); color: var(--text); }
-        .cennik-price { flex: 0 0 auto; margin-left: auto; font-size: var(--t-body); font-weight: 600; color: var(--text); white-space: nowrap; }
+        .cennik-price {
+            flex: 0 0 auto; margin-left: auto; text-align: right;
+            font-size: var(--t-body); font-weight: 600; color: var(--text);
+            white-space: nowrap; font-variant-numeric: tabular-nums;
+        }
         .poistovne { margin-top: var(--s6); text-align: center; }
         .poistovne-logos {
             display: flex; justify-content: center; align-items: center;
@@ -820,28 +789,27 @@
             background: #fff;
             border: 1px solid var(--line);
             border-radius: var(--radius);
-            box-shadow: var(--shadow-1);
             padding: 0.25rem 2.5rem;
             overflow: hidden;
         }
         .poistovne-logos img { width: 100%; height: 160px; object-fit: cover; object-position: center top; mix-blend-mode: multiply; }
 
         /* ══ KONTAKT ══ */
-        #kontakt { display: grid; grid-template-columns: 1fr 1fr; background: var(--cream); }
-        .contact-block { padding: var(--s7) var(--s6) var(--s7) var(--pad-x); }
+        .contact-grid { padding-block: var(--s8); row-gap: var(--s7); align-items: center; }
+        .contact-block { grid-column: 1 / span 6; }
         .contact-block .label { margin-bottom: var(--s3); }
+        .contact-head {
+            display: flex; flex-wrap: wrap; align-items: center;
+            column-gap: var(--s5); row-gap: var(--s2);
+            margin-bottom: var(--s5);
+        }
         .contact-block h2 {
             font-size: var(--t-h2);
             font-weight: 400; letter-spacing: -0.03em; line-height: 1.1;
-            color: var(--text);
+            color: var(--text); margin: 0;
         }
-        .contact-building {
-            width: 100%; height: 320px;
-            object-fit: cover; object-position: center;
-            border-radius: var(--radius);
-            margin-top: var(--s3);
-            box-shadow: var(--shadow-2);
-        }
+        .contact-building { grid-column: 8 / span 5; --arch-ratio: 4 / 5; }
+        .contact-building img { object-position: 56% center; }
         .contact-row { display: flex; gap: var(--s3); margin-bottom: var(--s4); align-items: flex-start; }
         .contact-ico {
             width: 56px; height: 56px; flex-shrink: 0;
@@ -859,6 +827,7 @@
             letter-spacing: 0.12em; text-transform: uppercase;
             color: var(--accent-text); display: block; margin-bottom: 0.4rem;
         }
+        .contact-row:last-child { margin-bottom: 0; }
         .map-link { text-decoration: underline; text-decoration-color: var(--line-pink); text-decoration-thickness: 1.5px; text-underline-offset: 4px; transition: text-decoration-color 0.2s; }
         .map-link:hover { text-decoration-color: var(--pink); }
         .contact-row-val { font-size: var(--t-body); color: var(--text); line-height: 1.7; }
@@ -867,13 +836,12 @@
         .hours-row:last-child { border-bottom: none; }
         .hours-day { font-size: var(--t-body); color: var(--text); }
         .hours-time { font-size: var(--t-body); color: var(--text); font-weight: 600; }
-        .contact-map { padding: var(--s3) var(--s3) var(--s3) 0; }
+        /* mapa ostáva obdĺžnik: oblúk by orezal ovládanie mapy */
+        .contact-map { grid-column: 1 / -1; }
         .contact-map iframe {
-            width: 100%; height: 100%; min-height: 520px; border: none;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-2);
+            display: block; width: 100%; height: clamp(320px, 36vw, 460px); border: none;
+            border-radius: var(--radius-sm);
             filter: sepia(22%) saturate(70%) hue-rotate(-8deg);
-            display: block;
         }
 
         /* ══ FOOTER ══ */
@@ -1000,12 +968,10 @@
             .photo-strip-text { padding: var(--s5) var(--pier); }
             .dh-body { grid-template-columns: 1fr; }
             .dh-porovnanie-texts { grid-template-columns: 1fr; }
-            .platenie-inner { flex-direction: column; gap: var(--s5); }
-            .platenie-img { width: 100%; aspect-ratio: 4/3; flex: none; }
-            #kontakt { grid-template-columns: 1fr; }
-            .contact-block { padding: var(--s6) var(--pad-x) var(--s4); }
-            .contact-map { padding: 0 var(--pad-x) var(--s6); }
-            .contact-map iframe { min-height: 360px; }
+            .pay, .contact-grid { grid-template-columns: 1fr; row-gap: var(--s5); }
+            .pay-text, .pay-photo, .contact-block, .contact-building, .contact-map { grid-column: 1; grid-row: auto; }
+            .pay-photo, .contact-building { --arch-ratio: 4 / 4.2; max-width: 460px; width: 100%; justify-self: center; }
+            #cennik, .contact-grid { padding-block: var(--s7); }
             .team-members-grid { grid-template-columns: repeat(2, 1fr); }
         }
 
@@ -1041,7 +1007,6 @@
             .poistovne-logos { padding: 0.5rem; }
             .poistovne-logos img { height: auto; object-fit: contain; }
             .team-members-grid { grid-template-columns: 1fr; }
-            .team-banner { margin: 0 var(--s2); }
             .hours-list { min-width: 0; }
         }
 
@@ -1133,8 +1098,6 @@
         html[data-theme="dark"] .logo-dark { display: block; }
 
         /* karty a vyvýšené plochy */
-        html[data-theme="dark"] .review-card,
-        html[data-theme="dark"] .cennik-flat,
         html[data-theme="dark"] .dh-porovnanie { background: var(--surface); }
 
         /* ikony: biela linka v obrysovom zaoblenom rámčeku (ako v guideline) */
@@ -1166,13 +1129,12 @@
         }
         html[data-theme="dark"] #vyrok { position: relative; }
         html[data-theme="dark"] #vyrok::after { height: 150%; right: -6%; top: -25%; }
-        html[data-theme="dark"] #recenzie { background: var(--cream); }
 
         /* fotky */
         html[data-theme="dark"] .hero-bg,
         html[data-theme="dark"] .about-photo img,
         html[data-theme="dark"] .team-banner-img,
-        html[data-theme="dark"] .platenie-img img,
+        html[data-theme="dark"] .pay-photo img,
         html[data-theme="dark"] .contact-building,
         html[data-theme="dark"] .dh-photo { filter: brightness(0.9); }
         html[data-theme="dark"] .poistovne-logos { background: #E6E1DE; border-color: transparent; box-shadow: none; }
@@ -1577,71 +1539,71 @@
 </section>
 
 <!-- ═══ TÍM ═══ -->
-<section id="tym">
+<section id="tym" class="surface-cream">
 
     <!-- Shared team photo banner -->
     <div class="team-header">
-        <span class="label fade-up">Náš tím</span>
-        <h2 class="fade-up">Ľudia, ktorým dôverujete</h2>
+        <span class="label">Náš tím</span>
+        <h2>Ľudia, ktorým dôverujete</h2>
     </div>
 
-    <div class="team-banner">
-        <img class="team-banner-img" src="brand_assests/final-form.webp" alt="Náš tím">
+    <div class="team-banner arch arch--wide">
+        <img class="team-banner-img" src="brand_assests/final-form.webp" alt="Náš tím" loading="lazy">
     </div>
 
     <!-- Member names grid -->
     <div class="team-members">
         <div class="team-members-grid">
 
-            <div class="team-member fade-up">
+            <div class="team-member">
 <div class="team-name">MUDr. Otília Kohajdová</div>
                 <div class="team-role">Vedúca lekárka</div>
                 <div class="team-cert">Zakladateľka DentAll Centra s viac ako 30-ročnou praxou · Parodontologička</div>
             </div>
 
-            <div class="team-member fade-up d1">
+            <div class="team-member">
                 <div class="team-name">MDDr. Alexandra Diana Kišiková</div>
                 <div class="team-role">Lekárka</div>
                 <div class="team-cert">Zameranie — endodoncia</div>
             </div>
 
-            <div class="team-member fade-up d2">
+            <div class="team-member">
                 <div class="team-name">MDDr. Ivana Polláková</div>
                 <div class="team-role">Lekárka</div>
                 <div class="team-cert">Zameranie — záchovná stomatológia</div>
             </div>
 
-            <div class="team-member fade-up">
+            <div class="team-member">
                 <div class="team-name">Bc. Dominika Lisková</div>
                 <div class="team-role">Dentálna hygienička</div>
                 <div class="team-cert"></div>
             </div>
 
-            <div class="team-member fade-up d1">
+            <div class="team-member">
                 <div class="team-name">Janka Ľachká</div>
                 <div class="team-role">Preventistka</div>
                 <div class="team-cert"></div>
             </div>
 
-            <div class="team-member fade-up d2">
+            <div class="team-member">
                 <div class="team-name">Bc. Alena Brindzová</div>
                 <div class="team-role">Vrchná sestra</div>
                 <div class="team-cert"></div>
             </div>
 
-            <div class="team-member fade-up">
+            <div class="team-member">
                 <div class="team-name">Monika Messerschmidtová</div>
                 <div class="team-role">Sestra</div>
                 <div class="team-cert"></div>
             </div>
 
-            <div class="team-member fade-up d1">
+            <div class="team-member">
                 <div class="team-name">Mgr. Jana Žondová</div>
                 <div class="team-role">Recepčná</div>
                 <div class="team-cert"></div>
             </div>
 
-            <div class="team-member fade-up d2">
+            <div class="team-member">
                 <div class="team-name">Michaela Gašparová</div>
                 <div class="team-role">Recepčná</div>
                 <div class="team-cert"></div>
@@ -1654,10 +1616,11 @@
 
 
 <!-- ═══ RECENZIE ═══ -->
-<section id="recenzie">
+<section id="recenzie" class="surface-charcoal">
+    <span class="frieze frieze--edge" aria-hidden="true"></span>
     <div class="section-header">
         <span class="label">Spokojní pacienti</span>
-        <h2 class="fade-up">Čo hovoria naši pacienti</h2>
+        <h2>Čo hovoria naši pacienti</h2>
     </div>
 
     <div class="testimonials-columns-wrap" id="reviewsWrap">
@@ -1716,160 +1679,161 @@
     </button>
 </section>
 
-
-<!-- ═══ AKO JE TO S PLATENÍM ═══ -->
-<section id="platenie" class="platenie-section">
-    <div class="platenie-inner">
-        <div class="platenie-text">
+<!-- ═══ PLATENIE A CENNÍK ═══ -->
+<section id="cennik" class="surface-cream-2">
+    <div class="pay bays">
+        <div class="pay-text">
             <span class="label">financie</span>
-            <h2 class="fade-up">Ako je to s platením?</h2>
-            <p class="fade-up d1">Na každú situáciu existuje viacero riešení, či bolestivý zub ideme zachraňovať výplňou, korunkou alebo koreňovými kanálikmi. Alebo zub extrahujeme a budeme zvažovať náhradu – mostík / implantát.</p>
-            <p class="fade-up d2">Od dohodnutého postupu sa odvíja cena prác a aj časový harmonogram tejto liečby. Nie všetko je potrebné stihnúť za mesiac - dva, niekedy sa liečba naplánuje na dlhšie obdobie napríklad na rok alebo aj viac.</p>
+            <h2>Ako je to s platením?</h2>
+            <p>Na každú situáciu existuje viacero riešení, či bolestivý zub ideme zachraňovať výplňou, korunkou alebo koreňovými kanálikmi. Alebo zub extrahujeme a budeme zvažovať náhradu – mostík / implantát.</p>
+            <p>Od dohodnutého postupu sa odvíja cena prác a aj časový harmonogram tejto liečby. Nie všetko je potrebné stihnúť za mesiac - dva, niekedy sa liečba naplánuje na dlhšie obdobie napríklad na rok alebo aj viac.</p>
         </div>
-        <div class="platenie-img fade-up d2">
-            <img src="brand_assests/IMG_7577.webp" alt="Platenie u zubára" style="width:100%;height:100%;object-fit:cover;">
-        </div>
-    </div>
-</section>
-
-<!-- ═══ CENNÍK ═══ -->
-<section id="cennik">
-    <div class="section-header">
-        <h2 class="fade-up">Orientačný cenník</h2>
-    </div>
-    <p class="cennik-note fade-up">Uvádzané ceny sú orientačné. Presná cena je stanovená po vstupnom vyšetrení.</p>
-
-    <div class="cennik-flat fade-up">
-        <div class="cennik-row">
-            <span class="cennik-name">Vstupné vyšetrenie</span>
-            <span class="cennik-price">50 €</span>
-        </div>
-        <div class="cennik-row">
-            <span class="cennik-name">Biela výplň (fotokompozit)</span>
-            <span class="cennik-price">od 79 € do 120 €</span>
-        </div>
-        <div class="cennik-row">
-            <span class="cennik-name">Dentálna hygiena</span>
-            <span class="cennik-price">69 €</span>
-        </div>
-        <div class="cennik-row">
-            <span class="cennik-name">Dentálna hygiena deti – s farbením a nácvikom</span>
-            <span class="cennik-price">48 €</span>
-        </div>
-        <div class="cennik-row">
-            <span class="cennik-name">Injekčná anestéza</span>
-            <span class="cennik-price">19 €</span>
-        </div>
-        <div class="cennik-row">
-            <span class="cennik-name">Endodontické ošetrenie 1. časť (1 kanálik)</span>
-            <span class="cennik-price">70 €</span>
-        </div>
-        <div class="cennik-row">
-            <span class="cennik-name">Endodontické ošetrenie 2. časť (1 kanálik)</span>
-            <span class="cennik-price">od 80 €</span>
-        </div>
-        <div class="cennik-row">
-            <span class="cennik-name">Parodontologické vyšetrenie</span>
-            <span class="cennik-price">90 €</span>
-        </div>
-        <div class="cennik-row">
-            <span class="cennik-name">Bielenie zubov (domáce)</span>
-            <span class="cennik-price">280 €</span>
-        </div>
-        <div class="cennik-row">
-            <span class="cennik-name">Bielenie zubov (ambulantné BlancOne)</span>
-            <span class="cennik-price">od 70 €</span>
-        </div>
-        <div class="cennik-row">
-            <span class="cennik-name">Intraorálny snímok (RTG – RVG)</span>
-            <span class="cennik-price">15 €</span>
+        <div class="pay-photo arch">
+            <img src="brand_assests/IMG_7577.webp" alt="Platenie u zubára" loading="lazy">
         </div>
     </div>
 
-
-    <div class="poistovne fade-up">
-        <div class="poistovne-logos">
-            <img src="brand_assests/poistovne.webp" alt="Zdravotné poisťovne" loading="lazy">
+    <div class="price">
+        <div class="section-header">
+            <h2>Orientačný cenník</h2>
         </div>
-    </div>
+        <p class="cennik-note">Uvádzané ceny sú orientačné. Presná cena je stanovená po vstupnom vyšetrení.</p>
 
-    <div class="call-block fade-up">
-        <a class="cta-call" href="tel:+421484145196"><span class="cta-call-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.95 13a19.79 19.79 0 01-3.07-8.67A2 2 0 012.85 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></span><span class="cta-call-text"><span class="cta-call-label">Zavolajte</span> <span class="cta-call-number">048 414 51 96</span></span></a>
+        <div class="cennik-flat">
+            <div class="cennik-row">
+                <span class="cennik-name">Vstupné vyšetrenie</span>
+                <span class="cennik-price">50 €</span>
+            </div>
+            <div class="cennik-row">
+                <span class="cennik-name">Biela výplň (fotokompozit)</span>
+                <span class="cennik-price">od 79 € do 120 €</span>
+            </div>
+            <div class="cennik-row">
+                <span class="cennik-name">Dentálna hygiena</span>
+                <span class="cennik-price">69 €</span>
+            </div>
+            <div class="cennik-row">
+                <span class="cennik-name">Dentálna hygiena deti – s farbením a nácvikom</span>
+                <span class="cennik-price">48 €</span>
+            </div>
+            <div class="cennik-row">
+                <span class="cennik-name">Injekčná anestéza</span>
+                <span class="cennik-price">19 €</span>
+            </div>
+            <div class="cennik-row">
+                <span class="cennik-name">Endodontické ošetrenie 1. časť (1 kanálik)</span>
+                <span class="cennik-price">70 €</span>
+            </div>
+            <div class="cennik-row">
+                <span class="cennik-name">Endodontické ošetrenie 2. časť (1 kanálik)</span>
+                <span class="cennik-price">od 80 €</span>
+            </div>
+            <div class="cennik-row">
+                <span class="cennik-name">Parodontologické vyšetrenie</span>
+                <span class="cennik-price">90 €</span>
+            </div>
+            <div class="cennik-row">
+                <span class="cennik-name">Bielenie zubov (domáce)</span>
+                <span class="cennik-price">280 €</span>
+            </div>
+            <div class="cennik-row">
+                <span class="cennik-name">Bielenie zubov (ambulantné BlancOne)</span>
+                <span class="cennik-price">od 70 €</span>
+            </div>
+            <div class="cennik-row">
+                <span class="cennik-name">Intraorálny snímok (RTG – RVG)</span>
+                <span class="cennik-price">15 €</span>
+            </div>
+        </div>
+
+        <div class="poistovne">
+            <div class="poistovne-logos">
+                <img src="brand_assests/poistovne.webp" alt="Zdravotné poisťovne" loading="lazy">
+            </div>
+        </div>
+
+        <div class="call-block">
+            <a class="cta-call" href="tel:+421484145196"><span class="cta-call-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.95 13a19.79 19.79 0 01-3.07-8.67A2 2 0 012.85 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></span><span class="cta-call-text"><span class="cta-call-label">Zavolajte</span> <span class="cta-call-number">048 414 51 96</span></span></a>
+        </div>
     </div>
 </section>
 
 
 <!-- ═══ KONTAKT ═══ -->
-<section id="kontakt">
-    <div class="contact-block">
-        <span class="label">Navštívte nás</span>
-        <div class="fade-up" style="display:flex; align-items:center; gap:2rem; margin-bottom:2rem;">
-            <h2 style="margin:0;">Kontakt</h2>
-            <a href="tel:+421484145196" class="nav-phone">
-                <svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.95 13a19.79 19.79 0 01-3.07-8.67A2 2 0 012.85 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
-                </svg>
-                048 414 51 96
-            </a>
-        </div>
-
-        <div class="contact-row fade-up d1">
-            <div class="contact-ico">
-                <svg aria-hidden="true" viewBox="0 0 24 24">
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
-                    <circle cx="12" cy="10" r="3"/>
-                </svg>
+<section id="kontakt" class="surface-cream">
+    <div class="contact-grid bays">
+        <div class="contact-block">
+            <span class="label">Navštívte nás</span>
+            <div class="contact-head">
+                <h2>Kontakt</h2>
+                <a href="tel:+421484145196" class="nav-phone">
+                    <svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.95 13a19.79 19.79 0 01-3.07-8.67A2 2 0 012.85 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+                    </svg>
+                    048 414 51 96
+                </a>
             </div>
-            <div>
-                <span class="contact-row-label">Adresa</span>
-                <div class="contact-row-val"><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=MUDr.+Ot%C3%ADlia+Kohajdov%C3%A1%2C+Bansk%C3%A1+Bystrica" target="_blank" rel="noopener">Horná 61/A, Banská Bystrica, polyfunkčný dom Gallery<br>3. poschodie, oproti starému Prioru</a></div>
-            </div>
-        </div>
 
-        <img src="brand_assests/1D2E8178-F88A-4BB0-869F-91D69E9B3666.webp" alt="Budova Gallery" class="contact-building fade-up" loading="lazy">
-
-        <div class="contact-row fade-up d3" style="margin-top: 3rem;">
-            <div class="contact-ico">
-                <svg aria-hidden="true" viewBox="0 0 24 24">
-                    <circle cx="12" cy="12" r="10"/>
-                    <polyline points="12,6 12,12 16,14"/>
-                </svg>
+            <div class="contact-row">
+                <div class="contact-ico">
+                    <svg aria-hidden="true" viewBox="0 0 24 24">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+                        <circle cx="12" cy="10" r="3"/>
+                    </svg>
+                </div>
+                <div>
+                    <span class="contact-row-label">Adresa</span>
+                    <div class="contact-row-val"><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=MUDr.+Ot%C3%ADlia+Kohajdov%C3%A1%2C+Bansk%C3%A1+Bystrica" target="_blank" rel="noopener">Horná 61/A, Banská Bystrica, polyfunkčný dom Gallery<br>3. poschodie, oproti starému Prioru</a></div>
+                </div>
             </div>
-            <div>
-                <span class="contact-row-label">Ordinačné hodiny</span>
-                <div class="hours-list">
-                    <div class="hours-row">
-                        <span class="hours-day">Pondelok:</span>
-                        <span class="hours-time">7:30 – 15:30</span>
-                    </div>
-                    <div class="hours-row">
-                        <span class="hours-day">Utorok:</span>
-                        <span class="hours-time">7:30 – 15:30</span>
-                    </div>
-                    <div class="hours-row">
-                        <span class="hours-day">Streda:</span>
-                        <span class="hours-time">7:30 – 15:30</span>
-                    </div>
-                    <div class="hours-row">
-                        <span class="hours-day">Štvrtok:</span>
-                        <span class="hours-time">7:30 – 16:00</span>
-                    </div>
-                    <div class="hours-row">
-                        <span class="hours-day">Piatok:</span>
-                        <span class="hours-time">7:30 – 14:00</span>
+
+            <div class="contact-row">
+                <div class="contact-ico">
+                    <svg aria-hidden="true" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polyline points="12,6 12,12 16,14"/>
+                    </svg>
+                </div>
+                <div>
+                    <span class="contact-row-label">Ordinačné hodiny</span>
+                    <div class="hours-list">
+                        <div class="hours-row">
+                            <span class="hours-day">Pondelok:</span>
+                            <span class="hours-time">7:30 – 15:30</span>
+                        </div>
+                        <div class="hours-row">
+                            <span class="hours-day">Utorok:</span>
+                            <span class="hours-time">7:30 – 15:30</span>
+                        </div>
+                        <div class="hours-row">
+                            <span class="hours-day">Streda:</span>
+                            <span class="hours-time">7:30 – 15:30</span>
+                        </div>
+                        <div class="hours-row">
+                            <span class="hours-day">Štvrtok:</span>
+                            <span class="hours-time">7:30 – 16:00</span>
+                        </div>
+                        <div class="hours-row">
+                            <span class="hours-day">Piatok:</span>
+                            <span class="hours-time">7:30 – 14:00</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="contact-map">
-        <iframe
-            src="https://maps.google.com/maps?q=MUDr.+Ot%C3%ADlia+Kohajdov%C3%A1%2C+Bansk%C3%A1+Bystrica&output=embed"
-            allowfullscreen="" loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-            title="DENTALL Centrum – Banská Bystrica">
-        </iframe>
+        <div class="contact-building arch">
+            <img src="brand_assests/1D2E8178-F88A-4BB0-869F-91D69E9B3666.webp" alt="Budova Gallery" loading="lazy">
+        </div>
+
+        <div class="contact-map">
+            <iframe
+                src="https://maps.google.com/maps?q=MUDr.+Ot%C3%ADlia+Kohajdov%C3%A1%2C+Bansk%C3%A1+Bystrica&output=embed"
+                allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                title="DENTALL Centrum – Banská Bystrica">
+            </iframe>
+        </div>
     </div>
 </section>
 
