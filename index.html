@@ -136,7 +136,7 @@
         }
         img { max-width: 100%; display: block; }
         p { text-wrap: pretty; }
-        h1, h2, h3, .text-reveal-text { text-wrap: balance; }
+        h1, h2, h3, .statement { text-wrap: balance; }
         a { color: inherit; text-decoration: none; }
         .skip-link {
             position: fixed; left: var(--s2); top: var(--s2); z-index: 10000;
@@ -561,31 +561,20 @@
         }
         .bay p { font-size: var(--t-body-sm); line-height: 1.65; color: var(--text); max-width: 22em; }
 
-        /* ══ KOMPLEXNÁ ══ */
-        .komplexna-section {
-            background:
-                radial-gradient(45% 80% at 15% 50%, rgba(var(--accent-rgb),0.06), transparent 70%),
-                radial-gradient(45% 80% at 85% 50%, rgba(var(--accent-rgb),0.05), transparent 70%),
-                var(--cream-2);
-            border-top: 1px solid var(--line);
-            border-bottom: 1px solid var(--line);
-            position: relative; overflow: hidden;
+        /* ══ VÝROK ══ tagline značky na bosáži */
+        #vyrok {
+            text-align: center;
+            padding: var(--s8) var(--pier);
+            display: flex; flex-direction: column; align-items: center; gap: var(--s4);
+            overflow: hidden;
         }
-        .text-reveal-wrap {
-            position: relative; z-index: 1;
-            display: flex; align-items: center; justify-content: center;
-            padding: var(--s7) var(--pad-x);
+        .statement {
+            font-size: clamp(2.6rem, 1rem + 5.2vw, 6rem);
+            font-weight: 300; letter-spacing: -0.035em; line-height: 1.02;
+            color: var(--text); text-wrap: balance;
         }
-        .text-reveal-sticky { display: contents; }
-        .text-reveal-text {
-            font-size: var(--t-display);
-            font-weight: 300; letter-spacing: -0.03em;
-            color: var(--text);
-            text-align: center; line-height: 1.15;
-        }
-        .komplexna-script-inner { display: inline-block; position: relative; padding-bottom: 0.45em; }
-        .komplexna-underline-svg { position: absolute; bottom: 0; left: 0; color: var(--pink); pointer-events: none; }
-        .komplexna-underline-path { stroke-dasharray: 700; stroke-dashoffset: 700; }
+        .statement span { display: inline-block; }
+        .frieze--short { width: min(320px, 70%); }
 
         /* ══ AKO PREBIEHA VYŠETRENIE ══ */
         #preco-my { padding: var(--s8) var(--pier) var(--s7); }
@@ -1048,7 +1037,7 @@
             .arcade { row-gap: var(--s5); }
             .footer-legal { row-gap: 0.4rem; }
             .service-name { font-size: var(--t-caps-sm); letter-spacing: 0.06em; }
-            .komplexna-section .hero-sub-tagline { letter-spacing: 0.14em; }
+            #vyrok .hero-sub-tagline { letter-spacing: 0.14em; }
 
             .path-stop { grid-template-columns: 44px minmax(0, 1fr); column-gap: var(--s3); padding-bottom: var(--s5); }
             .path-num { width: 44px; height: 44px; font-size: 1.1rem; }
@@ -1174,16 +1163,16 @@
         }
 
         /* veľký vodoznak „D“ ako na úvodných stranách guidelinu */
-        html[data-theme="dark"] .komplexna-section::after {
+        html[data-theme="dark"] #vyrok::after {
             content: ''; position: absolute; pointer-events: none;
             aspect-ratio: 119.66 / 118.17;
             background: rgba(254,254,254,0.05);
             -webkit-mask: url("brand_assests/logo/dentall-sign-mask.svg") center / contain no-repeat;
             mask: url("brand_assests/logo/dentall-sign-mask.svg") center / contain no-repeat;
         }
-        html[data-theme="dark"] .komplexna-section::after { height: 150%; right: -6%; top: -25%; }
+        html[data-theme="dark"] #vyrok { position: relative; }
+        html[data-theme="dark"] #vyrok::after { height: 150%; right: -6%; top: -25%; }
         html[data-theme="dark"] #recenzie { background: var(--cream); }
-        html[data-theme="dark"] .komplexna-section { background: var(--cream-2); }
 
         /* fotky */
         html[data-theme="dark"] .hero-bg,
@@ -1545,23 +1534,11 @@
     </div>
 </section>
 
-<!-- ═══ KOMPLEXNÁ STAROSTLIVOSŤ ═══ -->
-<section id="komplexna" class="komplexna-section">
-    <div class="text-reveal-wrap" id="textRevealWrap">
-        <div class="text-reveal-sticky">
-            <div style="display:flex;flex-direction:column;align-items:center;gap:1rem;">
-                <p class="text-reveal-text" id="textReveal">
-                    <span class="komplexna-script-inner">
-                        Komplexná starostlivosť pod jednou strechou
-                        <svg class="komplexna-underline-svg" width="100%" height="22" viewBox="0 0 300 22" preserveAspectRatio="none" aria-hidden="true">
-                            <path class="komplexna-underline-path" d="M 0,11 Q 75,2 150,11 Q 225,20 300,11" stroke="currentColor" stroke-width="2" fill="none"/>
-                        </svg>
-                    </span>
-                </p>
-                <p class="hero-sub-tagline">váš úsmev je našou prioritou</p>
-            </div>
-        </div>
-    </div>
+<!-- ═══ VÝROK ═══ -->
+<section id="vyrok" class="surface-cream-2 bosaz" aria-label="Zdravý úsmev. Lepší život.">
+    <p class="statement">Zdravý úsmev. <span>Lepší život.</span></p>
+    <span class="frieze frieze--short" aria-hidden="true"></span>
+    <p class="hero-sub-tagline">váš úsmev je našou prioritou</p>
 </section>
 
 
@@ -1960,35 +1937,6 @@
         setTimeout(() => document.querySelectorAll('#hero .frieze').forEach(el => el.classList.add('is-scratched')), 300);
     }));
 
-    // Animated underline draw for komplexna section
-    (function () {
-        const path = document.querySelector('.komplexna-underline-path');
-        const wrap = document.querySelector('.komplexna-script-inner');
-        if (!path || !wrap) return;
-
-        const obs = new IntersectionObserver(entries => {
-            if (entries[0].isIntersecting) {
-                const len = path.getTotalLength() || 700;
-                path.style.transition = 'none';
-                path.style.strokeDasharray = len;
-                path.style.strokeDashoffset = len;
-                path.getBoundingClientRect();
-                path.style.transition = 'stroke-dashoffset 1.6s ease-in-out';
-                requestAnimationFrame(() => {
-                    path.style.strokeDashoffset = '0';
-                });
-                obs.disconnect();
-            }
-        }, { threshold: 0.4 });
-        obs.observe(wrap);
-
-        wrap.addEventListener('mouseenter', () => {
-            path.setAttribute('d', 'M 0,11 Q 75,20 150,11 Q 225,2 300,11');
-        });
-        wrap.addEventListener('mouseleave', () => {
-            path.setAttribute('d', 'M 0,11 Q 75,2 150,11 Q 225,20 300,11');
-        });
-    })();
 
     // Cesta pacienta: zastávka v strede okna sa rozsvieti („tu ste“)
     (function () {
