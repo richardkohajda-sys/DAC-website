@@ -322,8 +322,8 @@
         }
         .nav-mark img { width: 42px; height: auto; }
         /* hlavička je vždy charcoal → vždy biele logo */
-        nav .logo-light, footer .logo-light { display: none !important; }
-        nav .nav-logo.logo-dark, footer .footer-logo.logo-dark { display: block; }
+        nav .logo-light { display: none !important; }
+        nav .nav-logo.logo-dark { display: block; }
         nav .nav-mark.logo-dark { display: flex; }
         .nav-mark.logo-dark { display: none; }
         html[data-theme="dark"] .nav-mark.logo-light { display: none; }
@@ -845,10 +845,9 @@
         }
 
         /* ══ FOOTER ══ */
+        /* charcoal v oboch režimoch, sgrafitový pás na hornej hrane, bosáž pod obsahom */
         footer {
-            background: var(--cream-3);
-            border-top: 1px solid var(--line);
-            padding: var(--s5) var(--pad-x) var(--s3);
+            padding: var(--s7) var(--pier) var(--s3);
             display: flex; flex-direction: column; align-items: center;
             gap: var(--s3);
         }
@@ -1110,8 +1109,8 @@
 
         /* akcentná linka s iskrou — hlavička a päta ako v guideline */
         html[data-theme="dark"] nav { border-bottom-color: rgba(var(--accent-rgb),0.35); }
-        html[data-theme="dark"] footer { border-top: 1px solid var(--pink); position: relative; }
-        html[data-theme="dark"] footer::before {
+        html[data-theme="dark"] footer { border-top: 1px solid var(--pink); }
+        html[data-theme="dark"] footer::after {
             content: ''; position: absolute; top: 0; right: var(--pad-x);
             width: 22px; height: 26px; transform: translateY(-50%);
             background: var(--pink);
@@ -1841,11 +1840,11 @@
 </main>
 
 <!-- ═══ FOOTER ═══ -->
-<footer>
+<footer class="surface-charcoal bosaz">
+    <span class="frieze frieze--edge" aria-hidden="true"></span>
     <div class="footer-top">
         <div class="footer-brand">
-            <img class="footer-logo logo-light" src="brand_assests/logo/dentall-centrum-logo.svg" alt="DentAll Centrum" width="120" height="80" loading="lazy">
-            <img class="footer-logo logo-dark" src="brand_assests/logo/dentall-centrum-logo-dark.svg" alt="DentAll Centrum" width="120" height="80" loading="lazy">
+            <img class="footer-logo" src="brand_assests/logo/dentall-centrum-logo-dark.svg" alt="DentAll Centrum" width="120" height="80" loading="lazy">
             <span class="footer-doctor">MUDr. Otília Kohajdová</span>
         </div>
         <div class="footer-copy">
