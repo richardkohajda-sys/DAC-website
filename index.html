@@ -196,17 +196,21 @@
         .arch--line { outline: 1.5px solid var(--pink); outline-offset: 10px; overflow: hidden; }
 
         /* ══ SGRAFITO ══ pás polkruhov a kosoštvorcov „vyškriabaný“ do ružovej */
+        /* orez je na ::before — sledovaný prvok ostáva celý, aby ho IntersectionObserver videl */
         .frieze {
             --frieze-h: clamp(18px, 1.8vw, 26px);
             --scratch: 0%;
-            display: block; height: var(--frieze-h);
+            display: block; position: relative; height: var(--frieze-h);
+        }
+        .frieze::before {
+            content: ''; position: absolute; inset: 0;
             background: var(--frieze-ink, var(--pink));
             -webkit-mask: var(--pat-frieze) left center / auto 100% repeat-x;
             mask: var(--pat-frieze) left center / auto 100% repeat-x;
             clip-path: inset(0 var(--scratch) 0 0);
         }
         .js .frieze:not(.is-scratched) { --scratch: 100%; }
-        .js .frieze { transition: clip-path 1.1s cubic-bezier(0.22, 1, 0.36, 1); }
+        .js .frieze::before { transition: clip-path 0.9s cubic-bezier(0.22, 1, 0.36, 1); }
         /* diamantová bosáž — jemná mriežka pod veľkými plochami */
         .bosaz { position: relative; isolation: isolate; }
         .bosaz::before {
@@ -224,7 +228,7 @@
             stroke-dasharray: 1; stroke-dashoffset: 0;
         }
         .js .dmark-draw:not(.is-drawn) use { stroke-dashoffset: 1; fill-opacity: 0; }
-        .js .dmark-draw use { transition: stroke-dashoffset 1.4s cubic-bezier(0.65, 0, 0.35, 1), fill-opacity 0.6s ease 1.1s; }
+        .js .dmark-draw use { transition: stroke-dashoffset 1.1s cubic-bezier(0.22, 1, 0.36, 1), fill-opacity 0.5s var(--ease-out) 0.8s; }
 
         /* ══ MRIEŽKA ARKÁD ══ 12 polí, jednotné stĺpy */
         .bays {
@@ -885,20 +889,13 @@
         .footer-legal a:hover { opacity: 0.7; }
         .footer-legal a:active { opacity: 0.5; }
 
-        /* ══ ANIMÁCIE ══ */
-        .js .fade-up {
-            opacity: 0; transform: translateY(24px);
-            transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
-        }
-        .js .fade-up.visible { opacity: 1; transform: translateY(0); }
-        .d1 { transition-delay: 0.1s; }
-        .d2 { transition-delay: 0.2s; }
-        .d3 { transition-delay: 0.3s; }
-
+        /* ══ POHYB ══ obsah je viditeľný hneď; pri obmedzenom pohybe je všetko hotové */
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after { animation: none !important; transition: none !important; }
-            .fade-up { opacity: 1; transform: none; }
             html { scroll-behavior: auto; }
+            .dmark-draw use, .js .dmark-draw:not(.is-drawn) use { stroke-dashoffset: 0; fill-opacity: 1; }
+            .frieze, .js .frieze:not(.is-scratched) { --scratch: 0%; }
+            #dentalna-hygiena mark, .js #dentalna-hygiena mark:not(.is-revealed) { text-decoration-color: rgba(var(--accent-rgb),0.55); }
         }
 
         /* ══ RESPONSIVE ══ */
@@ -984,7 +981,6 @@
 
             .about-content-inner { text-align: center; align-items: center; }
             .about-content-inner p { margin-left: auto; margin-right: auto; }
-            .about-content-inner p.d3 { margin-top: 0; }
 
             .facts { grid-template-columns: repeat(2, 1fr); padding-inline: 0; }
             .stat-item { padding: var(--s4) var(--s2); }
@@ -1318,12 +1314,12 @@
 <section id="o-nas" class="surface-cream">
     <div class="about-content about-content--full">
         <div class="about-content-inner">
-            <span class="label fade-up">O našom centre</span>
-            <h2 class="fade-up d1">Komplexná starostlivosť<br>o váš chrup</h2>
-            <p class="fade-up d2">
+            <span class="label">O našom centre</span>
+            <h2>Komplexná starostlivosť<br>o váš chrup</h2>
+            <p>
                 Vidíme Vás aj nás ako rovnocenných partnerov. Najdôležitejšia je pre nás kvalita, bezpečnosť a bezbolestnosť.
             </p>
-            <p class="fade-up d3">
+            <p>
                 Každou návštevou budujeme vzťah založený na vzájomnej dôvere.
             </p>
         </div>
@@ -1339,7 +1335,7 @@
 <section id="sluzby" class="surface-cream">
     <div class="section-header">
         <span class="label">Čo ponúkame</span>
-        <h2 class="fade-up">Naše služby</h2>
+        <h2>Naše služby</h2>
     </div>
 
     <div class="arcade">
@@ -1504,12 +1500,12 @@
 <section id="dentalna-hygiena" class="dh-section surface-cream">
 
     <div class="section-header">
-        <span class="label fade-up">Naša metóda</span>
-        <h2 class="fade-up">Dentálna hygiena</h2>
+        <span class="label">Naša metóda</span>
+        <h2>Dentálna hygiena</h2>
     </div>
 
     <div class="dh-body">
-        <div class="dh-text fade-up">
+        <div class="dh-text">
             <p>Bežné čistenie zubov kefkou nestačí — povlak ostáva v medzizubných priestoroch a pri ďasne, kde spôsobuje <mark>zubný kameň</mark>, zápal, zápach, krvácanie a kazy. Náš tím vás individuálne naučí správnu techniku čistenia podľa metódy <mark>iTOP</mark>, aby ste <mark>každý zub</mark> očistili z <mark>každej strany</mark> bez poškodenia ďasien a krčkov.</p>
             <p>Toto je naša metóda na udržanie dlhodobého úsmevu <mark>bez bolesti</mark>, neustáleho vrtania a plombovania zubov. Týmto šetríme náš <mark>čas</mark> a vaše <mark>peniaze</mark>.</p>
             <p>Počet sedení je individuálny, zvyčajne 2–4. Následne sú <mark>recally</mark>, čiže kontroly, ako sa nám to darí udržovať.</p>
@@ -1882,23 +1878,30 @@
     });
 
 
-    // Scroll reveal
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.08 });
-    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-
-
-    // Hero reveals on load
-    setTimeout(() => {
-        document.querySelectorAll('#hero .fade-up').forEach(el => el.classList.add('visible'));
-    }, 80);
+    // Odhalenie pri príchode do obrazu: trieda sa pridá raz a prvok sa prestane sledovať
+    function revealOnView(selector, className, rootMargin = '0px 0px -15% 0px') {
+        const els = [...document.querySelectorAll(selector)];
+        if (!els.length) return;
+        if (!('IntersectionObserver' in window)) { els.forEach(el => el.classList.add(className)); return; }
+        const io = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (!e.isIntersecting) return;
+                e.target.classList.add(className);
+                io.unobserve(e.target);
+            });
+        }, { rootMargin });
+        els.forEach(el => io.observe(el));
+    }
 
     // Fasáda: znak D sa nakreslí, pás pod hlavičkou sa vyškriabe
     requestAnimationFrame(() => requestAnimationFrame(() => {
         document.querySelectorAll('#hero .dmark-draw').forEach(el => el.classList.add('is-drawn'));
         setTimeout(() => document.querySelectorAll('#hero .frieze').forEach(el => el.classList.add('is-scratched')), 300);
     }));
+
+    // Pri scrolle: sgrafitové pásy sa vyškriabu, kľúčové slová v prevencii sa podfarbia
+    revealOnView('.frieze:not(.frieze--under-nav)', 'is-scratched');
+    revealOnView('#dentalna-hygiena mark', 'is-revealed');
 
 
     // Cesta pacienta: zastávka v strede okna sa rozsvieti („tu ste“)
