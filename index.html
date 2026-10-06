@@ -136,7 +136,7 @@
         }
         img { max-width: 100%; display: block; }
         p { text-wrap: pretty; }
-        h1, h2, h3, .hero-sub-script, .text-reveal-text { text-wrap: balance; }
+        h1, h2, h3, .text-reveal-text { text-wrap: balance; }
         a { color: inherit; text-decoration: none; }
         .skip-link {
             position: fixed; left: var(--s2); top: var(--s2); z-index: 10000;
@@ -197,7 +197,7 @@
 
         /* ══ SGRAFITO ══ pás polkruhov a kosoštvorcov „vyškriabaný“ do ružovej */
         .frieze {
-            --frieze-h: clamp(28px, 3vw, 44px);
+            --frieze-h: clamp(18px, 1.8vw, 26px);
             --scratch: 0%;
             display: block; height: var(--frieze-h);
             background: var(--frieze-ink, var(--pink));
@@ -287,9 +287,9 @@
             display: flex; flex-direction: column; align-items: center; gap: 0.7rem;
             padding: 1rem 2rem 1.1rem;
             flex-shrink: 0;
-            background: var(--cream);
+            background: var(--surface-bg, #212121);
             border-radius: 0 0 24px 24px;
-            box-shadow: var(--shadow-2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.35);
             position: relative; z-index: 1;
             margin-bottom: -4.4rem;
             isolation: isolate;
@@ -321,6 +321,9 @@
             transition: opacity 0.3s var(--ease-out), visibility 0s linear 0.3s;
         }
         .nav-mark img { width: 42px; height: auto; }
+        /* hlavička je vždy charcoal → vždy biele logo */
+        nav .logo-light, footer .logo-light { display: none !important; }
+        nav .nav-logo.logo-dark, footer .footer-logo.logo-dark { display: block; }
         .nav-mark.logo-dark { display: none; }
         html[data-theme="dark"] .nav-mark.logo-light { display: none; }
         html[data-theme="dark"] .nav-mark.logo-dark { display: flex; }
@@ -377,72 +380,49 @@
         .nav-phone:hover { transform: translateY(-2px); }
         .nav-phone:active { transform: translateY(0); }
 
-        /* ══ HERO ══ */
+        /* ══ FASÁDA (úvod) ══ */
         #hero {
+            position: relative; overflow: hidden;
             padding-top: var(--nav-h);
-            position: relative;
             min-height: 100vh; min-height: 100dvh;
-            display: grid;
-            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-            background:
-                radial-gradient(60% 50% at 8% 90%, rgba(var(--accent-rgb),0.06), transparent 70%),
-                radial-gradient(40% 40% at 40% 20%, rgba(var(--accent-rgb),0.06), transparent 70%),
-                var(--cream);
-            overflow: hidden;
+            display: flex; flex-direction: column;
         }
+        .frieze--under-nav { flex: none; }
+        .hero-grid {
+            flex: 1; align-items: stretch;
+            padding-top: var(--s5); padding-bottom: var(--s6);
+        }
+        .hero-media {
+            grid-column: 1 / span 5;
+            aspect-ratio: auto; min-height: min(62vh, 640px);
+            background: #2A2A2A;
+        }
+        .hero-bg { object-position: 58% 42%; filter: saturate(0.85) contrast(1.04); }
         .hero-content {
-            position: relative; z-index: 2;
-            align-self: center;
-            padding: var(--s7) var(--s4) var(--s6) var(--pad-x);
+            grid-column: 7 / span 6; align-self: center;
+            padding-block: var(--s5);
         }
-        .hero-content::before {
-            content: ''; position: absolute;
-            right: 4%; top: 2%;
-            width: clamp(80px, 9vw, 140px); aspect-ratio: 38 / 45;
-            background: var(--pink); opacity: 0.12;
-            -webkit-mask: var(--sparkle) center / contain no-repeat;
-            mask: var(--sparkle) center / contain no-repeat;
-        }
-        .hero-rule {
-            display: block; width: 64px; height: 2px; border-radius: 2px;
-            background: var(--pink); margin-bottom: var(--s4);
-        }
+        .hero-dmark { width: clamp(56px, 6vw, 84px); height: auto; margin-bottom: var(--s4); }
         .hero-content h1 {
             font-size: var(--t-h1);
             font-weight: 600;
             letter-spacing: 0.05em;
-            line-height: 1.25;
+            line-height: 1.22;
             color: var(--text);
         }
-        .hero-content h1 span { color: var(--pink); }  /* vedomá výnimka (Richard 5. 10. 2026): ružová ako na plagátoch, 2,8 : 1 */
-
-        /* fotka sa stráca do krémovej: zľava a zdola maska, navrchu teplý gradient */
-        .hero-media {
-            position: relative;
-            margin-top: calc(var(--nav-h) * -1);
-            overflow: hidden;
-            -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.6) 22%, #000 42%), linear-gradient(to top, transparent 0%, #000 22%);
-            -webkit-mask-composite: source-in;
-            mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.6) 22%, #000 42%), linear-gradient(to top, transparent 0%, #000 22%);
-            mask-composite: intersect;
+        .hero-content h1 span { color: var(--pink); }  /* vedomá výnimka (Richard 5. 10. 2026): ružová ako na plagátoch */
+        .hero-line {
+            display: flex; flex-wrap: wrap; align-items: center; gap: 0.3rem 1.2rem;
+            margin-top: var(--s4);
+            font-size: var(--t-caps-sm); font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
+            color: var(--text);
         }
-        .hero-bg {
-            position: absolute; inset: 0;
-            width: 100%; height: 100%;
-            object-fit: cover; object-position: 62% 40%;
-            filter: saturate(0.82) contrast(1.03);
-        }
-        .hero-overlay {
-            position: absolute; inset: 0;
-            background:
-                radial-gradient(70% 55% at 95% 5%, rgba(var(--accent-rgb),0.30), transparent 70%),
-                linear-gradient(200deg, rgba(var(--accent-rgb),0.12) 0%, transparent 45%, rgba(var(--shade-rgb),0.30) 100%);
-        }
-        .hero-overlay::after {
-            content: ''; position: absolute; inset: 0;
-            background: linear-gradient(to right, rgba(var(--accent-rgb),0.18), rgba(var(--accent-rgb),0.06));
-            mix-blend-mode: multiply;
-        }
+        .hero-place { display: inline-flex; align-items: center; gap: 0.4em; }
+        .hero-years { display: inline-flex; align-items: center; gap: 1.2rem; }
+        .hero-years::before { content: ''; width: 22px; height: 1.5px; background: var(--pink); }
+        .hero-heart { color: var(--pink); width: 1.1em; height: 1.1em; flex: none; }
+        .hero-cta .cta-call { background: var(--pink); color: #212121; }
+        .hero-cta .cta-call .cta-call-icon { background: #212121; }
 
         /* ── Výzva k telefonátu ── */
         .hero-cta { margin-top: var(--s5); display: flex; flex-direction: column; align-items: flex-start; gap: 0.7rem; }
@@ -473,31 +453,6 @@
         /* pevný pruh s telefónom (mobil a tablet) */
         .call-bar { display: none; }
 
-        /* Podnadpis pod hero */
-        .hero-sub {
-            background:
-                radial-gradient(50% 120% at 50% 0%, rgba(var(--accent-rgb),0.06), transparent 70%),
-                var(--cream);
-            padding: var(--s6) 10% var(--s6);
-            text-align: center;
-            position: relative;
-        }
-        .hero-sub-script {
-            font-size: var(--t-display);
-            font-weight: 300;
-            letter-spacing: -0.03em;
-            color: var(--text);
-            line-height: 1.15;
-            margin-bottom: var(--s3);
-        }
-        .hero-heart {
-            color: var(--pink);
-            width: 0.72em; height: 0.72em;
-            display: inline-block; vertical-align: -0.04em;
-        }
-        .hero-script-inner { display: inline-block; position: relative; padding-bottom: 0.45em; }
-        .hero-underline-svg { position: absolute; bottom: 0; left: 0; color: var(--pink); pointer-events: none; }
-        .hero-underline-path { stroke-dasharray: 700; stroke-dashoffset: 700; }
         .hero-sub-tagline {
             font-size: var(--t-caps-lg); font-weight: 600; line-height: 1.4;
             letter-spacing: 0.2em; text-transform: uppercase;
@@ -1076,12 +1031,11 @@
             .nav-end .nav-phone { flex-direction: column; gap: 0.15rem; font-size: 0.8125rem; }
             .nav-end .nav-phone svg { width: 20px; height: 20px; }
 
-            #hero { grid-template-columns: 1fr; grid-template-rows: auto auto; min-height: 0; }
-            .hero-media {
-                order: -1; margin: 0; height: 42vh; min-height: 260px;
-                -webkit-mask-image: linear-gradient(to top, transparent 0%, #000 28%);
-                mask-image: linear-gradient(to top, transparent 0%, #000 28%);
-            }
+            #hero { min-height: 0; }
+            .hero-grid { grid-template-columns: 1fr; padding-top: var(--s3); padding-bottom: var(--s5); }
+            .hero-media { grid-column: 1; height: 36vh; min-height: 240px; max-width: 520px; width: 100%; justify-self: center; }
+            .hero-content { grid-column: 1; padding-block: var(--s4) 0; }
+            .hero-dmark { display: none; }
             .hero-cta { margin-top: var(--s4); }
 
             /* pevný pruh s telefónom */
@@ -1104,9 +1058,6 @@
             .nav-mark { position: static; grid-area: brand; margin: 0.45rem auto; justify-self: center; }
             nav.compact .nav-brand { display: none; }
             nav.compact .nav-inner { min-height: 0; }
-            .hero-content { padding: var(--s4) var(--pad-x) var(--s5); align-self: start; }
-            .hero-rule { margin-bottom: var(--s3); }
-            .hero-content::before { top: auto; bottom: 20%; right: 6%; }
 
             .about-content.about-content--full { grid-template-columns: 1fr; padding: var(--s6) var(--pad-x); gap: var(--s5); }
             .about-photo-placeholder { aspect-ratio: 4/3; }
@@ -1128,9 +1079,6 @@
             .footer-legal { flex-wrap: wrap; gap: var(--s2); }
 
             .hero-content h1 { letter-spacing: 0.04em; }
-
-            /* Podnadpis pod úvodom: pevný text, žiadny pohyb */
-            .hero-sub { padding: var(--s5) var(--pad-x) var(--s5); }
 
             .about-content-inner { text-align: center; align-items: center; }
             .about-content-inner p { margin-left: auto; margin-right: auto; }
@@ -1277,7 +1225,6 @@
         }
 
         /* veľký vodoznak „D“ ako na úvodných stranách guidelinu */
-        html[data-theme="dark"] #hero::before,
         html[data-theme="dark"] .komplexna-section::after {
             content: ''; position: absolute; pointer-events: none;
             aspect-ratio: 119.66 / 118.17;
@@ -1285,11 +1232,7 @@
             -webkit-mask: url("brand_assests/logo/dentall-sign-mask.svg") center / contain no-repeat;
             mask: url("brand_assests/logo/dentall-sign-mask.svg") center / contain no-repeat;
         }
-        html[data-theme="dark"] #hero::before { height: 78%; left: -9%; bottom: -6%; }
         html[data-theme="dark"] .komplexna-section::after { height: 150%; right: -6%; top: -25%; }
-        html[data-theme="dark"] .hero-content::before { opacity: 0.22; }
-        html[data-theme="dark"] #hero,
-        html[data-theme="dark"] .hero-sub,
         html[data-theme="dark"] #recenzie { background: var(--cream); }
         html[data-theme="dark"] .komplexna-section { background: var(--cream-2); }
 
@@ -1305,7 +1248,6 @@
 
         html[data-theme="dark"] .cta-call,
         html[data-theme="dark"] .call-bar { background: var(--surface); color: #FEFEFE; border: 1px solid rgba(var(--accent-rgb),0.45); }
-        html[data-theme="dark"] .hero-overlay::after { background: linear-gradient(to right, rgba(33,33,33,0.35), rgba(33,33,33,0.1)); }
         html[data-theme="dark"] .cookie-btn--accept,
         html[data-theme="dark"] .cookie-btn--decline { border-color: var(--pink); color: #FEFEFE; }
 
@@ -1321,6 +1263,9 @@
             transition: opacity 0.2s;
         }
         .theme-toggle::before { content: ''; position: absolute; inset: -7px -4px; }  /* väčšia plocha na ťuknutie */
+        nav .theme-toggle { background: rgba(254,250,249,0.08); border-color: rgba(254,250,249,0.28); }
+        nav .theme-toggle-thumb { background: var(--pink); }
+        nav .theme-toggle svg { stroke: #212121; }
         .theme-toggle:hover { opacity: 0.85; }
         .theme-toggle:active { opacity: 0.7; }
         .theme-toggle-thumb {
@@ -1370,7 +1315,7 @@
 </div>
 
 <!-- ═══ NAV ═══ -->
-<nav id="navbar">
+<nav id="navbar" class="surface-charcoal">
     <div class="nav-inner">
 
         <a href="#" class="nav-brand" aria-label="DentAll Centrum – na začiatok stránky">
@@ -1414,35 +1359,24 @@
 <main id="main">
 
 <!-- ═══ HERO ═══ -->
-<section id="hero">
-    <div class="hero-content">
-        <span class="hero-rule fade-up"></span>
-        <h1 class="fade-up d1">
-            PRE VŠETKÝCH,<br>KTORÍ MAJÚ ZÁUJEM<br><span>O SVOJE ZDRAVIE</span>
-        </h1>
-        <div class="hero-cta fade-up d2">
-            <a class="cta-call" href="tel:+421484145196"><span class="cta-call-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.95 13a19.79 19.79 0 01-3.07-8.67A2 2 0 012.85 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></span><span class="cta-call-text"><span class="cta-call-label">Objednajte sa</span> <span class="cta-call-number">048 414 51 96</span></span></a>
+<section id="hero" class="surface-charcoal">
+    <span class="frieze frieze--under-nav" aria-hidden="true"></span>
+    <div class="hero-grid bays">
+        <div class="hero-media arch arch--tall arch--line">
+            <img class="hero-bg" src="brand_assests/IMG_7541.webp" alt="Dentálna ambulancia DENTALL Centrum" fetchpriority="high">
+        </div>
+        <div class="hero-content">
+            <svg class="dmark-draw hero-dmark" viewBox="0 0 123.66 122.17" aria-hidden="true" focusable="false"><use href="#d-mark-line"/></svg>
+            <h1>
+                PRE VŠETKÝCH,<br>KTORÍ MAJÚ ZÁUJEM<br><span>O SVOJE ZDRAVIE</span>
+            </h1>
+            <p class="hero-line"><span class="hero-place">Zubné centrum v <svg class="hero-heart" aria-hidden="true" viewBox="0 0 682.66669 682.66669" xmlns="http://www.w3.org/2000/svg"><g transform="matrix(1.3333333,0,0,-1.3333333,0,682.66667)"><g transform="translate(255.9746,356.0356)"><path d="M 0,0 C 0,0 28.801,100 120,100 191.04,100 236,42.668 236,-25.252 236,-119.187 142.336,-181.387 0,-300 -142.335,-181.387 -236,-119.187 -236,-25.252 -236,42.668 -191.04,100 -120,100 -28.8,100 0,0 0,0 Z" fill="none" stroke="currentColor" stroke-width="40" stroke-linecap="round" stroke-linejoin="round"/></g></g></svg> Banskej Bystrice</span> <span class="hero-years">S viac ako 20-ročnou tradíciou</span></p>
+            <div class="hero-cta">
+                <a class="cta-call" href="tel:+421484145196"><span class="cta-call-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.95 13a19.79 19.79 0 01-3.07-8.67A2 2 0 012.85 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></span><span class="cta-call-text"><span class="cta-call-label">Objednajte sa</span> <span class="cta-call-number">048 414 51 96</span></span></a>
+            </div>
         </div>
     </div>
-
-    <div class="hero-media fade-up d2">
-        <img class="hero-bg" src="brand_assests/IMG_7541.webp" alt="Dentálna ambulancia DENTALL Centrum">
-        <div class="hero-overlay"></div>
-    </div>
-
 </section>
-
-<div class="hero-sub fade-up">
-    <p class="hero-sub-script">
-            <span class="hero-script-inner">
-                Zubné centrum v <svg class="hero-heart" aria-hidden="true" viewBox="0 0 682.66669 682.66669" xmlns="http://www.w3.org/2000/svg"><g transform="matrix(1.3333333,0,0,-1.3333333,0,682.66667)"><g transform="translate(255.9746,356.0356)"><path d="M 0,0 C 0,0 28.801,100 120,100 191.04,100 236,42.668 236,-25.252 236,-119.187 142.336,-181.387 0,-300 -142.335,-181.387 -236,-119.187 -236,-25.252 -236,42.668 -191.04,100 -120,100 -28.8,100 0,0 0,0 Z" fill="none" stroke="currentColor" stroke-width="40" stroke-linecap="round" stroke-linejoin="round"/></g></g></svg> Banskej Bystrice
-                <svg class="hero-underline-svg" width="100%" height="22" viewBox="0 0 300 22" preserveAspectRatio="none" aria-hidden="true">
-                    <path class="hero-underline-path" d="M 0,11 Q 75,2 150,11 Q 225,20 300,11" stroke="currentColor" stroke-width="2" fill="none"/>
-                </svg>
-            </span>
-        </p>
-    <p class="hero-sub-tagline">S viac ako 20-ročnou tradíciou</p>
-</div>
 
 <!-- ═══ STATS ═══ -->
 <!-- ═══ O NÁS ═══ -->
@@ -2070,36 +2004,11 @@
         document.querySelectorAll('#hero .fade-up').forEach(el => el.classList.add('visible'));
     }, 80);
 
-    // Animated underline draw
-    (function () {
-        const path = document.querySelector('.hero-underline-path');
-        const wrap = document.querySelector('.hero-script-inner');
-        if (!path || !wrap) return;
-
-        const obs = new IntersectionObserver(entries => {
-            if (entries[0].isIntersecting) {
-                const len = path.getTotalLength() || 700;
-                path.style.transition = 'none';
-                path.style.strokeDasharray = len;
-                path.style.strokeDashoffset = len;
-                // Force reflow so the hidden state registers before animating
-                path.getBoundingClientRect();
-                path.style.transition = 'stroke-dashoffset 1.6s ease-in-out';
-                requestAnimationFrame(() => {
-                    path.style.strokeDashoffset = '0';
-                });
-                obs.disconnect();
-            }
-        }, { threshold: 0.4 });
-        obs.observe(wrap);
-
-        wrap.addEventListener('mouseenter', () => {
-            path.setAttribute('d', 'M 0,11 Q 75,20 150,11 Q 225,2 300,11');
-        });
-        wrap.addEventListener('mouseleave', () => {
-            path.setAttribute('d', 'M 0,11 Q 75,2 150,11 Q 225,20 300,11');
-        });
-    })();
+    // Fasáda: znak D sa nakreslí, pás pod hlavičkou sa vyškriabe
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+        document.querySelectorAll('#hero .dmark-draw').forEach(el => el.classList.add('is-drawn'));
+        setTimeout(() => document.querySelectorAll('#hero .frieze').forEach(el => el.classList.add('is-scratched')), 300);
+    }));
 
     // Animated underline draw for komplexna section
     (function () {
