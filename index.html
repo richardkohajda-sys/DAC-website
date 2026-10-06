@@ -2,7 +2,7 @@
 <html lang="sk">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="description" content="Zubná ambulancia DENTALL Centrum v Banskej Bystrici – MUDr. Otília Kohajdová a náš tím. Komplexná stomatologická starostlivosť s viac ako 20-ročnou tradíciou. Objednajte sa telefonicky.">
     <title>DENTALL Centrum – MUDr. Otília Kohajdová · Banská Bystrica</title>
 
@@ -24,18 +24,22 @@
     <link rel="icon" type="image/png" sizes="48x48" href="brand_assests/favicon-48x48.png">
     <link rel="icon" type="image/png" sizes="512x512" href="brand_assests/favicon-512x512.png">
     <link rel="apple-touch-icon" sizes="180x180" href="brand_assests/apple-touch-icon.png">
+    <link rel="icon" type="image/svg+xml" href="brand_assests/logo/dentall-centrum-icon.svg">
 
-    <!-- prevent flash of wrong theme -->
+    <!-- DM Sans (pred spustením naživo: hostovať lokálne kvôli GDPR) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300..600&display=swap">
+
     <script>
+      document.documentElement.classList.add('js');
       (function(){
-        var t=localStorage.getItem('dac-theme')||(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
-        if(t==='dark')document.documentElement.setAttribute('data-theme','dark');
+        var t=null; try{t=localStorage.getItem('dac-theme');}catch(e){}
+        if(!t) t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';
+        if(t==='dark') document.documentElement.setAttribute('data-theme','dark');
       })();
       (function(){
         if(localStorage.getItem('dac-cookie-consent')==='accepted'){
-          var pc1=document.createElement('link');pc1.rel='preconnect';pc1.href='https://fonts.googleapis.com';document.head.appendChild(pc1);
-          var pc2=document.createElement('link');pc2.rel='preconnect';pc2.href='https://fonts.gstatic.com';pc2.crossOrigin='anonymous';document.head.appendChild(pc2);
-          var f=document.createElement('link');f.rel='stylesheet';f.href='https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Great+Vibes&family=Dancing+Script:wght@400;600;700&display=swap';document.head.appendChild(f);
           var ga=document.createElement('script');ga.async=true;ga.src='https://www.googletagmanager.com/gtag/js?id=G-H6TRTWEFND';document.head.appendChild(ga);
           window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('js', new Date());gtag('config', 'G-H6TRTWEFND');
         }
@@ -43,64 +47,140 @@
     </script>
 
     <style>
+        /* ══ DESIGN TOKENS — DentAll Centrum ══
+           Farby: iba hnedá (text), tmavá ružová (akcent), krémová (pozadia).
+           Písmo: iba DM Sans. */
         :root {
-            --orange:       #eb532f;
-            --orange-h:     #d44422;
-            --orange-light: #f06c4d;
-            --peach:        #fbddd6;
-            --peach-mid:    #f0b89a;
-            --cream:        #f8efea;
-            --cream-light:  #fef5f3;
-            --dark:         #1a1410;
-            --text:         #3a2e28;
-            --muted:        #8a7268;
-            --line:         rgba(235,83,47,0.15);
-            --white:        #ffffff;
+            --text:       #76665E;   /* text na krémových — ≥ 4,5 : 1 (rozhodnutie 5. 10. 2026) */
+            --accent-text: var(--text);  /* svetlý režim: ružová nie je text */
+            --focus:      var(--text);
+            --pink:       #CC857F;
+            --cream:      #FEFAF9;
+            --cream-2:    #FAF2EF;
+            --cream-3:    #F5E9E5;
+            --on-photo:   #FEFAF9;
+            --icon:       #CC857F;
+
+            --shade-rgb:  134,116,106;
+            --accent-rgb: 204,133,127;
+            --bg-rgb:     254,250,249;
+
+            --line:       rgba(var(--shade-rgb),0.16);
+            --line-pink:  rgba(var(--accent-rgb),0.38);
+            --tint-pink:  rgba(var(--accent-rgb),0.12);
+
+            --shadow-1: 0 1px 2px rgba(var(--shade-rgb),0.06), 0 4px 14px rgba(var(--shade-rgb),0.06);
+            --shadow-2: 0 2px 4px rgba(var(--shade-rgb),0.05), 0 14px 32px rgba(var(--shade-rgb),0.09), 0 34px 70px rgba(var(--shade-rgb),0.06);
+            --shadow-3: 0 4px 10px rgba(var(--shade-rgb),0.07), 0 24px 48px rgba(var(--shade-rgb),0.11), 0 64px 110px rgba(var(--accent-rgb),0.10);
+
+            --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
+
+            --s1: 0.5rem; --s2: 1rem; --s3: 1.5rem; --s4: 2rem;
+            --s5: 3rem;   --s6: 4rem; --s7: 6rem;   --s8: 8rem;
+            --pad-x: clamp(1.25rem, 7vw, 8rem);
+
+            /* typografia — iba DM Sans, roly (krok typeset 6. 10. 2026) */
+            --t-display: clamp(2rem, 0.25rem + 3.9vw, 3.6rem);
+            --t-num:     clamp(2.5rem, 1rem + 3vw, 3.6rem);
+            --t-h1:      clamp(1.75rem, 0.5rem + 2.7vw, 3rem);
+            --t-h2:      clamp(2rem, 0.5rem + 3.1vw, 3.4rem);
+            --t-h3:      clamp(1.75rem, 0.5rem + 2.6vw, 2.75rem);
+            --t-lead:    clamp(1.125rem, 0.95rem + 0.55vw, 1.375rem);
+            --t-body:    clamp(1.0625rem, 0.95rem + 0.35vw, 1.1875rem);
+            --t-body-sm: 1rem;
+            --t-title:   1.125rem;
+            --t-caps-lg: clamp(0.875rem, 0.8rem + 0.15vw, 0.9375rem);
+            --t-caps-sm: 0.8125rem;
+            --t-caption: 0.875rem;
+            --measure:   32em;
+
+            --radius:    22px;
+            --radius-sm: 14px;
+            --nav-h:     84px;
+
+            --sparkle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='175 36 38 45'%3E%3Cpath d='M211.89,58.71s-12.36-1.13-13.66-21.49c0,0,1.24,19.76-22.68,21.49,0,0,21.14-.91,22.44,20.91,0,0,.94-17.85,13.9-20.91Z'/%3E%3C/svg%3E");
         }
 
+        @font-face {
+            font-family: 'DM Sans Fallback';
+            src: local('Arial'), local('Helvetica');
+            size-adjust: 102%;
+            ascent-override: 98%; descent-override: 30%; line-gap-override: 0%;
+        }
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; overflow-x: hidden; }
         body {
-            font-family: 'Jost', sans-serif;
-            font-weight: 300;
+            font-family: 'DM Sans', 'DM Sans Fallback', system-ui, sans-serif;
+            font-weight: 400;
+            font-size: var(--t-body);
+            line-height: 1.7;
             color: var(--text);
-            background: var(--white);
+            background: var(--cream);
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        /* jemné zrno pre hĺbku */
+        body::after {
+            content: ''; position: fixed; inset: 0; z-index: 9998; pointer-events: none;
+            opacity: 0.035;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
         }
         img { max-width: 100%; display: block; }
+        p { text-wrap: pretty; }
+        h1, h2, h3, .hero-sub-script, .text-reveal-text { text-wrap: balance; }
         a { color: inherit; text-decoration: none; }
-
-        .label--large {
-            font-size: 1.1rem;
-            letter-spacing: 0.18em;
+        .skip-link {
+            position: fixed; left: var(--s2); top: var(--s2); z-index: 10000;
+            padding: 0.7rem 1.2rem; border-radius: 999px;
+            background: var(--text); color: var(--cream);
+            font-weight: 600; font-size: var(--t-caption);
+            transform: translateY(-200%);
+            transition: transform 0.3s var(--ease-out);
         }
+        .skip-link:focus { transform: translateY(0); }
+        a:focus-visible, button:focus-visible {
+            outline: 2px solid var(--focus); outline-offset: 4px; border-radius: 6px;
+        }
+        ::selection { background: var(--tint-pink); color: var(--text); }
+
         .label {
+            display: inline-flex; align-items: center; gap: 0.75rem;
             font-weight: 600;
-            font-size: 0.88rem;
-            letter-spacing: 0.22em;
+            font-size: var(--t-caps-lg);
+            line-height: 1.4;
+            letter-spacing: 0.2em;
             text-transform: uppercase;
-            color: var(--orange);
+            color: var(--accent-text);
+        }
+        .label::before {
+            content: ''; width: 28px; height: 2px; background: var(--pink); border-radius: 2px;
         }
 
-        /* anchor scroll offset – compensates for fixed nav */
-        #sluzby, #dentalna-hygiena, #cennik, #kontakt, #o-nas, #tym, #recenzie, #platenie, #cennik {
-            scroll-margin-top: 90px;
+        #sluzby, #dentalna-hygiena, #cennik, #kontakt, #o-nas, #tym, #recenzie, #platenie {
+            scroll-margin-top: calc(var(--nav-h) + 1rem);
         }
 
         /* ══ NAV ══ */
         nav {
             position: fixed; top: 0; left: 0; right: 0; z-index: 900;
-            background: rgba(255,255,255,0.97);
-            backdrop-filter: blur(12px);
+            background: rgba(var(--bg-rgb),0.92);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
             border-bottom: 1px solid var(--line);
-            transition: box-shadow 0.3s;
             overflow: visible;
         }
-        nav.scrolled { box-shadow: 0 4px 30px rgba(0,0,0,0.06); }
+        nav::after {
+            content: ''; position: absolute; inset: 0; pointer-events: none;
+            box-shadow: var(--shadow-2);
+            opacity: 0; transition: opacity 0.4s var(--ease-out);
+        }
+        nav.scrolled::after { opacity: 1; }
 
         .nav-inner {
             display: flex; align-items: center;
-            padding: 0 5% 0 1.5rem;
+            min-height: var(--nav-h);
+            padding: 0 var(--pad-x) 0 1.5rem;
             gap: clamp(0.5rem, 1.5vw, 2rem);
         }
 
@@ -109,1268 +189,1101 @@
             initial-value: 0deg;
             inherits: false;
         }
-        @keyframes beam-travel {
-            to { --beam-angle: 360deg; }
-        }
+        @keyframes beam-travel { to { --beam-angle: 360deg; } }
 
-        /* Logo block */
+        /* Logo — visiaca záložka */
         .nav-brand {
-            display: flex; flex-direction: column; align-items: center;
-            padding: 0.6rem 2rem 1.8rem;
+            align-self: flex-start;
+            display: flex; flex-direction: column; align-items: center; gap: 0.7rem;
+            padding: 1rem 2rem 1.1rem;
             flex-shrink: 0;
-            background: var(--white);
+            background: var(--cream);
             border-radius: 0 0 24px 24px;
-            box-shadow: 0 12px 36px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow-2);
             position: relative; z-index: 1;
-            margin-bottom: -3rem;
+            margin-bottom: -4.4rem;
             isolation: isolate;
         }
+        .nav-brand:hover { transform: translateY(3px); }
+        .nav-brand:active { transform: translateY(1px); }
         .nav-brand::before {
             content: '';
-            position: absolute;
-            inset: -1px; top: 0;
+            position: absolute; inset: -1px; top: 0;
             border-radius: 0 0 25px 25px;
             padding: 1.5px;
-            background: conic-gradient(
-                from var(--beam-angle) at 50% 50%,
-                transparent 0deg,
-                transparent 160deg,
-                var(--orange) 220deg,
-                #fbddd6 270deg,
-                transparent 320deg,
-                transparent 360deg
-            );
+            background: conic-gradient(from var(--beam-angle) at 50% 50%,
+                transparent 0deg, transparent 160deg,
+                var(--pink) 220deg, rgba(var(--accent-rgb),0.25) 270deg,
+                transparent 320deg, transparent 360deg);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
-            animation: beam-travel 4s linear infinite;
-            pointer-events: none;
-            z-index: -1;
+            animation: beam-travel 3.2s var(--ease-out) 0.4s 1 both;
+            pointer-events: none; z-index: -1;
         }
-        .nav-logo-css {
-            display: flex; align-items: center;
+        .nav-logo { width: 132px; height: auto; }
+        .nav-mark {
+            position: absolute; left: 1.5rem; top: 50%;
+            width: 46px; height: 46px; margin-top: -23px;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden;
+            transition: opacity 0.3s var(--ease-out), visibility 0s linear 0.3s;
         }
-        .nav-logo-words {
-            display: flex; flex-direction: column; line-height: 1; gap: 0.2rem;
-            align-items: center;
+        .nav-mark img { width: 42px; height: auto; }
+        .nav-mark.logo-dark { display: none; }
+        html[data-theme="dark"] .nav-mark.logo-light { display: none; }
+        html[data-theme="dark"] .nav-mark.logo-dark { display: flex; }
+        nav.compact .nav-mark { opacity: 1; visibility: visible; transition-delay: 0s; }
+        nav.compact .nav-brand {
+            transform: translateY(-110%); opacity: 0; visibility: hidden; pointer-events: none;
+            transition: transform 0.5s var(--ease-out), opacity 0.3s var(--ease-out), visibility 0s linear 0.5s;
         }
-        .nav-logo-name {
-            font-size: 3.64rem; font-weight: 300;
-            letter-spacing: 0.18em; color: var(--dark);
-        }
-        .nav-logo-accent { color: var(--orange); }
-        .nav-logo-sub {
-            font-size: 1.31rem; font-weight: 300;
-            letter-spacing: 0.45em; text-transform: uppercase;
-            color: var(--muted);
-            border-top: 1px solid var(--line);
-            padding-top: 0.32rem;
-            width: 100%; text-align: center;
-        }
+        .nav-brand { transition: transform 0.5s var(--ease-spring), opacity 0.3s var(--ease-out); }
+        /* pri veľkom priblížení (malá výška okna) hlavička neostáva pripnutá */
+        @media (max-height: 520px) { nav { position: absolute; } }
         .nav-doctor {
-            font-size: 1.14rem; font-weight: 300;
-            color: #4a3c34; letter-spacing: 0.08em;
-            margin-top: 2.2rem;
-            font-style: normal;
+            font-size: 0.875rem; font-weight: 500;
+            color: var(--text); letter-spacing: 0.02em;
+            white-space: nowrap;
         }
 
-        /* Links */
         .nav-links {
             display: flex; gap: 0; list-style: none; flex: 1;
             justify-content: center;
         }
         .nav-links a {
+            position: relative;
             display: block;
-            padding: 1.6rem clamp(0.4rem, 0.9vw, 1.1rem);
+            padding: 1.6rem clamp(0.4rem, 0.8vw, 1.2rem);
             font-weight: 600;
-            font-size: clamp(0.62rem, 1.06vw, 0.85rem);
-            letter-spacing: 0.1em;
+            font-size: 0.8125rem;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
             color: var(--text);
-            transition: color 0.2s;
             white-space: nowrap;
+            transition: opacity 0.2s;
         }
-        .nav-links a:hover { color: var(--orange); }
+        .nav-links a::after {
+            content: ''; position: absolute; left: 50%; bottom: 1.15rem;
+            width: 18px; height: 2px; margin-left: -9px; border-radius: 2px;
+            background: var(--pink);
+            transform: scaleX(0); transition: transform 0.4s var(--ease-spring);
+        }
+        .nav-links a:hover::after, .nav-links a:focus-visible::after { transform: scaleX(1); }
+        .nav-links a:active { opacity: 0.7; }
 
-        /* Phone */
+        .nav-end { display: flex; align-items: center; flex-shrink: 0; }
         .nav-phone {
-            display: flex; align-items: center; gap: 0.5rem;
-            font-weight: 700; font-size: clamp(0.75rem, 2vw, 1.6rem);
+            min-height: 44px;
+            display: inline-flex; align-items: center; gap: 0.6rem;
+            font-weight: 600; font-size: clamp(1rem, 1.4vw, 1.35rem);
+            letter-spacing: 0.02em;
             color: var(--text);
             white-space: nowrap;
-            flex-shrink: 0;
+            transition: transform 0.4s var(--ease-spring);
         }
-        .nav-phone svg { stroke: var(--orange); }
-        .nav-phone:hover { color: var(--orange); }
-
+        .nav-phone svg { stroke: var(--pink); flex-shrink: 0; }
+        .nav-phone:hover { transform: translateY(-2px); }
+        .nav-phone:active { transform: translateY(0); }
 
         /* ══ HERO ══ */
         #hero {
-            padding-top: 85px; /* nav height */
+            padding-top: var(--nav-h);
             position: relative;
-            min-height: 100vh;
-            display: flex; align-items: flex-end; justify-content: flex-start;
+            min-height: 100vh; min-height: 100dvh;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            background:
+                radial-gradient(60% 50% at 8% 90%, rgba(var(--accent-rgb),0.06), transparent 70%),
+                radial-gradient(40% 40% at 40% 20%, rgba(var(--accent-rgb),0.06), transparent 70%),
+                var(--cream);
             overflow: hidden;
         }
+        .hero-content {
+            position: relative; z-index: 2;
+            align-self: center;
+            padding: var(--s7) var(--s4) var(--s6) var(--pad-x);
+        }
+        .hero-content::before {
+            content: ''; position: absolute;
+            right: 4%; top: 2%;
+            width: clamp(80px, 9vw, 140px); aspect-ratio: 38 / 45;
+            background: var(--pink); opacity: 0.12;
+            -webkit-mask: var(--sparkle) center / contain no-repeat;
+            mask: var(--sparkle) center / contain no-repeat;
+        }
+        .hero-rule {
+            display: block; width: 64px; height: 2px; border-radius: 2px;
+            background: var(--pink); margin-bottom: var(--s4);
+        }
+        .hero-content h1 {
+            font-size: var(--t-h1);
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            line-height: 1.25;
+            color: var(--text);
+        }
+        .hero-content h1 span { color: var(--pink); }  /* vedomá výnimka (Richard 5. 10. 2026): ružová ako na plagátoch, 2,8 : 1 */
 
+        /* fotka sa stráca do krémovej: zľava a zdola maska, navrchu teplý gradient */
+        .hero-media {
+            position: relative;
+            margin-top: calc(var(--nav-h) * -1);
+            overflow: hidden;
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.6) 22%, #000 42%), linear-gradient(to top, transparent 0%, #000 22%);
+            -webkit-mask-composite: source-in;
+            mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.6) 22%, #000 42%), linear-gradient(to top, transparent 0%, #000 22%);
+            mask-composite: intersect;
+        }
         .hero-bg {
             position: absolute; inset: 0;
             width: 100%; height: 100%;
-            object-fit: cover; object-position: center 40%;
+            object-fit: cover; object-position: 62% 40%;
+            filter: saturate(0.82) contrast(1.03);
         }
-
-        /* Overlay so text is readable over future photo */
         .hero-overlay {
             position: absolute; inset: 0;
-            background: linear-gradient(100deg,
-                rgba(26,20,16,0.55) 0%,
-                rgba(26,20,16,0.25) 55%,
-                rgba(235,83,47,0.12) 100%);
+            background:
+                radial-gradient(70% 55% at 95% 5%, rgba(var(--accent-rgb),0.30), transparent 70%),
+                linear-gradient(200deg, rgba(var(--accent-rgb),0.12) 0%, transparent 45%, rgba(var(--shade-rgb),0.30) 100%);
+        }
+        .hero-overlay::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(to right, rgba(var(--accent-rgb),0.18), rgba(var(--accent-rgb),0.06));
+            mix-blend-mode: multiply;
         }
 
-        .hero-content {
-            position: relative; z-index: 2;
-            max-width: 680px;
-            padding: 4rem 8% 5rem 8%;
-            text-align: left;
-            width: 100%;
+        /* ── Výzva k telefonátu ── */
+        .hero-cta { margin-top: var(--s5); display: flex; flex-direction: column; align-items: flex-start; gap: 0.7rem; }
+        .cta-call {
+            display: inline-flex; align-items: center; gap: 0.9rem;
+            padding: 0.75rem 1.6rem 0.75rem 0.75rem;
+            border-radius: 999px;
+            background: var(--text); color: var(--cream);
+            box-shadow: var(--shadow-2);
+            transition: transform 0.45s var(--ease-spring), box-shadow 0.45s var(--ease-out);
+        }
+        .cta-call:hover { transform: translateY(-3px); }
+        .cta-call:active { transform: translateY(0) scale(0.98); }
+        .cta-call-icon {
+            width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            background: var(--pink);
+        }
+        .cta-call-icon svg { width: 20px; height: 20px; stroke: #FEFEFE; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        .cta-call-text { display: flex; flex-direction: column; line-height: 1.2; }
+        .cta-call-label { font-size: var(--t-caps-sm); font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; }
+        .cta-call-number { font-size: 1.3rem; font-weight: 600; letter-spacing: 0.01em; }
+        .call-block {
+            display: flex; flex-direction: column; align-items: center; gap: 0.7rem;
+            margin-top: var(--s6); text-align: center;
         }
 
-        .hero-content .label { color: rgba(255,255,255,0.7); margin-bottom: 1.5rem; display: block; }
+        /* pevný pruh s telefónom (mobil a tablet) */
+        .call-bar { display: none; }
 
-        .hero-content h1 {
-            font-size: clamp(1.6rem, 3vw, 2.8rem);
-            font-weight: 800; color: white;
-            line-height: 1.2;
-            margin-bottom: 1.5rem;
-        }
-        .hero-content h1 span {
-            background: var(--peach);
-            color: var(--dark);
-            padding: 0.12em 0.4em;
-            display: inline-block;
-            white-space: nowrap;
-        }
-
+        /* Podnadpis pod hero */
         .hero-sub {
-            background: linear-gradient(to bottom, #f0b89a 0%, #fbddd6 40%, #f8efea 75%, white 100%);
-            border-top: 1px solid var(--line);
-            border-bottom: none;
-            padding: 2rem 10% 4rem;
+            background:
+                radial-gradient(50% 120% at 50% 0%, rgba(var(--accent-rgb),0.06), transparent 70%),
+                var(--cream);
+            padding: var(--s6) 10% var(--s6);
             text-align: center;
             position: relative;
         }
         .hero-sub-script {
-            font-family: 'Dancing Script', cursive;
-            font-size: clamp(2rem, 4vw, 3.4rem);
-            font-style: normal;
-            font-weight: 600;
+            font-size: var(--t-display);
+            font-weight: 300;
+            letter-spacing: -0.03em;
             color: var(--text);
-            line-height: 1.3;
-            margin-bottom: 1rem;
+            line-height: 1.15;
+            margin-bottom: var(--s3);
         }
         .hero-heart {
-            color: var(--orange);
-            width: 0.75em;
-            height: 0.75em;
-            display: inline-block;
-            vertical-align: -0.05em;
+            color: var(--pink);
+            width: 0.72em; height: 0.72em;
+            display: inline-block; vertical-align: -0.04em;
         }
-        .hero-script-inner {
-            display: inline-block;
-            position: relative;
-            padding-bottom: 0.45em;
-        }
-        .hero-underline-svg {
-            position: absolute;
-            bottom: 0; left: 0;
-            color: var(--orange);
-            pointer-events: none;
-        }
-        .hero-underline-path {
-            stroke-dasharray: 700;
-            stroke-dashoffset: 700;
-            transition: stroke-dashoffset 1.6s ease-in-out, d 0.8s ease;
-        }
-        .hero-underline-path.drawn {
-            stroke-dashoffset: 0;
-        }
-.hero-sub-tagline {
-            font-size: 1.05rem; font-weight: 600;
-            letter-spacing: 0.22em; text-transform: uppercase;
-            color: var(--muted);
-        }
-
-
-        /* ══ STATS ══ */
-        #stats {
-            background: linear-gradient(to bottom, white 0%, #fdf8f6 15%, #f8efea 35%, #fbddd6 65%, #f0b89a 100%);
-            display: grid; grid-template-columns: repeat(4, 1fr);
-            padding-bottom: 3rem;
-        }
-        .stat-item {
-            padding: 3rem 2rem; text-align: center;
-            border-right: 1px solid var(--line);
-        }
-        .stat-item:last-child { border-right: none; }
-        .stat-num {
-            font-size: 2.8rem; font-weight: 300; color: var(--orange); line-height: 1;
-            height: 56px; display: flex; align-items: center; justify-content: center;
-        }
-        .stat-label {
-            font-size: 0.68rem; font-weight: 600; letter-spacing: 0.16em;
-            text-transform: uppercase; color: var(--muted);
-            margin-top: 0.7rem;
+        .hero-script-inner { display: inline-block; position: relative; padding-bottom: 0.45em; }
+        .hero-underline-svg { position: absolute; bottom: 0; left: 0; color: var(--pink); pointer-events: none; }
+        .hero-underline-path { stroke-dasharray: 700; stroke-dashoffset: 700; }
+        .hero-sub-tagline {
+            font-size: var(--t-caps-lg); font-weight: 600; line-height: 1.4;
+            letter-spacing: 0.2em; text-transform: uppercase;
+            color: var(--text);
         }
 
         /* ══ O NÁS ══ */
-        #o-nas { background: var(--white); }
-
-        .about-content-inner {
-            width: 100%;
-            display: flex; flex-direction: column;
-        }
+        #o-nas { background: var(--cream); }
+        .about-content-inner { width: 100%; display: flex; flex-direction: column; }
         .about-photo-placeholder {
             width: 100%;
             aspect-ratio: 4/5;
-            border-radius: 16px;
+            border-radius: var(--radius);
             position: relative;
             overflow: hidden;
+            box-shadow: var(--shadow-3);
         }
-
-        .about-content {
-            padding: 7rem 8% 7rem 7%;
-            display: flex; flex-direction: column; justify-content: center;
-            background: var(--white);
+        .about-photo-placeholder::after {
+            content: ''; position: absolute; inset: 0; pointer-events: none;
+            background: linear-gradient(to top, rgba(var(--shade-rgb),0.22), transparent 40%);
         }
         .about-content.about-content--full {
             display: grid;
             grid-template-columns: 1fr 1fr;
             align-items: center;
-            padding: 6rem 10%;
-            gap: 4rem;
-            flex-direction: unset;
+            padding: var(--s7) var(--pad-x) var(--s8);
+            gap: clamp(3rem, 7vw, 7rem);
         }
-        .about-content .label { margin-bottom: 1.5rem; display: block; }
+        .about-content .label { margin-bottom: var(--s3); }
         .about-content h2 {
-            font-size: clamp(2rem, 2.8vw, 3rem);
-            font-weight: 700; color: var(--dark);
-            margin-bottom: 2rem; line-height: 1.15;
+            font-size: var(--t-h2);
+            font-weight: 400; letter-spacing: -0.03em;
+            color: var(--text);
+            margin-bottom: var(--s4); line-height: 1.08;
         }
         .about-content p {
-            font-size: 1.4rem; line-height: 1.7;
-            color: var(--muted); margin-bottom: 1.2rem;
+            font-size: var(--t-lead); line-height: 1.6;
+            color: var(--text); margin-bottom: 1em; max-width: 34em;
         }
-        .about-content-inner p.d3 { margin-top: 1.8rem; }
+        .about-content-inner p.d3 { margin-top: var(--s2); }
 
-        /* ══ SEKCIA HEADER ══ */
-        .section-header { text-align: center; margin-bottom: 4.5rem; }
-        .section-header .label { margin-bottom: 1rem; display: block; }
-        .section-header h2 {
-            font-size: clamp(2rem, 2.8vw, 2.8rem);
-            font-weight: 700; color: var(--dark);
-        }
-
-        /* ══ SLUŽBY ══ */
-        #sluzby { padding: 7rem 8% 3rem; background: var(--white); }
-
-        .services-grid {
+        /* ══ ŠTATISTIKY ══ */
+        #stats {
+            background: var(--cream-2);
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
             display: grid; grid-template-columns: repeat(4, 1fr);
-            gap: 0;
+            padding: 0 var(--pad-x);
         }
-        .service-card {
-            background: var(--white); padding: 3.5rem 2.5rem;
-            text-align: center; position: relative; overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .service-card::after {
-            content: ''; position: absolute;
-            bottom: 0; left: 0; right: 0; height: 0;
-            background: var(--orange); transition: height 0.3s;
-        }
-        .service-card:hover::after { height: 3px; }
-        .service-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 48px rgba(0,0,0,0.07);
-        }
-        .service-icon { width: 80px; height: 80px; margin: 0 auto 2rem; }
-        .service-icon svg {
-            width: 100%; height: 100%;
-            stroke: var(--peach-mid); fill: none;
-            stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round;
-        }
-        .service-name {
-            font-weight: 700; font-size: 1.1rem;
-            letter-spacing: 0.15em; text-transform: uppercase;
-            color: var(--orange); margin-bottom: 1.2rem;
-            min-height: 2.8em; display: flex; align-items: center; justify-content: center;
-        }
-        .service-card p { font-size: 1.1rem; line-height: 1.8; color: var(--muted); }
-
-        /* ══ KOMPLEXNÁ ══ */
-        .komplexna-section {
-            background: var(--white);
+        .stat-item {
+            min-width: 0; overflow-wrap: anywhere;
+            padding: var(--s6) var(--s3); text-align: center;
             position: relative;
-            overflow: hidden;
         }
-        .komplexna-section::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(
-                to bottom,
-                transparent 0%,
-                rgba(240,184,154,0.62) 50%,
-                transparent 100%
-            );
-            pointer-events: none;
+        .stat-item + .stat-item::before {
+            content: ''; position: absolute; left: 0; top: 30%; bottom: 30%;
+            width: 1px; background: var(--line);
         }
-        .text-reveal-wrap {
-            position: relative;
-            z-index: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 5rem 8%;
+        .stat-num {
+            font-size: var(--t-num); font-weight: 300; letter-spacing: -0.03em;
+            color: var(--accent-text); line-height: 1;
+            height: 60px; display: flex; align-items: center; justify-content: center;
         }
-        .text-reveal-sticky { display: contents; }
-        .text-reveal-text {
-            font-family: 'Dancing Script', cursive;
-            font-size: clamp(2rem, 4vw, 3.4rem);
-            font-weight: 600;
-            color: var(--dark);
-            text-align: center;
-            line-height: 1.4;
-        }
-        .komplexna-script-inner {
-            display: inline-block;
-            position: relative;
-            padding-bottom: 0.45em;
-        }
-        .komplexna-underline-svg {
-            position: absolute;
-            bottom: 0; left: 0;
-            color: var(--orange);
-            pointer-events: none;
-        }
-        .komplexna-underline-path {
-            stroke-dasharray: 700;
-            stroke-dashoffset: 700;
-            transition: stroke-dashoffset 1.6s ease-in-out;
+        .stat-label {
+            font-size: var(--t-caps-sm); font-weight: 600; letter-spacing: 0.12em; line-height: 1.4;
+            text-transform: uppercase; color: var(--text);
+            margin-top: var(--s2);
         }
 
         /* ══ PHOTO STRIP ══ */
-        .photo-strip {
-            position: relative; height: 650px; overflow: hidden;
-        }
+        .photo-strip { position: relative; height: clamp(460px, 62vh, 680px); overflow: hidden; }
         .photo-strip img {
             width: 100%; height: 100%;
             object-fit: cover; object-position: center 35%;
-            display: block;
         }
         .photo-strip-overlay {
             position: absolute; inset: 0;
-            background: linear-gradient(to right,
-                rgba(26,20,16,0.6) 0%,
-                rgba(26,20,16,0.2) 50%,
-                rgba(235,83,47,0.15) 100%);
+            background: linear-gradient(to right, rgba(var(--shade-rgb),0.95) 0%, rgba(var(--shade-rgb),0.7) 38%, rgba(var(--shade-rgb),0.1) 72%, transparent 100%);
+            mix-blend-mode: multiply;
+        }
+        .photo-strip-overlay::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(var(--shade-rgb),0.45), transparent 50%);
         }
         .photo-strip-text {
-            position: absolute; top: 40%; left: 10%;
+            position: absolute; top: 50%; left: var(--pad-x);
             transform: translateY(-50%);
-            color: white;
-            text-align: left;
-            max-width: 55%;
+            color: var(--on-photo);
+            max-width: min(560px, 50%);
         }
-        .photo-strip-text h3 {
-            font-size: clamp(2.04rem, 2.86vw, 3.06rem);
-            font-weight: 700; line-height: 1.15;
-            margin-bottom: 0.75rem;
+        .photo-strip-text h2 {
+            font-size: var(--t-h3);
+            font-weight: 400; letter-spacing: -0.03em; line-height: 1.08;
+            margin-bottom: var(--s3);
         }
-        .photo-strip-text p {
-            font-size: 1.43rem; color: rgba(255,255,255,0.75);
-            font-weight: 300; max-width: 520px; line-height: 1.7;
+        .photo-strip-text h2::before {
+            content: ''; display: block; width: 56px; height: 2px; border-radius: 2px;
+            background: var(--pink); margin-bottom: var(--s3);
+        }
+        .photo-strip-text p { font-size: var(--t-lead); line-height: 1.6; color: var(--on-photo); }
+
+        /* ══ SEKCIA HEADER ══ */
+        .section-header { text-align: center; margin-bottom: var(--s6); }
+        .section-header .label { margin-bottom: var(--s2); }
+        .section-header h2 {
+            font-size: var(--t-h2);
+            font-weight: 400; letter-spacing: -0.03em; line-height: 1.1;
+            color: var(--text);
         }
 
-        /* ══ PREČO MY ══ */
-        #preco-my { padding: 7rem 10%; background: var(--white); }
-
-        .scroll-card-wrap {
-            perspective: 1200px;
-            margin-top: 4rem;
-            padding-bottom: 2rem;
+        /* ══ SLUŽBY ══ */
+        #sluzby { padding: var(--s8) var(--pad-x) var(--s7); background: var(--cream); }
+        .services-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: var(--line);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-1);
         }
+        .service-card {
+            background: var(--cream); padding: var(--s5) var(--s4) var(--s5);
+            text-align: center; position: relative;
+        }
+        .service-icon {
+            width: 92px; height: 92px; margin: 0 auto var(--s3);
+            padding: 18px; border-radius: 50%;
+            background: var(--tint-pink);
+        }
+        .service-icon svg {
+            width: 100%; height: 100%;
+            stroke: var(--icon); fill: none;
+            stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round;
+        }
+        .service-name {
+            font-weight: 600; font-size: var(--t-caps-lg); line-height: 1.4;
+            letter-spacing: 0.12em; text-transform: uppercase;
+            color: var(--text); margin-bottom: var(--s2);
+            min-height: 2.8em; display: flex; align-items: center; justify-content: center;
+        }
+        .service-card p { font-size: var(--t-body-sm); line-height: 1.65; color: var(--text); }
+
+        /* ══ KOMPLEXNÁ ══ */
+        .komplexna-section {
+            background:
+                radial-gradient(45% 80% at 15% 50%, rgba(var(--accent-rgb),0.06), transparent 70%),
+                radial-gradient(45% 80% at 85% 50%, rgba(var(--accent-rgb),0.05), transparent 70%),
+                var(--cream-2);
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+            position: relative; overflow: hidden;
+        }
+        .text-reveal-wrap {
+            position: relative; z-index: 1;
+            display: flex; align-items: center; justify-content: center;
+            padding: var(--s7) var(--pad-x);
+        }
+        .text-reveal-sticky { display: contents; }
+        .text-reveal-text {
+            font-size: var(--t-display);
+            font-weight: 300; letter-spacing: -0.03em;
+            color: var(--text);
+            text-align: center; line-height: 1.15;
+        }
+        .komplexna-script-inner { display: inline-block; position: relative; padding-bottom: 0.45em; }
+        .komplexna-underline-svg { position: absolute; bottom: 0; left: 0; color: var(--pink); pointer-events: none; }
+        .komplexna-underline-path { stroke-dasharray: 700; stroke-dashoffset: 700; }
+
+        /* ══ AKO PREBIEHA VYŠETRENIE ══ */
+        #preco-my { padding: var(--s8) var(--pad-x); background: var(--cream); }
+        .scroll-card-wrap { perspective: 1200px; margin-top: var(--s5); padding-bottom: var(--s4); }
         .scroll-card {
             max-width: 980px; margin: 0 auto;
-            background: #1e2a38;
+            background: var(--cream-2);
+            border: 1px solid var(--line);
             border-radius: 32px;
-            padding: 4.5rem 5rem;
+            padding: var(--s6) clamp(2rem, 6vw, 5rem);
             transform: rotateX(18deg) scale(1.04);
             transform-origin: center top;
             will-change: transform;
-            box-shadow:
-                0 9px 20px rgba(0,0,0,0.28),
-                0 37px 37px rgba(0,0,0,0.24),
-                0 84px 50px rgba(0,0,0,0.14),
-                0 149px 60px rgba(0,0,0,0.04);
+            box-shadow: var(--shadow-3);
         }
-        .process-steps {
-            display: flex; flex-direction: column;
-            position: relative;
-        }
+        .process-steps { display: flex; flex-direction: column; position: relative; }
         .process-steps::before {
             content: '';
-            position: absolute;
-            left: 0.4rem; top: 0.7rem; bottom: 0.7rem;
+            position: absolute; left: 0.7rem; top: 1rem; bottom: 1rem;
             width: 1px;
-            background: linear-gradient(to bottom, var(--orange), rgba(235,83,47,0.08));
+            background: linear-gradient(to bottom, var(--pink), rgba(var(--accent-rgb),0.08));
         }
         .process-step {
-            display: flex; gap: 3rem; align-items: flex-start;
-            padding-bottom: 3.2rem; position: relative;
+            display: flex; gap: var(--s4); align-items: flex-start;
+            padding-bottom: var(--s5); position: relative;
         }
         .process-step:last-child { padding-bottom: 0; }
         .step-dot {
-            width: 0.85rem; height: 0.85rem; flex-shrink: 0;
-            border-radius: 50%;
-            background: var(--orange);
-            margin-top: 0.55rem;
-            box-shadow: 0 0 0 6px rgba(235,83,47,0.2);
+            width: 1.4rem; height: 1.65rem; flex-shrink: 0;
+            margin-top: 0.3rem;
+            background: var(--pink);
+            -webkit-mask: var(--sparkle) center / contain no-repeat;
+            mask: var(--sparkle) center / contain no-repeat;
             position: relative; z-index: 1;
         }
-        .process-step p { font-size: 1.2rem; line-height: 1.9; color: rgba(255,255,255,0.82); }
-        .process-step p mark {
+        .process-step p { font-size: var(--t-body); line-height: 1.7; color: var(--text); max-width: var(--measure); }
+
+        mark, .dh-porovnanie-content p strong {
             background: none;
-            color: var(--peach);
-            font-weight: 700;
+            color: var(--text);
+            font-weight: 500;
+            text-decoration: underline;
+            text-decoration-color: rgba(var(--accent-rgb),0.4);
+            text-decoration-thickness: 0.22em;
+            text-underline-offset: -0.06em;
+            text-decoration-skip-ink: none;
         }
 
         /* ══ DENTÁLNA HYGIENA ══ */
-        .dh-section { background: var(--cream); padding: 7rem 10%; }
-        .dh-body { display: grid; grid-template-columns: 3fr 2fr; gap: 4rem; align-items: center; margin-bottom: 4rem; }
-        .dh-text p { font-size: 1.1rem; line-height: 1.85; color: var(--text); margin-bottom: 1.2rem; }
-        .dh-text mark { background: none; color: var(--orange); font-weight: 700; }
+        .dh-section {
+            background: var(--cream-2);
+            border-top: 1px solid var(--line);
+            padding: var(--s8) var(--pad-x);
+        }
+        .dh-body { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2.5rem, 5vw, 4.5rem); align-items: center; margin-bottom: var(--s6); }
+        .dh-text p { font-size: var(--t-body); line-height: 1.7; color: var(--text); margin-bottom: 1em; max-width: var(--measure); }
         .dh-photo-right { width: 100%; }
-        .dh-photos-stack { display: flex; flex-direction: column; gap: 1rem; }
-        .dh-photo-caption { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); text-align: center; margin-top: -0.3rem; }
-        .dh-photo { width: 100%; display: block; border-radius: 16px; object-fit: cover; aspect-ratio: 4/3; box-shadow: 0 8px 32px rgba(0,0,0,0.13); }
-
+        .dh-photos-stack { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s2); }
+        .dh-photos-stack .dh-photo-caption { grid-column: 1 / -1; }
+        .dh-photo-caption {
+            font-size: var(--t-caps-sm); font-weight: 600; letter-spacing: 0.12em; line-height: 1.4; text-transform: uppercase;
+            color: var(--text); text-align: center; margin-top: 0.2rem;
+        }
+        .dh-photo {
+            width: 100%; display: block; border-radius: var(--radius-sm);
+            object-fit: cover; aspect-ratio: 4/3;
+            box-shadow: var(--shadow-2);
+        }
         .dh-porovnanie {
-            background: linear-gradient(135deg, #f8efea 0%, #fbddd6 30%, #f0b89a 60%, #fbddd6 80%, #f8efea 100%);
-            border-radius: 20px; padding: 2.5rem 3rem;
-            margin-bottom: 0;
+            background: var(--cream);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: var(--s5) clamp(1.5rem, 4vw, 3.5rem);
+            box-shadow: var(--shadow-1);
+            position: relative; overflow: hidden;
         }
         .dh-porovnanie-label {
-            font-size: 0.72rem; font-weight: 700; letter-spacing: 0.2em;
-            text-transform: uppercase; color: var(--orange); margin-bottom: 1.2rem;
+            font-size: var(--t-caps-lg); font-weight: 600; letter-spacing: 0.2em; line-height: 1.4;
+            text-transform: uppercase; color: var(--accent-text); margin-bottom: var(--s2);
         }
-        .dh-porovnanie-content {
-            display: flex; align-items: center; gap: 1.5rem;
-        }
+        .dh-porovnanie-content { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: var(--s4); }
+        .dh-porovnanie-texts { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s4); align-items: center; }
+        .dh-porovnanie-texts p + p { border-left: 1px solid var(--line); padding-left: var(--s4); }
         .dh-porovnanie-icon {
-            font-size: 2.8rem; font-weight: 800; color: var(--orange);
+            font-weight: 300; color: var(--pink);
             flex-shrink: 0; line-height: 1;
         }
-        .dh-porovnanie-content p {
-            font-size: 1.2rem; line-height: 1.7; color: var(--dark);
-        }
+        .dh-porovnanie-content p { font-size: var(--t-lead); line-height: 1.55; color: var(--text); margin: 0; }
+
         /* ══ TÍM ══ */
-        #tym { padding: 0; background: var(--white); }
-
-        .team-header {
-            padding: 5rem 10% 2.5rem;
-            text-align: center;
-            background: var(--cream);
+        #tym { padding: 0; background: var(--cream); }
+        .team-header { padding: var(--s8) var(--pad-x) var(--s5); text-align: center; background: var(--cream); }
+        .team-header .label { margin-bottom: var(--s2); }
+        .team-header h2 {
+            font-size: var(--t-h2);
+            font-weight: 400; letter-spacing: -0.03em; line-height: 1.1;
+            color: var(--text);
         }
-        .team-header .label { color: var(--orange); margin-bottom: 0.9rem; display: block; }
-        .team-header h2 { font-size: clamp(2rem, 4vw, 3.2rem); color: var(--dark); }
-
         .team-banner {
             position: relative;
-            width: 100%;
-            height: 520px;
+            margin: 0 var(--pad-x);
+            height: clamp(320px, 52vw, 560px);
+            border-radius: var(--radius);
             overflow: hidden;
-            background: linear-gradient(135deg, #f8efea 0%, #fbddd6 40%, #f0b89a 70%, #fbddd6 85%, #f8efea 100%);
+            background: var(--cream-3);
+            box-shadow: var(--shadow-3);
         }
         .team-banner-img {
             position: absolute; inset: 0;
             width: 100%; height: 100%;
             object-fit: cover; object-position: center 50%;
         }
-
-        /* Members list */
-        .team-members {
-            padding: 5rem 10%;
-        }
+        .team-members { padding: var(--s6) var(--pad-x) var(--s8); }
         .team-members-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 0.5rem 2rem;
+            gap: 0 var(--s5);
         }
-        .team-member {
-            padding: 1.6rem 0;
-            transition: background 0.2s;
-        }
-        .team-member:hover { background: transparent; }
-        .team-name {
-            font-size: 1.05rem; font-weight: 700;
-            color: var(--dark); margin-bottom: 0.45rem;
-            line-height: 1.3;
-        }
+        .team-member { padding: var(--s3) 0; border-top: 1px solid var(--line); }
+        .team-name { font-size: var(--t-title); font-weight: 600; color: var(--text); margin-bottom: 0.35rem; line-height: 1.3; }
         .team-role {
-            font-size: 0.68rem; font-weight: 600;
-            letter-spacing: 0.14em; text-transform: uppercase;
-            color: var(--orange);
+            font-size: var(--t-caps-sm); font-weight: 600; line-height: 1.4;
+            letter-spacing: 0.12em; text-transform: uppercase;
+            color: var(--accent-text);
         }
-        .team-cert {
-            font-size: 0.82rem; color: var(--muted);
-            margin-top: 0.6rem; line-height: 1.6;
-        }
+        .team-cert { font-size: var(--t-body-sm); color: var(--text); margin-top: 0.5rem; line-height: 1.6; }
+        .team-cert:empty { display: none; }
 
         /* ══ RECENZIE ══ */
-        #recenzie { padding: 7rem 10%; background: #1e2a38; }
-        #recenzie .section-header h2 { color: white; }
-
+        #recenzie {
+            padding: var(--s8) var(--pad-x);
+            background:
+                radial-gradient(50% 60% at 50% 0%, rgba(var(--accent-rgb),0.06), transparent 70%),
+                var(--cream-2);
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+        }
         .testimonials-columns-wrap {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-top: 4rem;
-            max-height: 740px;
-            overflow: hidden;
-            -webkit-mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
-            mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+            display: flex; justify-content: center; gap: var(--s3);
+            margin-top: var(--s5);
+            max-height: 740px; overflow: hidden;
+            -webkit-mask-image: linear-gradient(to bottom, transparent, black 18%, black 82%, transparent);
+            mask-image: linear-gradient(to bottom, transparent, black 18%, black 82%, transparent);
         }
-        .testimonials-col {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            width: 320px;
-            flex-shrink: 0;
-        }
+        .testimonials-col { display: flex; flex-direction: column; gap: var(--s3); width: 330px; flex-shrink: 0; }
         .testimonials-col:nth-child(2) { display: none; }
         .testimonials-col:nth-child(3) { display: none; }
         @media (min-width: 768px) { .testimonials-col:nth-child(2) { display: flex; } }
         @media (min-width: 1024px) { .testimonials-col:nth-child(3) { display: flex; } }
-        .testimonials-track {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            animation: scrollUp linear infinite;
+        .testimonials-track { display: flex; flex-direction: column; gap: var(--s3); animation: scrollUp linear infinite; }
+        @keyframes scrollUp { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
+        .testimonials-columns-wrap:hover .testimonials-track,
+        .testimonials-columns-wrap:focus-within .testimonials-track,
+        .testimonials-columns-wrap.is-paused .testimonials-track { animation-play-state: paused; }
+        .reviews-pause {
+            display: flex; align-items: center; justify-content: center;
+            width: 44px; height: 44px; margin: var(--s3) auto 0;
+            border-radius: 50%; cursor: pointer;
+            background: var(--cream); border: 1px solid var(--line-pink);
+            transition: transform 0.4s var(--ease-spring);
         }
-        @keyframes scrollUp {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-50%); }
-        }
-        @keyframes hero-marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+        .reviews-pause:hover { transform: scale(1.06); }
+        .reviews-pause:active { transform: scale(0.96); }
+        .reviews-pause svg { width: 18px; height: 18px; stroke: var(--text); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        .reviews-pause .ico-play { display: none; }
+        .reviews-pause[aria-pressed="true"] .ico-pause { display: none; }
+        .reviews-pause[aria-pressed="true"] .ico-play { display: block; fill: var(--text); }
+        @media (max-width: 767px), (prefers-reduced-motion: reduce) {
+            .testimonials-columns-wrap {
+                max-height: none; overflow-x: auto; overflow-y: visible;
+                justify-content: flex-start; gap: var(--s2);
+                scroll-snap-type: x mandatory; scroll-padding-inline: var(--pad-x);
+                margin-inline: calc(var(--pad-x) * -1); padding: var(--s2) var(--pad-x) var(--s3);
+                -webkit-mask-image: none; mask-image: none;
+            }
+            .testimonials-col, .testimonials-col:nth-child(2), .testimonials-col:nth-child(3) { display: contents; }
+            .testimonials-track { display: contents; animation: none; }
+            .review-card[aria-hidden="true"] { display: none; }
+            .review-card { flex: 0 0 min(84%, 340px); scroll-snap-align: start; }
+            .reviews-pause { display: none; }
         }
         .review-card {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 1.5rem;
-            padding: 2rem;
-            box-shadow: 0 4px 32px rgba(0,0,0,0.18);
+            background: var(--cream);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: var(--s4);
+            box-shadow: var(--shadow-1);
+            position: relative;
         }
-        .review-text {
-            font-size: 0.92rem; line-height: 1.75;
-            color: rgba(255,255,255,0.72); margin-bottom: 1.25rem;
+        .review-card::before {
+            content: '\201C'; position: absolute; top: 0.6rem; right: 1.4rem;
+            font-size: 3.6rem; line-height: 1; font-weight: 300; color: var(--pink); opacity: 0.45;
         }
-        .review-author-row {
-            display: flex; align-items: center; gap: 0.75rem;
-        }
+        .review-text { font-size: var(--t-body-sm); line-height: 1.65; color: var(--text); margin-bottom: 1.25rem; }
+        .review-author-row { display: flex; align-items: center; gap: 0.75rem; }
         .review-avatar {
-            width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
-            color: #fff;
+            width: 42px; height: 42px; border-radius: 50%; flex-shrink: 0;
+            color: var(--cream);
             display: flex; align-items: center; justify-content: center;
-            font-weight: 700; font-size: 1rem; text-transform: uppercase;
+            font-weight: 600; font-size: 1rem; text-transform: uppercase;
         }
-        .review-name {
-            font-weight: 600; font-size: 0.88rem; color: #fff; line-height: 1.3;
-        }
-        .review-role {
-            font-size: 0.78rem; color: rgba(255,255,255,0.5); line-height: 1.3;
-        }
+        .review-avatar[data-tone="accent"] { background: var(--cream); color: var(--text); box-shadow: inset 0 0 0 1.5px var(--pink); }
+        .review-avatar[data-tone="brown"]  { background: var(--text); color: var(--cream); }
+        .review-name { font-weight: 600; font-size: var(--t-body-sm); color: var(--text); line-height: 1.3; }
+        .review-role { font-size: var(--t-caps-sm); font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-text); line-height: 1.5; }
 
-        /* ══ CENNÍK ══ */
-        .platenie-section {
-            padding: 7rem 10%;
-            background: var(--white);
-        }
-        .platenie-inner {
-            display: flex; align-items: center; gap: 5rem;
-        }
+        /* ══ PLATENIE ══ */
+        .platenie-section { padding: var(--s8) var(--pad-x); background: var(--cream); }
+        .platenie-inner { display: flex; align-items: center; gap: clamp(3rem, 7vw, 6rem); }
         .platenie-text { flex: 1; min-width: 0; }
-        .platenie-text .label { display: block; margin-bottom: 1rem; text-align: center; }
+        .platenie-text .label { margin-bottom: var(--s2); }
         .platenie-text h2 {
-            font-size: clamp(2rem, 3vw, 3rem);
-            font-weight: 700; color: var(--dark);
-            margin-bottom: 2.5rem; line-height: 1.15;
-            text-align: center;
+            font-size: var(--t-h2);
+            font-weight: 400; letter-spacing: -0.03em; line-height: 1.1;
+            color: var(--text); margin-bottom: var(--s4);
         }
-        .platenie-text p {
-            font-size: 1.15rem; line-height: 1.85;
-            color: var(--text); margin-bottom: 1.5rem;
-        }
+        .platenie-text p { font-size: var(--t-body); line-height: 1.7; color: var(--text); margin-bottom: 1em; max-width: var(--measure); }
         .platenie-img {
             flex: 1; min-width: 0;
             aspect-ratio: 4/5;
-            border-radius: 16px;
-            background: var(--cream);
-            display: flex; align-items: center; justify-content: center;
+            border-radius: var(--radius);
+            background: var(--cream-3);
             overflow: hidden;
-        }
-        @media (max-width: 768px) {
-            .platenie-section { padding-left: 0; padding-right: 0; padding-bottom: 0; background: linear-gradient(to bottom, var(--white) 55%, #f8efea 100%); }
-            .platenie-inner { flex-direction: column; gap: 3rem; }
-            .platenie-text { padding: 0 7%; }
-            .platenie-img {
-                width: 100%;
-                flex: none;
-                margin: 0;
-                border-radius: 0;
-                aspect-ratio: 4/3;
-                position: relative;
-            }
-            .platenie-img::after {
-                content: '';
-                position: absolute;
-                inset: 0;
-                background: linear-gradient(
-                    to bottom,
-                    var(--white) 0%,
-                    transparent 18%,
-                    transparent 65%,
-                    rgba(248,239,234,0.5) 82%,
-                    #f8efea 100%
-                );
-                pointer-events: none;
-            }
+            box-shadow: var(--shadow-3);
         }
 
-        #cennik { padding: 7rem 10% 0; background: var(--cream); }
-
+        /* ══ CENNÍK ══ */
+        #cennik {
+            padding: var(--s8) var(--pad-x) var(--s7);
+            background: var(--cream-2);
+            border-top: 1px solid var(--line);
+        }
+        #cennik .section-header { margin-bottom: var(--s3); }
         .cennik-note {
-            text-align: center; font-size: 1.2rem; color: var(--muted);
-            margin-top: -3rem; margin-bottom: 4rem; line-height: 1.7;
+            text-align: center; font-size: var(--t-lead); color: var(--text);
+            margin: 0 auto var(--s5); line-height: 1.7; max-width: 36em;
         }
-
         .cennik-flat {
-            max-width: 800px; margin: 0 auto;
+            max-width: 820px; margin: 0 auto;
+            background: var(--cream);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: var(--s3) clamp(1.25rem, 4vw, 3rem);
+            box-shadow: var(--shadow-2);
         }
         .cennik-row {
-            display: flex; justify-content: space-between; align-items: baseline;
-            padding: 0.65rem 0; border-bottom: 1px solid rgba(235,83,47,0.07);
-            gap: 1rem;
+            display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline;
+            padding: 0.9rem 0; border-bottom: 1px solid var(--line);
+            column-gap: 1rem; row-gap: 0.2rem;
         }
         .cennik-row:last-child { border-bottom: none; }
-        .cennik-name { font-size: 0.9rem; color: var(--text); font-weight: 400; }
-        .cennik-price { font-size: 0.9rem; font-weight: 600; color: var(--dark); white-space: nowrap; }
-        .cennik-disclaimer {
-            text-align: center; font-size: 0.78rem; color: var(--muted);
-            margin-top: 2.5rem; line-height: 1.7;
-        }
-        .poistovne {
-            margin-top: 1.5rem;
-            margin-left: -12.5%;
-            margin-right: -12.5%;
-            padding: 4rem 12.5%;
-            text-align: center;
-            background: var(--cream);
-        }
+        .cennik-name { flex: 1 1 12em; min-width: 0; font-size: var(--t-body); color: var(--text); }
+        .cennik-price { flex: 0 0 auto; margin-left: auto; font-size: var(--t-body); font-weight: 600; color: var(--text); white-space: nowrap; }
+        .poistovne { margin-top: var(--s6); text-align: center; }
         .poistovne-label {
-            font-size: 0.78rem; font-weight: 600;
-            letter-spacing: 0.12em; text-transform: uppercase;
-            color: var(--muted); margin-bottom: 1.5rem;
+            font-size: var(--t-body-sm); font-weight: 500;
+            letter-spacing: 0;
+            color: var(--text); margin-bottom: var(--s3);
         }
         .poistovne-logos {
             display: flex; justify-content: center; align-items: center;
             max-width: 820px; margin: 0 auto;
-            background: #ffffff;
-            border-radius: 18px;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.07), 0 0 0 1px rgba(0,0,0,0.04);
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-1);
             padding: 0.25rem 2.5rem;
             overflow: hidden;
         }
-        .poistovne-logos img {
-            width: 100%;
-            height: 160px;
-            object-fit: cover;
-            object-position: center top;
-            mix-blend-mode: multiply;
-        }
+        .poistovne-logos img { width: 100%; height: 160px; object-fit: cover; object-position: center top; mix-blend-mode: multiply; }
 
         /* ══ KONTAKT ══ */
-        #kontakt { display: grid; grid-template-columns: 1fr 1fr; }
-
-        .contact-block {
-            padding: 3.5rem 8% 7rem 10%;
-            background: var(--cream-light);
+        #kontakt { display: grid; grid-template-columns: 1fr 1fr; background: var(--cream); }
+        .contact-block { padding: var(--s7) var(--s6) var(--s7) var(--pad-x); }
+        .contact-block .label { margin-bottom: var(--s3); }
+        .contact-block h2 {
+            font-size: var(--t-h2);
+            font-weight: 400; letter-spacing: -0.03em; line-height: 1.1;
+            color: var(--text);
         }
-        .contact-block .label { margin-bottom: 1.5rem; display: block; }
         .contact-building {
             width: 100%; height: 320px;
             object-fit: cover; object-position: center;
-            border-radius: 12px;
-            margin-top: 2rem;
+            border-radius: var(--radius);
+            margin-top: var(--s3);
+            box-shadow: var(--shadow-2);
         }
-        .contact-block h2 {
-            font-size: clamp(2rem, 3vw, 3rem);
-            font-weight: 700; color: var(--dark);
-            margin-bottom: 3rem; line-height: 1.15;
-        }
-
-        .contact-row {
-            display: flex; gap: 1.5rem; margin-bottom: 2.5rem; align-items: flex-start;
-        }
+        .contact-row { display: flex; gap: var(--s3); margin-bottom: var(--s4); align-items: flex-start; }
         .contact-ico {
-            width: 60px; height: 60px; flex-shrink: 0;
-            border: 1px solid rgba(235,83,47,0.25);
+            width: 56px; height: 56px; flex-shrink: 0;
+            border-radius: var(--radius-sm);
+            background: var(--tint-pink);
             display: flex; align-items: center; justify-content: center;
         }
         .contact-ico svg {
-            width: 26px; height: 26px;
-            stroke: var(--orange); fill: none;
-            stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
+            width: 24px; height: 24px;
+            stroke: var(--pink); fill: none;
+            stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round;
         }
         .contact-row-label {
-            font-size: 0.9rem; font-weight: 700;
-            letter-spacing: 0.16em; text-transform: uppercase;
-            color: var(--orange); display: block; margin-bottom: 0.5rem;
+            font-size: var(--t-caps-sm); font-weight: 600; line-height: 1.4;
+            letter-spacing: 0.12em; text-transform: uppercase;
+            color: var(--accent-text); display: block; margin-bottom: 0.4rem;
         }
-        .contact-row-val { font-size: 1.3rem; color: var(--text); line-height: 1.75; }
-        .contact-row-val a { color: var(--orange); font-weight: 600; }
-
-        .hours-list { margin-top: 0.2rem; }
-        .hours-row {
-            display: flex; justify-content: space-between;
-            padding: 0.65rem 0;
-        }
-        .hours-day { font-size: 1.15rem; color: var(--muted); }
-        .hours-time { font-size: 1.15rem; color: var(--text); font-weight: 700; }
-
+        .map-link { text-decoration: underline; text-decoration-color: var(--line-pink); text-decoration-thickness: 1.5px; text-underline-offset: 4px; transition: text-decoration-color 0.2s; }
+        .map-link:hover { text-decoration-color: var(--pink); }
+        .contact-row-val { font-size: var(--t-body); color: var(--text); line-height: 1.7; }
+        .hours-list { margin-top: 0.2rem; min-width: 260px; }
+        .hours-row { display: flex; justify-content: space-between; gap: var(--s4); padding: 0.55rem 0; border-bottom: 1px solid var(--line); }
+        .hours-row:last-child { border-bottom: none; }
+        .hours-day { font-size: var(--t-body); color: var(--text); }
+        .hours-time { font-size: var(--t-body); color: var(--text); font-weight: 600; }
+        .contact-map { padding: var(--s3) var(--s3) var(--s3) 0; }
         .contact-map iframe {
             width: 100%; height: 100%; min-height: 520px; border: none;
-            filter: sepia(20%) saturate(75%); display: block;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-2);
+            filter: sepia(22%) saturate(70%) hue-rotate(-8deg);
+            display: block;
         }
 
         /* ══ FOOTER ══ */
         footer {
-            background: #1e2a38;
-            border-top: 1px solid rgba(255,255,255,0.08);
-            padding: 2.5rem 5% 1.2rem;
+            background: var(--cream-3);
+            border-top: 1px solid var(--line);
+            padding: var(--s5) var(--pad-x) var(--s3);
             display: flex; flex-direction: column; align-items: center;
-            gap: 1rem;
+            gap: var(--s3);
         }
-        .footer-top {
-            width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1.2rem;
-        }
-        .footer-brand { display: flex; flex-direction: column; align-items: flex-start; gap: 0.4rem; margin-left: 2rem; }
-        .footer-logo-text { display: flex; flex-direction: column; line-height: 1; align-items: flex-start; gap: 0.2rem; }
-        .footer-logo-wordmark {
-            font-size: 2rem; font-weight: 300;
-            color: rgba(255,255,255,0.85);
-            letter-spacing: 0.18em;
-        }
-        .footer-logo-wordmark span { color: var(--orange); }
-        .footer-logo-centrum {
-            font-size: 0.6rem; font-weight: 300;
-            letter-spacing: 0.45em; text-transform: uppercase;
-            color: rgba(255,255,255,0.45);
-            border-top: 1px solid rgba(255,255,255,0.15);
-            padding-top: 0.28rem; width: 100%; text-align: center;
-        }
-        .footer-doctor {
-            font-size: 0.85rem; font-weight: 300;
-            color: rgba(255,255,255,0.4);
-            letter-spacing: 0.08em; font-style: normal;
-            margin-top: 0.6rem;
-        }
-        .footer-copy { font-size: 1rem; color: rgba(255,255,255,0.4); flex: 1; text-align: center; }
+        .footer-top { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: var(--s3); }
+        .footer-brand { display: flex; flex-direction: column; align-items: center; gap: 0.6rem; }
+        .footer-logo { width: 120px; height: auto; }
+        .footer-doctor { font-size: 0.875rem; font-weight: 500; color: var(--text); letter-spacing: 0.02em; }
+        .footer-info { font-size: var(--t-caption); color: var(--text); line-height: 1.7; margin-top: 0.4rem; }
+        .footer-info a { text-decoration: underline; text-decoration-color: var(--line-pink); text-underline-offset: 3px; }
+        .footer-credit { font-size: 0.75rem; color: var(--text); opacity: 0.8; }
+        .footer-copy { font-size: var(--t-caption); color: var(--text); flex: 1; text-align: center; }
+        .footer-copy .by { color: var(--accent-text); font-weight: 600; }
         .footer-phone {
-            display: flex; align-items: center; gap: 0.5rem;
-            font-weight: 700; font-size: 1.6rem;
-            color: rgba(255,255,255,0.85);
-            white-space: nowrap; text-decoration: none;
+            min-height: 44px;
+            display: inline-flex; align-items: center; gap: 0.6rem;
+            font-weight: 600; font-size: 1.35rem;
+            color: var(--text);
+            white-space: nowrap;
+            transition: transform 0.4s var(--ease-spring);
         }
-        .footer-phone svg { stroke: var(--orange); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; width: 28px; height: 28px; flex-shrink: 0; }
+        .footer-phone:hover { transform: translateY(-2px); }
+        .footer-phone:active { transform: translateY(0); }
+        .footer-phone svg { stroke: var(--pink); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; width: 24px; height: 24px; flex-shrink: 0; }
         .footer-legal {
             width: 100%; display: flex; align-items: center; justify-content: center;
-            gap: 2rem; padding-top: 1rem;
-            border-top: 1px solid rgba(255,255,255,0.08);
+            gap: var(--s4); padding-top: var(--s2);
+            border-top: 1px solid var(--line);
         }
         .footer-legal a {
-            font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em;
-            text-transform: uppercase; color: rgba(255,255,255,0.35);
-            transition: color 0.2s;
+            display: inline-flex; align-items: center; min-height: 44px; padding: 0 0.3rem;
+            font-size: var(--t-caps-sm); font-weight: 600; letter-spacing: 0.12em;
+            text-transform: uppercase; color: var(--text);
+            transition: opacity 0.2s;
         }
-        .footer-legal a:hover { color: var(--orange); }
+        .footer-legal a:hover { opacity: 0.7; }
+        .footer-legal a:active { opacity: 0.5; }
 
-        /* ══ ANIMATIONS ══ */
-        .fade-up {
+        /* ══ ANIMÁCIE ══ */
+        .js .fade-up {
             opacity: 0; transform: translateY(24px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
+            transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
         }
-        .fade-up.visible { opacity: 1; transform: translateY(0); }
+        .js .fade-up.visible { opacity: 1; transform: translateY(0); }
         .d1 { transition-delay: 0.1s; }
         .d2 { transition-delay: 0.2s; }
         .d3 { transition-delay: 0.3s; }
-        .d4 { transition-delay: 0.4s; }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation: none !important; transition: none !important; }
+            .fade-up { opacity: 1; transform: none; }
+            .scroll-card { transform: none !important; }
+            html { scroll-behavior: auto; }
+        }
 
         /* ══ RESPONSIVE ══ */
-        @media (max-width: 1200px) {
-            .contact-block .nav-phone { font-size: clamp(1.1rem, 3.5vw, 1.6rem); }
-            .contact-block .nav-phone svg { width: clamp(20px, 3.5vw, 26px); height: clamp(20px, 3.5vw, 26px); }
+        @media (max-width: 1100px) {
+            .services-grid { grid-template-columns: repeat(2, 1fr); }
         }
 
         @media (max-width: 930px) {
-            /* ── NAV: stack vertically ── */
-            nav { overflow: visible; }
-            .nav-inner { display: grid; grid-template-areas: "toggle brand phone" "links links links"; grid-template-columns: 1fr auto 1fr; padding: 0; gap: 0; align-items: stretch; }
+            :root { --nav-h: 150px; }
+            .nav-inner {
+                display: grid;
+                grid-template-areas: "left brand phone" "links links links";
+                grid-template-columns: 1fr auto 1fr;
+                padding: 0; gap: 0; align-items: stretch;
+            }
             .nav-brand {
-                grid-area: brand;
-                background: transparent;
-                border-radius: 0 0 20px 20px;
-                box-shadow: 0 10px 32px rgba(0,0,0,0.09);
+                grid-area: brand; align-self: start;
                 margin-bottom: 0;
-                padding: 0.6rem clamp(0.6rem, 3.2vw, 1.4rem) 1.3rem;
-                align-items: center;
-                border-bottom: none;
-                position: relative; z-index: 2; isolation: isolate;
+                padding: 0.6rem 1.2rem 0.8rem;
+                gap: 0.35rem;
+                border-radius: 0 0 20px 20px;
             }
-            .nav-brand::before { display: block; border-radius: 0 0 21px 21px; }
-            .nav-logo-name { font-size: clamp(1.4rem, 4.75vw, 1.9rem); }
-            .nav-logo-sub { font-size: clamp(0.52rem, 1.65vw, 0.72rem); }
-            .nav-doctor { margin-top: 0.4rem; font-size: clamp(0.6rem, 1.9vw, 0.78rem); }
-            .nav-links {
-                grid-area: links;
-                flex-wrap: wrap; justify-content: center;
-                padding: 0.25rem 0;
-                border-top: none;
+            .nav-brand::before { border-radius: 0 0 21px 21px; }
+            .nav-logo { width: 88px; }
+            .nav-doctor { font-size: 0.8125rem; }
+            .nav-links { grid-area: links; flex-wrap: wrap; justify-content: center; padding: 0.15rem 0; }
+            .nav-links a { min-height: 44px; display: flex; align-items: center; padding: 0.6rem clamp(0.3rem, 1.6vw, 0.6rem); font-size: 0.875rem; letter-spacing: 0; text-transform: none; }
+            .nav-links a::after { bottom: 0.2rem; }
+            .nav-end { grid-area: phone; justify-content: center; padding: 0 0.5rem; }
+            .nav-end .nav-phone { flex-direction: column; gap: 0.15rem; font-size: 0.8125rem; }
+            .nav-end .nav-phone svg { width: 20px; height: 20px; }
+
+            #hero { grid-template-columns: 1fr; grid-template-rows: auto auto; min-height: 0; }
+            .hero-media {
+                order: -1; margin: 0; height: 42vh; min-height: 260px;
+                -webkit-mask-image: linear-gradient(to top, transparent 0%, #000 28%);
+                mask-image: linear-gradient(to top, transparent 0%, #000 28%);
             }
-            .nav-links a { padding: 0.5rem 0.6rem; font-size: 0.62rem; }
-            #hero { padding-top: 135px; }
+            .hero-cta { margin-top: var(--s4); }
+
+            /* pevný pruh s telefónom */
+            .call-bar {
+                display: flex; align-items: center; gap: 0.8rem;
+                position: fixed; z-index: 950;
+                left: var(--s2); right: var(--s2);
+                bottom: calc(var(--s2) + env(safe-area-inset-bottom, 0px));
+                min-height: 56px; padding: 0.45rem 1.1rem 0.45rem 0.45rem;
+                border-radius: 999px;
+                background: var(--text); color: var(--cream);
+                box-shadow: var(--shadow-3);
+                transform: translateY(160%); opacity: 0; visibility: hidden;
+                transition: transform 0.5s var(--ease-spring), opacity 0.3s var(--ease-out), visibility 0s linear 0.5s;
+            }
+            .call-bar.is-visible { transform: translateY(0); opacity: 1; visibility: visible; transition-delay: 0s; }
+            .call-bar .cta-call-icon { width: 46px; height: 46px; }
+            .call-bar-text { display: flex; flex-direction: column; line-height: 1.2; flex: 1; min-width: 0; }
+            footer { padding-bottom: calc(var(--s6) + 56px + env(safe-area-inset-bottom, 0px)); }
+            .nav-mark { position: static; grid-area: brand; margin: 0.45rem auto; justify-self: center; }
+            nav.compact .nav-brand { display: none; }
+            nav.compact .nav-inner { min-height: 0; }
+            .hero-content { padding: var(--s4) var(--pad-x) var(--s5); align-self: start; }
+            .hero-rule { margin-bottom: var(--s3); }
+            .hero-content::before { top: auto; bottom: 20%; right: 6%; }
+
+            .about-content.about-content--full { grid-template-columns: 1fr; padding: var(--s6) var(--pad-x); gap: var(--s5); }
+            .about-photo-placeholder { aspect-ratio: 4/3; }
+            .dh-body { grid-template-columns: 1fr; }
+            .dh-porovnanie-texts { grid-template-columns: 1fr; }
+            .platenie-inner { flex-direction: column; gap: var(--s5); }
+            .platenie-img { width: 100%; aspect-ratio: 4/3; flex: none; }
+            #kontakt { grid-template-columns: 1fr; }
+            .contact-block { padding: var(--s6) var(--pad-x) var(--s4); }
+            .contact-map { padding: 0 var(--pad-x) var(--s6); }
+            .contact-map iframe { min-height: 360px; }
+            .team-members-grid { grid-template-columns: repeat(2, 1fr); }
         }
 
         @media (max-width: 640px) {
-            /* ── FOOTER: stack on mobile ── */
             .footer-top { flex-direction: column; align-items: center; text-align: center; }
-            .footer-brand { margin-left: 0 !important; align-items: center; }
+            .footer-brand { margin-left: 0 !important; }
             .footer-copy { flex: none; }
-            .footer-legal { flex-wrap: wrap; gap: 1rem; }
+            .footer-legal { flex-wrap: wrap; gap: var(--s2); }
 
-            /* ── HERO: shorter on mobile ── */
-            #hero { min-height: 100vh; min-height: 100dvh; }
-            .hero-bg { object-fit: cover; object-position: 72% 55%; }
-            /* ── HERO-SUB MARQUEE ── */
-            .hero-sub { overflow: hidden; padding: 0 0 2rem; text-align: left; }
-            .hero-marquee-wrap { overflow: hidden; padding: 1.75rem 0 0.75rem; }
-            .hero-marquee-track {
-                display: flex;
-                width: max-content;
-                white-space: nowrap;
-                animation: hero-marquee 22s linear infinite;
-            }
-            .hero-marquee-item {
-                font-family: 'Jost', sans-serif;
-                font-size: 1.05rem;
-                font-weight: 600;
-                letter-spacing: 0.22em;
-                text-transform: uppercase;
-                color: var(--muted);
-                white-space: nowrap;
-                padding-right: 5rem;
-                display: inline-flex;
-                align-items: center;
-                gap: 0.3em;
-            }
-            .hero-marquee-item .hero-heart { color: var(--orange); width: 1.1em; height: 1.1em; display: inline-block; vertical-align: -0.15em; margin-right: 0.25em; }
-            .hero-marquee-item .hero-heart path { stroke-width: 65; }
+            .hero-content h1 { letter-spacing: 0.04em; }
 
-            /* ── O NAS ── */
-            .about-content.about-content--full { grid-template-columns: 1fr; padding: 2.5rem 5% 3rem; gap: 0; }
-            .about-photo-placeholder { display: none; }
+            /* Podnadpis pod úvodom: pevný text, žiadny pohyb */
+            .hero-sub { padding: var(--s5) var(--pad-x) var(--s5); }
+
             .about-content-inner { text-align: center; align-items: center; }
-            .about-content-inner .label,
-            .about-content-inner h2,
-            .about-content-inner p { text-align: center; }
+            .about-content-inner p { margin-left: auto; margin-right: auto; }
             .about-content-inner p.d3 { margin-top: 0; }
 
-            /* ── PHOTO STRIP ── */
-            .photo-strip-text { top: 13%; left: 5%; transform: none; max-width: 80%; }
-            .photo-strip-text h3 { font-size: 2rem; text-align: center; margin-bottom: 3.5rem; }
-            .photo-strip-text p { max-width: 72%; text-align: left; }
+            #stats { grid-template-columns: repeat(2, 1fr); padding: 0; }
+            .stat-item { padding: var(--s4) var(--s2); }
+            .stat-item:nth-child(3)::before { display: none; }
+            .stat-item:nth-child(3), .stat-item:nth-child(4) { border-top: 1px solid var(--line); }
 
-            /* ── REST ── */
-            #sluzby { padding-top: 2.5rem; padding-left: 0; padding-right: 0; }
-            .service-card { padding: 2rem 0.9rem; }
-            .komplexna-section .hero-sub-tagline { font-size: clamp(0.5rem, 2.8vw, 0.78rem); letter-spacing: clamp(0.05em, 0.6vw, 0.18em); white-space: nowrap; }
-            .text-reveal-wrap { padding-bottom: 2rem; }
-            #preco-my { padding-top: 2.5rem; }
-            .scroll-card { padding: 2rem 1.5rem; transform: none; border-radius: 20px; }
-            .process-step { gap: 1.2rem; padding-bottom: 2rem; }
-            .process-step p { font-size: 0.95rem; line-height: 1.65; }
-            .dh-section { padding: 2.5rem 5%; }
-            .dh-body { grid-template-columns: 1fr; gap: 2rem; }
-            .dh-text p { font-size: 0.95rem; line-height: 1.7; }
-            .dh-porovnanie { padding: 1.5rem; }
-            .dh-porovnanie-content { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
-            .dh-porovnanie-content p { font-size: 0.95rem; line-height: 1.6; }
-            .poistovne { margin-left: 0; margin-right: 0; padding: 2rem 0; }
-            .poistovne-logos { padding: 0.5rem; max-width: 100%; }
-            .poistovne-logos img { height: auto; object-fit: contain; }
-            .service-name { font-size: clamp(0.6rem, 3.2vw, 1.1rem); letter-spacing: 0.08em; }
-            .services-grid { grid-template-columns: repeat(2, 1fr); }
-            .team-members-grid { grid-template-columns: repeat(2, 1fr); }
-            .team-banner { height: 400px; }
+            .photo-strip-text { top: auto; bottom: var(--s5); transform: none; max-width: none; right: var(--pad-x); }
+            .photo-strip-overlay { background: linear-gradient(to top, rgba(var(--shade-rgb),0.95) 0%, rgba(var(--shade-rgb),0.75) 45%, transparent 85%); }
 
-            #kontakt { grid-template-columns: 1fr; }
-            .contact-map iframe { min-height: 360px; }
-        }
-
-        @media (max-width: 680px) {
-            #stats { grid-template-columns: repeat(2, 1fr); }
-            .stat-item:nth-child(2) { border-right: none; }
-            .stat-item:nth-child(3),
-            .stat-item:nth-child(4) { border-top: 1px solid var(--line); }
+            #sluzby { padding-top: var(--s6); }
             .services-grid { grid-template-columns: 1fr 1fr; }
+            .service-card { padding: var(--s4) var(--s2); }
+            .service-icon { width: 72px; height: 72px; padding: 14px; }
+            .footer-legal { row-gap: 0.4rem; }
+            .service-name { font-size: var(--t-caps-sm); letter-spacing: 0.06em; }
+            .komplexna-section .hero-sub-tagline { letter-spacing: 0.14em; }
+
+            .scroll-card { padding: var(--s4) var(--s3); transform: none; border-radius: var(--radius); }
+            .process-step { gap: var(--s2); padding-bottom: var(--s4); }
+            .dh-porovnanie-content { grid-template-columns: 1fr; gap: var(--s2); }
+            .dh-porovnanie-texts p + p { border-left: 0; padding-left: 0; border-top: 1px solid var(--line); padding-top: var(--s3); }
+            .poistovne-logos { padding: 0.5rem; }
+            .poistovne-logos img { height: auto; object-fit: contain; }
             .team-members-grid { grid-template-columns: 1fr; }
-            .team-banner { height: 320px; }
-            .hero-content { padding: 4rem 6%; }
+            .team-banner { margin: 0 var(--s2); }
+            .hours-list { min-width: 0; }
         }
 
-        /* ══ DARK MODE VARIABLES ══ */
-        html[data-theme="dark"] {
-            --white:       #161b22;
-            --cream:       #1c2128;
-            --cream-light: #22272e;
-            --dark:        #e6edf3;
-            --text:        #c9d1d9;
-            --muted:       #8b949e;
-            --line:        rgba(235,83,47,0.2);
-            --peach:       #2a2d35;
-            --peach-mid:   #3d4150;
-        }
-
-        /* ── process card & dh marks ── */
-        html[data-theme="dark"] .process-step p mark,
-        html[data-theme="dark"] .dh-text mark,
-        html[data-theme="dark"] .dh-porovnanie-content p strong,
-        html[data-theme="dark"] .team-role {
-            color: #fbddd6;
-        }
-
-        /* ── hero h1 highlight box ── */
-        html[data-theme="dark"] .hero-content h1 span {
-            background: #fbddd6;
-            color: #1a1410;
-        }
-
-        /* ── nav ── */
-        html[data-theme="dark"] nav {
-            background: rgba(22,27,34,0.97);
-        }
-        html[data-theme="dark"] .nav-doctor { color: #8b949e; }
-
-        /* ── hero-sub gradient ── */
-        html[data-theme="dark"] .hero-sub {
-            background: linear-gradient(to bottom, #2c3a52 0%, #222e44 25%, #1a2438 55%, #161b22 100%);
-        }
-
-        /* ── stats ── */
-        html[data-theme="dark"] #stats {
-            background: linear-gradient(to bottom, #161b22 0%, #191e26 15%, #1c2128 40%, #1a2030 70%, #161b22 100%);
-        }
-
-        /* ── service cards ── */
-        html[data-theme="dark"] .service-card { background: #1c2128; }
-        html[data-theme="dark"] .service-card:hover { box-shadow: 0 20px 48px rgba(0,0,0,0.35); }
-        html[data-theme="dark"] .service-icon svg { stroke: #f0b89a; }
-        html[data-theme="dark"] .service-icon svg[style] { fill: #f0b89a !important; stroke: none !important; }
-
-        /* ── komplexna ── */
-        html[data-theme="dark"] .komplexna-section::before {
-            background: linear-gradient(
-                to bottom,
-                transparent 0%,
-                rgba(200,200,210,0.08) 50%,
-                transparent 100%
-            );
-        }
-
-        /* ── dh gradient boxes ── */
-        html[data-theme="dark"] .dh-porovnanie {
-            background: linear-gradient(135deg, #181e26 0%, #1c2230 30%, #1e2535 60%, #1c2230 80%, #181e26 100%);
-        }
-
-        /* ── recenzie ── */
-        html[data-theme="dark"] #recenzie { background: #0d1117; }
-
-        /* ── photo-strip vignette ── */
-        html[data-theme="dark"] .photo-strip { background: #161b22; }
-        html[data-theme="dark"] .photo-strip-overlay {
-            background:
-                linear-gradient(to bottom, #161b22 0%, rgba(22,27,34,0.6) 20%, transparent 42%, transparent 80%, #161b22 100%),
-                linear-gradient(to right, #161b22 0%, rgba(22,27,34,0.72) 18%, transparent 55%, rgba(22,27,34,0.55) 82%, #161b22 100%);
-        }
-
-        /* ── team banner ── */
-        html[data-theme="dark"] .team-banner {
-            background: linear-gradient(135deg, #161b22 0%, #1c2230 40%, #1e2535 70%, #1c2230 85%, #161b22 100%);
-        }
-
-        /* ── cennik poistovne ── */
-        html[data-theme="dark"] .poistovne { background: var(--cream); }
-        html[data-theme="dark"] .poistovne-logos {
-            background: #ede8e2;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.35), 0 0 0 1px rgba(0,0,0,0.12);
-        }
-        html[data-theme="dark"] .poistovne-logos img { mix-blend-mode: multiply; opacity: 1; filter: none; }
-
-        /* ── contact map ── */
-        html[data-theme="dark"] .contact-map iframe {
-            filter: sepia(15%) saturate(60%) brightness(0.65);
-        }
-        html[data-theme="dark"] .contact-building { filter: brightness(0.8) saturate(0.9); }
-
-        /* ── platenie ── */
-        html[data-theme="dark"] .platenie-img { background: #1c2128; }
-        @media (max-width: 768px) {
-            html[data-theme="dark"] .platenie-section { background: linear-gradient(to bottom, #161b22 55%, #1c2128 100%); }
-            html[data-theme="dark"] .platenie-img::after {
-                background: linear-gradient(
-                    to bottom,
-                    #161b22 0%,
-                    transparent 18%,
-                    transparent 65%,
-                    rgba(28,33,40,0.5) 82%,
-                    #1c2128 100%
-                );
+        @media (max-width: 480px) {
+            .services-grid { grid-template-columns: 1fr; }
+            .service-card {
+                display: grid; grid-template-columns: 64px 1fr; column-gap: var(--s3); row-gap: 0.25rem;
+                text-align: left; align-items: center; padding: var(--s3) var(--s3);
             }
+            .service-icon { grid-row: span 2; width: 64px; height: 64px; padding: 12px; margin: 0; }
+            .service-name { justify-content: flex-start; min-height: 0; margin: 0; align-self: end; }
+            .service-card p { align-self: start; }
         }
 
-        /* ══ THEME TOGGLE ══ */
-        .nav-end {
-            display: flex; align-items: center; gap: 1.2rem; flex-shrink: 0;
-        }
-
-        .theme-toggle {
-            position: relative;
-            display: flex; align-items: center;
-            width: 84px; height: 50px;
-            border-radius: 9999px;
-            padding: 5px;
-            border: 2px solid rgba(203,213,225,0.6);
-            cursor: pointer; outline: none;
-            background: radial-gradient(ellipse at top left, #ffffff 0%, #f1f5f9 40%, #cbd5e1 100%);
-            box-shadow:
-                inset 5px 5px 12px rgba(148,163,184,0.5),
-                inset -5px -5px 12px rgba(255,255,255,1),
-                inset 8px 8px 16px rgba(100,116,139,0.3),
-                inset -8px -8px 16px rgba(255,255,255,0.9),
-                0 1px 2px rgba(255,255,255,1),
-                0 8px 16px rgba(0,0,0,0.08);
-            transition: background 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
-            flex-shrink: 0;
-        }
-        .theme-toggle[aria-checked="true"] {
-            background: radial-gradient(ellipse at top left, #1e293b 0%, #0f172a 40%, #020617 100%);
-            border-color: rgba(51,65,85,0.6);
-            box-shadow:
-                inset 5px 5px 12px rgba(0,0,0,0.9),
-                inset -5px -5px 12px rgba(71,85,105,0.4),
-                inset 8px 8px 16px rgba(0,0,0,0.7),
-                inset -8px -8px 16px rgba(100,116,139,0.2),
-                0 1px 1px rgba(255,255,255,0.05),
-                0 8px 16px rgba(0,0,0,0.4);
-        }
-
-        .toggle-bg-icons {
-            position: absolute; inset: 0;
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 0 13px; pointer-events: none;
-        }
-        .toggle-bg-sun { color: #b45309; transition: color 0.3s; width: 16px; height: 16px; }
-        .toggle-bg-moon { color: #475569; transition: color 0.3s; width: 16px; height: 16px; }
-        .theme-toggle[aria-checked="true"] .toggle-bg-sun,
-        .theme-toggle[aria-checked="true"] .toggle-bg-moon { color: #fef9c3; }
-
-        .toggle-thumb {
-            position: relative; z-index: 10;
-            width: 36px; height: 36px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            overflow: hidden;
-            background: linear-gradient(145deg, #ffffff 0%, #fefefe 50%, #f8fafc 100%);
-            border: 2px solid rgba(255,255,255,0.9);
-            box-shadow:
-                inset 2px 2px 4px rgba(203,213,225,0.3),
-                inset -2px -2px 4px rgba(255,255,255,1),
-                0 8px 32px rgba(0,0,0,0.18),
-                0 4px 12px rgba(0,0,0,0.12);
-            transition:
-                transform 0.45s cubic-bezier(0.34,1.56,0.64,1),
-                background 0.3s ease,
-                box-shadow 0.3s ease,
-                border-color 0.3s ease;
-            transform: translateX(0);
-        }
-        .theme-toggle[aria-checked="true"] .toggle-thumb {
-            transform: translateX(34px);
-            background: linear-gradient(145deg, #64748b 0%, #475569 50%, #334155 100%);
-            border-color: rgba(148,163,184,0.3);
-            box-shadow:
-                inset 2px 2px 4px rgba(100,116,139,0.4),
-                inset -2px -2px 4px rgba(0,0,0,0.8),
-                0 8px 32px rgba(0,0,0,0.6),
-                0 4px 12px rgba(0,0,0,0.5);
-        }
-        .toggle-thumb::before {
-            content: '';
-            position: absolute; inset: 0; border-radius: 50%;
-            background: linear-gradient(to bottom, rgba(255,255,255,0.4) 0%, transparent 40%, rgba(0,0,0,0.1) 100%);
-            mix-blend-mode: overlay; pointer-events: none; z-index: 1;
-        }
-
-        .toggle-icon {
-            position: absolute;
-            transition: opacity 0.25s ease;
-            width: 16px; height: 16px;
-        }
-        .toggle-sun { opacity: 1; color: #f59e0b; }
-        .toggle-moon { opacity: 0; color: #e2e8f0; }
-        .theme-toggle[aria-checked="true"] .toggle-sun { opacity: 0; }
-        .theme-toggle[aria-checked="true"] .toggle-moon { opacity: 1; }
-
-        /* Particle burst */
-        .toggle-particle {
-            position: absolute; width: 10px; height: 10px; border-radius: 50%;
-            pointer-events: none;
-            top: 50%; left: 50%; margin: -5px 0 0 -5px;
-            animation: toggle-burst 0.65s ease-out forwards;
-        }
-        @keyframes toggle-burst {
-            0%   { transform: scale(0); opacity: 0; }
-            25%  { opacity: 1; }
-            100% { transform: scale(8); opacity: 0; }
-        }
-        .toggle-particle-light {
-            background: radial-gradient(circle, rgba(251,191,36,0.7) 0%, rgba(251,191,36,0) 70%);
-        }
-        .toggle-particle-dark {
-            background: radial-gradient(circle, rgba(147,197,253,0.5) 0%, rgba(147,197,253,0) 70%);
-        }
-
-        /* Vertical toggle wrapper */
-        .toggle-v-wrap {
-            width: 50px; height: 84px;
-            display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0;
-            margin-right: -0.5rem;
-        }
-        .toggle-v-wrap .theme-toggle {
-            transform: rotate(-90deg);
-            flex-shrink: 0;
-        }
-
-        /* Mobile nav-end */
-        @media (max-width: 930px) {
-            .nav-end { grid-area: phone; display: flex; align-items: center; justify-content: center; padding: 0 0.4rem 0 0.7rem; overflow: hidden; }
-            .nav-end .nav-phone { flex-direction: column; align-items: center; gap: 0.1rem; font-size: clamp(0.65rem, 2.4vw, 0.88rem); padding: 0; white-space: nowrap; }
-            .nav-end .nav-phone svg { width: clamp(14px, 4vw, 20px); height: clamp(14px, 4vw, 20px); }
-            .toggle-v-wrap { grid-area: toggle; order: unset; display: flex; align-items: center; justify-content: center; overflow: clip; width: auto; height: auto; align-self: stretch; justify-self: stretch; margin: 0; padding: 0 0.7rem 0 0.4rem; }
-            .toggle-v-wrap .theme-toggle { transform: rotate(-90deg); flex-shrink: 0; }
-            .contact-block .nav-phone { font-size: clamp(1rem, 5vw, 1.3rem); }
-            .contact-block .nav-phone svg { width: clamp(18px, 5vw, 22px); height: clamp(18px, 5vw, 22px); }
-        }
-        @media (max-width: 1200px) {
-            .theme-toggle { width: 76px; height: 46px; }
-            .theme-toggle[aria-checked="true"] .toggle-thumb { transform: translateX(30px); }
-        }
-
-        /* ══ COOKIE CONSENT ══ */
+        /* ══ COOKIE LIŠTA ══ */
         .cookie-banner {
-            position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999;
-            background: rgba(45,34,27,0.97);
+            position: fixed; bottom: var(--s2); left: var(--s2); right: var(--s2); z-index: 9999;
+            max-width: 1100px; margin: 0 auto;
+            background: rgba(var(--bg-rgb),0.97);
             backdrop-filter: blur(16px);
-            border-top: 1px solid rgba(235,83,47,0.25);
-            padding: 1.1rem 5%;
-            display: flex; align-items: center; gap: 2rem;
-            box-shadow: 0 -8px 40px rgba(0,0,0,0.3);
-            transform: translateY(100%); opacity: 0;
-            transition: opacity 0.4s ease, transform 0.45s cubic-bezier(0.34,1.56,0.64,1);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 1.1rem 1.6rem;
+            display: flex; align-items: center; gap: var(--s4);
+            box-shadow: var(--shadow-3);
+            transform: translateY(120%); opacity: 0;
+            transition: opacity 0.4s var(--ease-out), transform 0.55s var(--ease-spring);
         }
         .cookie-banner.visible { transform: translateY(0); opacity: 1; }
-        .cookie-banner.hidden { transform: translateY(110%); opacity: 0; pointer-events: none; }
+        .cookie-banner.hidden { transform: translateY(130%); opacity: 0; pointer-events: none; }
         .cookie-text { flex: 1; }
         .cookie-text strong {
-            font-size: 0.76rem; font-weight: 700; letter-spacing: 0.14em;
-            text-transform: uppercase; color: rgba(255,255,255,0.85);
+            font-size: var(--t-caps-sm); font-weight: 600; letter-spacing: 0.12em;
+            text-transform: uppercase; color: var(--accent-text);
             display: block; margin-bottom: 0.25rem;
         }
-        .cookie-text p { font-size: 0.8rem; color: rgba(255,255,255,0.5); line-height: 1.55; margin: 0; }
-        .cookie-text a { color: var(--orange); text-decoration: underline; text-underline-offset: 2px; }
+        .cookie-text p { font-size: var(--t-caption); color: var(--text); line-height: 1.55; margin: 0; max-width: 36em; }
+        .cookie-text a { color: var(--text); font-weight: 600; text-decoration: underline; text-decoration-color: var(--pink); text-underline-offset: 3px; }
         .cookie-actions { display: flex; gap: 0.7rem; flex-shrink: 0; align-items: center; }
         .cookie-btn {
-            padding: 0.55rem 1.3rem; border-radius: 6px; cursor: pointer;
-            font-family: 'Jost', sans-serif;
-            font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-            transition: background 0.2s, transform 0.15s, border-color 0.2s, color 0.2s;
+            min-height: 44px;
+            padding: 0.7rem 1.4rem; border-radius: 999px; cursor: pointer;
+            font-family: inherit;
+            font-size: var(--t-caps-sm); font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+            transition: transform 0.4s var(--ease-spring), opacity 0.2s;
             white-space: nowrap;
         }
-        .cookie-btn--accept { background: var(--orange); color: #fff; border: 1px solid var(--orange); }
-        .cookie-btn--accept:hover { background: var(--orange-h); border-color: var(--orange-h); transform: translateY(-1px); }
-        .cookie-btn--decline { background: transparent; color: rgba(255,255,255,0.45); border: 1px solid rgba(255,255,255,0.18); }
-        .cookie-btn--decline:hover { border-color: rgba(255,255,255,0.4); color: rgba(255,255,255,0.7); }
+        .cookie-btn:hover { transform: translateY(-2px); }
+        .cookie-btn:active { transform: translateY(0); opacity: 0.85; }
+        .cookie-btn--accept,
+        .cookie-btn--decline { background: transparent; color: var(--text); border: 1.5px solid var(--text); }
         @media (max-width: 640px) {
-            .cookie-banner { flex-direction: column; align-items: flex-start; gap: 0.9rem; padding: 1.1rem 5% 1.4rem; }
+            .cookie-banner { flex-direction: column; align-items: flex-start; gap: 0.9rem; }
             .cookie-actions { width: 100%; }
             .cookie-btn { flex: 1; text-align: center; }
         }
+
+        /* ══ TMAVÝ REŽIM — podľa „brand guideline dark“ ══
+           Pozadie dark charcoal #212121, text čisto biely #FEFEFE,
+           akcent pre CENTRUM/iskru/linky, biele ikony v obrysových rámčekoch. */
+        html[data-theme="dark"] {
+            color-scheme: dark;
+            --text:      #FEFEFE;
+            --accent-text: var(--pink);
+            --focus:     var(--pink);
+            --cream:     #212121;
+            --cream-2:   #262626;
+            --cream-3:   #1C1C1C;
+            --surface:   #2A2A2A;
+            --on-photo:  #FEFEFE;
+            --icon:      #FEFEFE;
+
+            --bg-rgb:     33,33,33;
+            --shade-rgb:  33,33,33;
+
+            --line:       rgba(254,254,254,0.10);
+            --line-pink:  rgba(var(--accent-rgb),0.45);
+            --tint-pink:  rgba(var(--accent-rgb),0.14);
+
+            --shadow-1: 0 1px 2px rgba(0,0,0,0.25), 0 4px 14px rgba(0,0,0,0.22);
+            --shadow-2: 0 2px 4px rgba(0,0,0,0.25), 0 14px 32px rgba(0,0,0,0.30), 0 34px 70px rgba(0,0,0,0.25);
+            --shadow-3: 0 4px 10px rgba(0,0,0,0.30), 0 24px 48px rgba(0,0,0,0.35), 0 64px 110px rgba(0,0,0,0.35);
+        }
+
+        /* logo: biela verzia */
+        .logo-dark { display: none; }
+        html[data-theme="dark"] .logo-light { display: none; }
+        html[data-theme="dark"] .logo-dark { display: block; }
+
+        /* karty a vyvýšené plochy */
+        html[data-theme="dark"] .scroll-card,
+        html[data-theme="dark"] .review-card,
+        html[data-theme="dark"] .cennik-flat,
+        html[data-theme="dark"] .dh-porovnanie { background: var(--surface); }
+
+        /* ikony: biela linka v obrysovom zaoblenom rámčeku (ako v guideline) */
+        html[data-theme="dark"] .service-icon,
+        html[data-theme="dark"] .contact-ico {
+            background: transparent;
+            border: 1px solid rgba(254,254,254,0.32);
+            border-radius: 18px;
+        }
+        html[data-theme="dark"] .service-icon svg image { filter: url(#iconLight); }
+
+        /* akcentná linka s iskrou — hlavička a päta ako v guideline */
+        html[data-theme="dark"] nav { border-bottom-color: rgba(var(--accent-rgb),0.35); }
+        html[data-theme="dark"] footer { border-top: 1px solid var(--pink); position: relative; }
+        html[data-theme="dark"] footer::before {
+            content: ''; position: absolute; top: 0; right: var(--pad-x);
+            width: 22px; height: 26px; transform: translateY(-50%);
+            background: var(--pink);
+            -webkit-mask: var(--sparkle) center / contain no-repeat;
+            mask: var(--sparkle) center / contain no-repeat;
+        }
+
+        /* veľký vodoznak „D“ ako na úvodných stranách guidelinu */
+        html[data-theme="dark"] #hero::before,
+        html[data-theme="dark"] .komplexna-section::after {
+            content: ''; position: absolute; pointer-events: none;
+            aspect-ratio: 119.66 / 118.17;
+            background: rgba(254,254,254,0.05);
+            -webkit-mask: url("brand_assests/logo/dentall-sign-mask.svg") center / contain no-repeat;
+            mask: url("brand_assests/logo/dentall-sign-mask.svg") center / contain no-repeat;
+        }
+        html[data-theme="dark"] #hero::before { height: 78%; left: -9%; bottom: -6%; }
+        html[data-theme="dark"] .komplexna-section::after { height: 150%; right: -6%; top: -25%; }
+        html[data-theme="dark"] .hero-content::before { opacity: 0.22; }
+        html[data-theme="dark"] #hero,
+        html[data-theme="dark"] .hero-sub,
+        html[data-theme="dark"] #recenzie { background: var(--cream); }
+        html[data-theme="dark"] .komplexna-section { background: var(--cream-2); }
+
+        /* fotky */
+        html[data-theme="dark"] .hero-bg,
+        html[data-theme="dark"] .about-photo-placeholder img,
+        html[data-theme="dark"] .team-banner-img,
+        html[data-theme="dark"] .platenie-img img,
+        html[data-theme="dark"] .contact-building,
+        html[data-theme="dark"] .dh-photo { filter: brightness(0.9); }
+        html[data-theme="dark"] .poistovne-logos { background: #E6E1DE; border-color: transparent; box-shadow: none; }
+        html[data-theme="dark"] .contact-map iframe { filter: invert(0.9) hue-rotate(180deg) grayscale(0.55) brightness(0.95); }
+
+        html[data-theme="dark"] .cta-call,
+        html[data-theme="dark"] .call-bar { background: var(--surface); color: #FEFEFE; border: 1px solid rgba(var(--accent-rgb),0.45); }
+        html[data-theme="dark"] .hero-overlay::after { background: linear-gradient(to right, rgba(33,33,33,0.35), rgba(33,33,33,0.1)); }
+        html[data-theme="dark"] .cookie-btn--accept,
+        html[data-theme="dark"] .cookie-btn--decline { border-color: var(--pink); color: #FEFEFE; }
+
+        /* ══ PREPÍNAČ REŽIMU ══ */
+        .theme-toggle {
+            position: relative; flex-shrink: 0;
+            width: 58px; height: 32px; padding: 3px;
+            border-radius: 999px;
+            border: 1px solid var(--line-pink);
+            background: var(--cream-2);
+            cursor: pointer;
+            display: inline-flex; align-items: center;
+            transition: opacity 0.2s;
+        }
+        .theme-toggle::before { content: ''; position: absolute; inset: -7px -4px; }  /* väčšia plocha na ťuknutie */
+        .theme-toggle:hover { opacity: 0.85; }
+        .theme-toggle:active { opacity: 0.7; }
+        .theme-toggle-thumb {
+            width: 24px; height: 24px; border-radius: 50%;
+            background: var(--text);
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: var(--shadow-1);
+            transform: translateX(0);
+            transition: transform 0.5s var(--ease-spring);
+        }
+        .theme-toggle[aria-checked="true"] .theme-toggle-thumb { transform: translateX(26px); }
+        .theme-toggle svg {
+            width: 14px; height: 14px; stroke: #FEFEFE; fill: none;
+            stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+            position: absolute; transition: opacity 0.25s;
+        }
+        .theme-toggle .ico-moon { opacity: 0; }
+        .theme-toggle[aria-checked="true"] .ico-sun { opacity: 0; }
+        .theme-toggle[aria-checked="true"] .ico-moon { opacity: 1; }
+        .theme-toggle[aria-checked="true"] svg { stroke: #212121; }
+        html[data-theme="dark"] .theme-toggle-thumb { background: var(--pink); }
+        .nav-toggle-slot { display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        @media (max-width: 930px) { .nav-toggle-slot { grid-area: left; } }
     </style>
 </head>
 <body>
 
+<a class="skip-link" href="#main">Preskočiť na obsah</a>
+
+<!-- COOKIE CONSENT BANNER -->
+<div id="cookieBanner" class="cookie-banner" role="region" aria-label="Súhlas s externými zdrojmi">
+    <div class="cookie-text">
+        <strong>Externé zdroje &amp; súkromie</strong>
+        <p>Na našej stránke využívame Google Fonts, Google Analytics. Pri ich načítaní môže dochádzať k spracovaniu vašej IP adresy spoločnosťou Google LLC. Viac informácií nájdete v našich <a href="privacy.html">zásadách ochrany údajov</a>.</p>
+    </div>
+    <div class="cookie-actions">
+        <button id="cookieDecline" class="cookie-btn cookie-btn--decline">Len nevyhnutné</button>
+        <button id="cookieAccept" class="cookie-btn cookie-btn--accept">Prijať</button>
+    </div>
+</div>
+
 <!-- ═══ NAV ═══ -->
 <nav id="navbar">
     <div class="nav-inner">
-        <div class="toggle-v-wrap">
-            <button id="themeToggle" class="theme-toggle" aria-label="Prepnúť tmavý/svetlý režim" role="switch" aria-checked="false">
-                <div class="toggle-bg-icons">
-                    <svg class="toggle-bg-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-                        <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-                    </svg>
-                    <svg class="toggle-bg-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                    </svg>
-                </div>
-                <div class="toggle-thumb">
-                    <svg class="toggle-icon toggle-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-                        <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-                    </svg>
-                    <svg class="toggle-icon toggle-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                    </svg>
-                </div>
-            </button>
-        </div>
 
-        <a href="#" class="nav-brand">
-            <div class="nav-logo-css">
-                <div class="nav-logo-words">
-                    <span class="nav-logo-name">DENT<span class="nav-logo-accent">ALL</span></span>
-                    <span class="nav-logo-sub">Centrum</span>
-                </div>
-            </div>
+        <a href="#" class="nav-brand" aria-label="DentAll Centrum – na začiatok stránky">
+            <img class="nav-logo logo-light" src="brand_assests/logo/dentall-centrum-logo.svg" alt="DentAll Centrum" width="132" height="88">
+            <img class="nav-logo logo-dark" src="brand_assests/logo/dentall-centrum-logo-dark.svg" alt="DentAll Centrum" width="132" height="88">
             <span class="nav-doctor">MUDr. Otília Kohajdová</span>
         </a>
+
+        <a href="#" class="nav-mark logo-light" aria-label="DentAll Centrum – na začiatok stránky"><img src="brand_assests/logo/dentall-mark.svg" alt="" width="42" height="42"></a>
+        <a href="#" class="nav-mark logo-dark" aria-label="DentAll Centrum – na začiatok stránky"><img src="brand_assests/logo/dentall-mark-dark.svg" alt="" width="42" height="42"></a>
 
         <ul class="nav-links" id="navLinks">
             <li><a href="#sluzby">Naše služby</a></li>
@@ -1379,9 +1292,18 @@
             <li><a href="#kontakt">Kontakt</a></li>
         </ul>
 
+        <div class="nav-toggle-slot">
+            <button id="themeToggle" class="theme-toggle" type="button" role="switch" aria-checked="false" aria-label="Tmavý režim">
+                <span class="theme-toggle-thumb">
+                    <svg class="ico-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+                    <svg class="ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                </span>
+            </button>
+        </div>
+
         <div class="nav-end">
-            <a href="tel:048414519" class="nav-phone">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <a href="tel:+421484145196" class="nav-phone">
+                <svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.95 13a19.79 19.79 0 01-3.07-8.67A2 2 0 012.85 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
                 </svg>
                 048 414 51 96
@@ -1392,15 +1314,23 @@
 </nav>
 
 
+<main id="main">
+
 <!-- ═══ HERO ═══ -->
 <section id="hero">
-    <img class="hero-bg" src="brand_assests/IMG_7541.webp" alt="Dentálna ambulancia DENTALL Centrum">
-    <div class="hero-overlay"></div>
-
     <div class="hero-content">
+        <span class="hero-rule fade-up"></span>
         <h1 class="fade-up d1">
             PRE VŠETKÝCH,<br>KTORÍ MAJÚ ZÁUJEM<br><span>O SVOJE ZDRAVIE</span>
         </h1>
+        <div class="hero-cta fade-up d2">
+            <a class="cta-call" href="tel:+421484145196"><span class="cta-call-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.95 13a19.79 19.79 0 01-3.07-8.67A2 2 0 012.85 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></span><span class="cta-call-text"><span class="cta-call-label">Objednajte sa</span> <span class="cta-call-number">048 414 51 96</span></span></a>
+        </div>
+    </div>
+
+    <div class="hero-media fade-up d2">
+        <img class="hero-bg" src="brand_assests/IMG_7541.webp" alt="Dentálna ambulancia DENTALL Centrum">
+        <div class="hero-overlay"></div>
     </div>
 
 </section>
@@ -1448,7 +1378,7 @@
     </div>
     <div class="stat-item fade-up d2">
         <div class="stat-num">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <svg aria-hidden="true" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M17 8h1a4 4 0 010 8h-1"/>
                 <path d="M3 8h14v9a4 4 0 01-4 4H7a4 4 0 01-4-4V8z"/>
                 <line x1="6" y1="2" x2="6" y2="4"/>
@@ -1460,7 +1390,7 @@
     </div>
     <div class="stat-item fade-up d3">
         <div class="stat-num">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <svg aria-hidden="true" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M5 12.55a11 11 0 0114.08 0"/>
                 <path d="M1.42 9a16 16 0 0121.16 0"/>
                 <path d="M8.53 16.11a6 6 0 016.95 0"/>
@@ -1477,7 +1407,7 @@
     <img src="brand_assests/IMG_7549.webp" alt="Moderné vybavenie DENTALL Centrum" loading="lazy">
     <div class="photo-strip-overlay"></div>
     <div class="photo-strip-text fade-up">
-        <h3>Moderné vybavenie<br>na špičkovej úrovni</h3>
+        <h2>Moderné vybavenie<br>na špičkovej úrovni</h2>
         <p>Pracujeme s modernými technológiami, materiálmi a spolupracujeme s kvalitnými zubnými laboratóriami.</p>
     </div>
 </div>
@@ -1494,7 +1424,7 @@
 
         <div class="service-card fade-up">
             <div class="service-icon">
-                <svg viewBox="0 0 64 64" style="fill:var(--peach-mid);stroke:none">
+                <svg aria-hidden="true" viewBox="0 0 64 64" style="fill:var(--icon);stroke:none">
                     <path d="m58.01 7.36-25-5.17a4.91 4.91 0 0 0 -2.02 0l-25 5.17a5.027 5.027 0 0 0 -3.99 4.9v19.74c0 16.47 28.38 29.37 29.59 29.91a.979.979 0 0 0 .82 0 92 92 0 0 0 14.68-8.59c9.89-7.17 14.91-14.34 14.91-21.32v-19.74a5.027 5.027 0 0 0 -3.99-4.9zm1.99 24.64c0 14.17-24.51 26.25-28 27.9-3.49-1.65-28-13.72-28-27.9v-19.74a3.017 3.017 0 0 1 2.39-2.94l25-5.17a2.693 2.693 0 0 1 1.22 0l25 5.17a3.017 3.017 0 0 1 2.39 2.94z"/>
                     <path d="m44.96 26.69-.81 15.52a4.005 4.005 0 0 1 -4 3.79h-1.33a3.994 3.994 0 0 1 -3.98-3.6l-.65-6.6a2 2 0 0 0 -2-1.8h-.54a2 2 0 0 0 -2 1.83l-.55 6.51a3.975 3.975 0 0 1 -3.99 3.66h-1.26a4.005 4.005 0 0 1 -4-3.79l-.81-15.52a8.987 8.987 0 0 1 5.69-14.6 8.865 8.865 0 0 1 3.52.2.986.986 0 0 1 .72 1.21 1 1 0 0 1 -1.22.72 7 7 0 0 0 -8.69 5.84 6.965 6.965 0 0 0 1.71 5.59 1 1 0 0 1 .26.73l.82 15.72a2 2 0 0 0 2 1.9h1.26a2 2 0 0 0 2-1.83l.55-6.51a3.975 3.975 0 0 1 3.99-3.66h.54a4 4 0 0 1 3.99 3.6l.65 6.6a2 2 0 0 0 1.99 1.8h1.33a2 2 0 0 0 2-1.9l.83-15.74a.931.931 0 0 1 .25-.71 6.976 6.976 0 0 0 1.71-5.6 7 7 0 0 0 -12.19-3.67 1 1 0 1 1 -1.5-1.32 8.99 8.99 0 0 1 13.71 11.63z"/>
                 </svg>
@@ -1505,7 +1435,7 @@
 
         <div class="service-card fade-up d1">
             <div class="service-icon">
-                <svg viewBox="0 0 512 512" style="fill:var(--peach-mid);stroke:none">
+                <svg aria-hidden="true" viewBox="0 0 512 512" style="fill:var(--icon);stroke:none">
                     <path d="m448.58 125.068h-19.65c23.356-10.094 35.605-22.442 35.605-36.1 0-18.072-20.97-33.567-60.642-44.844-17.124-26.326-45.818-43.624-78.268-43.624-11.202 0-22.192 2.041-32.693 6.078-8.75 3.405-35.87 3.404-44.66-.008-10.446-4.028-21.429-6.07-32.644-6.07-31.253 0-59.023 16.045-76.328 40.747-33.555 8.202-71.523 22.958-71.523 47.721 0 17.635 20.038 32.842 57.994 44.072 3.617 11.274 9.099 21.859 16.284 31.151 13.956 18.087 25.524 74.516 33.178 111.858 2.017 9.842 3.759 18.341 5.32 25.135 2.571 11.235 10.879 18.784 20.675 18.784 9.08 0 16.534-6.594 20.447-18.081l36.837-107.705c7.094-2.297 17.125-2.297 24.201-.004l36.842 107.721c3.953 11.483 11.414 18.068 20.47 18.068 9.756 0 18.062-7.54 20.675-18.786 1.533-6.71 3.248-15.08 5.232-24.772 3.882-18.956 8.644-42.19 14.185-63.101h33.295c3.859 0 6.988-3.129 6.988-6.988v-28.149h28.178c3.859 0 6.988-3.129 6.988-6.988v-39.127c.001-3.86-3.127-6.988-6.986-6.988zm1.98-36.1c0 7.895-11.1 16.809-30.159 24.525v-7.473c.094-1.912.141-3.626.141-5.226 0-13.883-2.685-27.116-7.533-39.151 27.391 9.59 37.551 20.094 37.551 27.325zm-234.932-74.492c9.489 0 18.781 1.728 27.602 5.128 12.044 4.675 42.757 4.674 54.744.009 8.867-3.409 18.17-5.137 27.651-5.137 41.181 0 75.277 32.968 80.302 75.453h-31.613c-3.859 0-6.988 3.129-6.988 6.988v28.151h-28.179c-3.859 0-6.988 3.129-6.988 6.988v.664c-21.156 2.236-43.319 3.381-66.004 3.381-48.443 0-94.021-5.1-129.041-14.395-1.591-6.8-2.429-13.821-2.429-20.912.001-47.596 36.312-86.318 80.943-86.318zm-133.875 74.492c0-8.071 12.905-20.314 47.908-30.661-5.737 12.908-8.951 27.307-8.951 42.486 0 5.523.446 11.011 1.295 16.413-29.435-9.855-40.252-20.803-40.252-28.238zm270.488 184.637c-1.968 9.609-3.667 17.908-5.159 24.438-1.105 4.754-3.94 7.947-7.056 7.947-3.972 0-6.558-6.613-7.251-8.627l-37.882-110.761c-.615-1.798-1.935-3.268-3.657-4.071-11.548-5.389-29.663-5.39-41.239-.003-1.725.802-3.048 2.274-3.664 4.074l-37.884 110.769c-.689 2.022-3.245 8.619-7.22 8.619-3.133 0-5.966-3.184-7.052-7.93-1.525-6.638-3.252-15.063-5.252-24.819-8.386-40.911-19.871-96.94-35.809-117.594-4.322-5.589-7.928-11.728-10.78-18.233 34.818 8.198 78.147 12.662 123.822 12.662 22.647 0 44.807-1.114 66.004-3.3v24.405c0 3.86 3.129 6.988 6.988 6.988h28.179v28.149c0 .208.013.413.031.617-5.97 22.021-11.028 46.696-15.119 66.67zm89.351-109.411h-28.178c-3.859 0-6.988 3.129-6.988 6.988v28.149h-25.123v-28.149c0-3.86-3.129-6.988-6.988-6.988h-28.179v-25.15h28.179c3.859 0 6.988-3.129 6.988-6.988v-28.151h25.123v28.151c0 3.86 3.129 6.988 6.988 6.988h28.178zm-37.976 180.162-63.409 40.658c-3.048-9.1-10.21-16.532-19.772-19.711l-110.956-36.693c-14.604-4.837-29.271-3.157-42.408 4.85l-48.306 29.377-3.789-5.944c-2.074-3.255-6.395-4.211-9.649-2.136l-54.631 34.827c-1.563.997-2.666 2.573-3.067 4.383-.4 1.81-.065 3.705.931 5.267l69.54 109.035c.997 1.563 2.573 2.666 4.383 3.065.5.111 1.005.166 1.509.166 1.321 0 2.627-.375 3.758-1.096l54.602-34.827c3.253-2.075 4.209-6.395 2.135-9.648l-8.048-12.624 20.682-12.58 88.287 29.201c5.942 1.965 11.881 2.942 17.735 2.942 10.231 0 20.199-2.985 29.451-8.899l104.686-67.113c14.453-9.293 18.671-28.611 9.402-43.063-9.281-14.469-28.598-18.706-43.066-9.437zm-277.49 150.506-62.024-97.25 42.844-27.313 61.999 97.251zm303.603-109.766-104.67 67.102c-10.873 6.95-23.067 8.492-35.262 4.459l-91.353-30.216c-1.946-.643-4.076-.401-5.826.664l-23.694 14.411-42.644-66.89 48.059-29.227c9.665-5.89 20.01-7.076 30.75-3.52l110.949 36.691c7.263 2.414 12.005 9.287 11.786 16.89-.06.258-.11.52-.141.789-.665 5.69-3.812 10.967-8.213 13.771-4.075 2.597-8.87 3.01-14.253 1.228l-50.529-16.72c-3.666-1.211-7.617.776-8.83 4.44-1.212 3.664.775 7.617 4.439 8.829l50.527 16.719c3.571 1.182 7.139 1.769 10.612 1.769 5.565 0 10.881-1.507 15.544-4.479 7.098-4.523 12.189-12.113 14.04-20.712l70.138-44.973c7.979-5.11 18.639-2.771 23.761 5.216 5.112 7.974 2.781 18.633-5.19 23.759zm-3.528-112.772v9.76h9.761c3.859 0 6.988 3.129 6.988 6.988s-3.129 6.988-6.988 6.988h-9.761v9.789c0 3.86-3.129 6.988-6.988 6.988s-6.988-3.129-6.988-6.988v-9.789h-9.789c-3.859 0-6.988-3.129-6.988-6.988s3.129-6.988 6.988-6.988h9.789v-9.76c0-3.86 3.129-6.988 6.988-6.988s6.988 3.128 6.988 6.988zm-297.625-80.857v9.789h9.789c3.859 0 6.988 3.129 6.988 6.988s-3.129 6.988-6.988 6.988h-9.789v9.789c0 3.86-3.129 6.988-6.988 6.988s-6.988-3.129-6.988-6.988v-9.789h-9.789c-3.859 0-6.988-3.129-6.988-6.988s3.129-6.988 6.988-6.988h9.789v-9.789c0-3.86 3.129-6.988 6.988-6.988s6.988 3.129 6.988 6.988z"/>
                 </svg>
             </div>
@@ -1515,10 +1445,13 @@
 
         <div class="service-card fade-up d2">
             <div class="service-icon">
-                <svg viewBox="0 0 56 56">
+                <svg aria-hidden="true" viewBox="0 0 56 56">
                     <defs>
+                        <filter id="iconLight" color-interpolation-filters="sRGB">
+                            <feColorMatrix type="matrix" values="0 0 0 0 0.996  0 0 0 0 0.996  0 0 0 0 0.996  -0.333 -0.333 -0.333 1 0"/>
+                        </filter>
                         <filter id="whiteningColor" color-interpolation-filters="sRGB">
-                            <feColorMatrix type="matrix" values="0 0 0 0 0.941  0 0 0 0 0.722  0 0 0 0 0.604  -0.8 -0.8 -0.8 1 0"/>
+                            <feColorMatrix type="matrix" values="0 0 0 0 0.8  0 0 0 0 0.522  0 0 0 0 0.498  -0.8 -0.8 -0.8 1 0"/>
                         </filter>
                     </defs>
                     <image href="brand_assests/whitening.png" x="4" y="4" width="48" height="48" filter="url(#whiteningColor)"/>
@@ -1530,7 +1463,7 @@
 
         <div class="service-card fade-up d3">
             <div class="service-icon">
-                <svg viewBox="0 0 511.984 511.984" style="fill:var(--peach-mid);stroke:none">
+                <svg aria-hidden="true" viewBox="0 0 511.984 511.984" style="fill:var(--icon);stroke:none">
                     <g><path d="m9.112 319.809c.942 0 1.899-.179 2.825-.556 29.506-12.012 78.134-16.015 111.2-2.85.575 11.674 2.509 42.819 7.904 74.779 9.627 57.031 24.908 85.814 46.714 87.994 16.692 1.674 31.89-10.822 45.149-37.138 1.864-3.699.376-8.208-3.323-10.072-3.699-1.863-8.208-.376-10.072 3.323-7 13.894-17.93 30.194-30.26 28.962-8.489-.849-15.22-12.593-19.373-22.296-5.526-12.912-10.244-30.792-14.023-53.142-6.53-38.616-7.92-77.325-7.933-77.711-.064-.435-.001-.887-.444-2.299l-20.709-57.135c-3.091-8.54-4.658-17.455-4.658-26.499 0-20.588 7.969-40.002 22.438-54.666 4.146-4.201 8.771-7.928 13.746-11.078 2.344-1.484 5.157-1.688 7.719-.561 2.544 1.12 4.305 3.297 4.861 5.996l5.101 48.594c2.994 28.522 26.877 50.03 55.556 50.03h69.926c28.678 0 52.562-21.508 55.556-50.029l5.101-48.594c.556-2.699 2.316-4.876 4.86-5.996 2.562-1.128 5.376-.923 7.72.561 4.974 3.15 9.599 6.877 13.746 11.078 20.97 21.241 27.949 53.098 17.781 81.161l-20.71 57.139c-.088.384-.328.768-.444 2.299-.013.386-1.403 39.096-7.934 77.711-3.779 22.35-8.498 40.229-14.023 53.142-4.152 9.703-10.884 21.447-19.374 22.296-18.919 1.91-40.329-38.552-54.552-103.063-2.098-10.805-11.201-18.056-22.691-18.056-11.488 0-20.59 7.25-22.689 18.055-2.298 10.42-6.162 26.222-11.552 42.51-1.301 3.933.832 8.175 4.764 9.477 3.933 1.301 8.175-.832 9.477-4.764 5.608-16.946 9.611-33.333 11.982-44.096.017-.074.032-.147.045-.222 1.071-5.673 6.83-5.96 7.974-5.96s6.902.287 7.974 5.96c.014.074.029.148.045.222 3.352 15.215 10.599 44.416 21.479 69.044 13.484 30.524 29.046 45.968 46.296 45.966 24.749-.499 39.663-30.243 49.657-88.142 5.402-31.999 7.334-63.18 7.906-74.82 33.272-13.553 80.92-8.883 110.225 2.903.917.369 1.865.544 2.796.544 2.971 0 5.784-1.778 6.961-4.703 1.545-3.843-.317-8.211-4.16-9.757-29.76-11.97-74.628-17.081-110.54-6.666l15.19-41.908c12.128-33.473 3.804-71.473-21.209-96.809-4.945-5.01-10.462-9.456-16.396-13.213-6.538-4.14-14.683-4.744-21.786-1.617-6.232 2.743-10.898 8.005-12.909 14.396l-56.341 46.202c-14.869 12.194-36.405 12.134-51.206-.143l-55.502-46.034c-2.007-6.402-6.677-11.674-12.917-14.42-7.104-3.127-15.249-2.521-21.786 1.617-5.935 3.758-11.452 8.204-16.397 13.214-17.258 17.489-26.762 40.645-26.762 65.202 0 10.79 1.868 21.423 5.554 31.607l15.232 42.023c-36.59-10.441-82.673-5.219-111.613 6.562-3.836 1.562-5.681 5.938-4.119 9.774 1.183 2.908 3.987 4.672 6.947 4.672zm247.053-89.978c12.43 0 24.863-4.165 35.027-12.499l44.129-36.187-3.227 30.743c-2.19 20.863-19.661 36.596-40.638 36.596h-69.926c-20.978 0-38.448-15.732-40.638-36.596l-3.212-30.598 43.218 35.846c10.202 8.461 22.733 12.695 35.267 12.695z"/><path d="m502.874 496.984h-493.765c-4.142 0-7.5 3.358-7.5 7.5s3.358 7.5 7.5 7.5h493.765c4.142 0 7.5-3.358 7.5-7.5s-3.358-7.5-7.5-7.5z"/><path d="m162.649 42.535c5.246 29.307 30.662 50.579 60.433 50.579h11.41v26.282c-1.592-.371-3.238-.561-4.913-.561-5.743 0-11.142 2.236-15.202 6.297-4.061 4.061-6.298 9.459-6.298 15.203s2.237 11.143 6.297 15.203l26.413 26.413c4.061 4.061 9.46 6.297 15.203 6.297s11.142-2.236 15.203-6.297l26.413-26.413c4.062-4.061 6.298-9.46 6.298-15.203s-2.236-11.143-6.297-15.203c-4.061-4.061-9.46-6.297-15.203-6.297-1.675 0-3.321.19-4.913.561v-47.986c0-11.855-9.645-21.5-21.5-21.5s-21.5 9.645-21.5 21.5v6.703h-11.41c-22.497 0-41.703-16.074-45.667-38.221l-3.43-19.169c-.25-1.401.302-2.446.654-2.944.351-.497 1.147-1.365 2.542-1.597.184-.03.366-.068.547-.112 15.124-3.684 36.905 2.685 55.622 8.751-9.241 2.994-20.106 5.946-29.124 6.793-4.124.388-7.153 4.045-6.765 8.169.366 3.885 3.633 6.798 7.458 6.798 34.678-4.656 48.63-14.549 69.773-20.138 19.506-6.402 43.781-14.37 60.593-10.366.169.041.339.075.51.103 1.402.232 2.2 1.102 2.552 1.6.351.498.903 1.542.653 2.94l-3.43 19.17c-3.105 17.352-15.522 31.258-32.403 36.292-3.97 1.184-6.228 5.361-5.044 9.331s5.362 6.228 9.331 5.044c22.341-6.662 38.773-25.064 42.882-48.024l3.43-19.17c.897-5.017-.227-10.071-3.165-14.233-2.884-4.085-7.164-6.811-12.075-7.699-20.9-4.866-47.291 3.796-68.511 10.761-4.785 1.571-9.342 3.066-13.516 4.307-4.026-1.203-8.447-2.652-13.087-4.173-21.513-7.049-48.262-15.816-68.987-10.89-4.897.892-9.165 3.615-12.043 7.693-2.938 4.163-4.062 9.218-3.164 14.235zm86.843 28.875c0-3.584 2.916-6.5 6.5-6.5s6.5 2.916 6.5 6.5v61.539c0 3.034 1.827 5.768 4.63 6.929 2.802 1.161 6.029.52 8.173-1.626l2.514-2.514c1.228-1.228 2.86-1.904 4.596-1.904s3.368.676 4.597 1.904c1.228 1.228 1.903 2.859 1.903 4.596s-.676 3.368-1.904 4.596l-26.413 26.413c-1.228 1.228-2.86 1.904-4.596 1.904s-3.368-.676-4.596-1.904l-26.414-26.414c-1.228-1.227-1.903-2.859-1.903-4.596s.676-3.369 1.904-4.596c1.228-1.228 2.86-1.904 4.596-1.904s3.368.676 4.596 1.904l2.514 2.514c2.146 2.146 5.372 2.787 8.173 1.626 2.803-1.161 4.63-3.896 4.63-6.929z"/><ellipse cx="451.806" cy="364.454" rx="7.479" ry="7.479" transform="matrix(.973 -.23 .23 .973 -71.648 113.553)"/><ellipse cx="73.419" cy="459.403" rx="7.479" ry="7.479" transform="matrix(.973 -.23 .23 .973 -103.585 29.158)"/><ellipse cx="48.801" cy="430.865" rx="7.479" ry="7.479" transform="matrix(.707 -.707 .707 .707 -290.374 160.705)"/></g>
                 </svg>
             </div>
@@ -1540,10 +1473,10 @@
 
         <div class="service-card fade-up">
             <div class="service-icon">
-                <svg viewBox="0 0 56 56">
+                <svg aria-hidden="true" viewBox="0 0 56 56">
                     <defs>
                         <filter id="protetColor" color-interpolation-filters="sRGB">
-                            <feColorMatrix type="matrix" values="0 0 0 0 0.941  0 0 0 0 0.722  0 0 0 0 0.604  -0.333 -0.333 -0.333 1 0"/>
+                            <feColorMatrix type="matrix" values="0 0 0 0 0.8  0 0 0 0 0.522  0 0 0 0 0.498  -0.333 -0.333 -0.333 1 0"/>
                         </filter>
                     </defs>
                     <image href="brand_assests/dental-crown-2.png" x="4" y="4" width="48" height="48" filter="url(#protetColor)"/>
@@ -1555,10 +1488,10 @@
 
         <div class="service-card fade-up d1">
             <div class="service-icon">
-                <svg viewBox="0 0 56 56">
+                <svg aria-hidden="true" viewBox="0 0 56 56">
                     <defs>
                         <filter id="paroColor" color-interpolation-filters="sRGB">
-                            <feColorMatrix type="matrix" values="0 0 0 0 0.941  0 0 0 0 0.722  0 0 0 0 0.604  -0.333 -0.333 -0.333 1 0"/>
+                            <feColorMatrix type="matrix" values="0 0 0 0 0.8  0 0 0 0 0.522  0 0 0 0 0.498  -0.333 -0.333 -0.333 1 0"/>
                         </filter>
                     </defs>
                     <image href="brand_assests/dental.png" x="4" y="4" width="48" height="48" filter="url(#paroColor)"/>
@@ -1570,10 +1503,10 @@
 
         <div class="service-card fade-up d2">
             <div class="service-icon">
-                <svg viewBox="0 0 56 56">
+                <svg aria-hidden="true" viewBox="0 0 56 56">
                     <defs>
                         <filter id="surgeryColor" color-interpolation-filters="sRGB">
-                            <feColorMatrix type="matrix" values="0 0 0 0 0.941  0 0 0 0 0.722  0 0 0 0 0.604  -0.333 -0.333 -0.333 1 0"/>
+                            <feColorMatrix type="matrix" values="0 0 0 0 0.8  0 0 0 0 0.522  0 0 0 0 0.498  -0.333 -0.333 -0.333 1 0"/>
                         </filter>
                     </defs>
                     <image href="brand_assests/dental-surgery.png" x="4" y="4" width="48" height="48" filter="url(#surgeryColor)"/>
@@ -1585,7 +1518,7 @@
 
         <div class="service-card fade-up d3">
             <div class="service-icon">
-                <svg viewBox="0 0 48 48">
+                <svg aria-hidden="true" viewBox="0 0 48 48">
                     <rect x="10" y="4" width="28" height="40" rx="2"/>
                     <line x1="16" y1="12" x2="32" y2="12"/>
                     <line x1="16" y1="16" x2="27" y2="16"/>
@@ -1621,7 +1554,7 @@
 <!-- ═══ PREČO MY ═══ -->
 <section id="preco-my">
     <div class="section-header">
-        <span class="label label--large">Náš prístup</span>
+        <span class="label">Náš prístup</span>
         <h2 class="fade-up">Ako prebieha vyšetrenie</h2>
     </div>
 
@@ -1642,6 +1575,10 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="call-block fade-up">
+        <a class="cta-call" href="tel:+421484145196"><span class="cta-call-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.95 13a19.79 19.79 0 01-3.07-8.67A2 2 0 012.85 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></span><span class="cta-call-text"><span class="cta-call-label">Zavolajte</span> <span class="cta-call-number">048 414 51 96</span></span></a>
     </div>
 </section>
 
@@ -1664,7 +1601,7 @@
             <div class="dh-photos-stack">
                 <img src="brand_assests/159b0e1a-59d3-447f-8bfd-e8a4f06176b3.webp" alt="Farbenie plaku - dentálna hygiena" class="dh-photo">
                 <img src="brand_assests/IMG_7619.webp" alt="Farbenie plaku - zubný kameň" class="dh-photo">
-                <p class="dh-photo-caption"><span style="color:var(--orange)">po</span> nesprávnom umytí zubov</p>
+                <p class="dh-photo-caption"><span style="color:var(--pink)">po</span> nesprávnom umytí zubov</p>
             </div>
         </div>
     </div>
@@ -1673,10 +1610,10 @@
     <div class="dh-porovnanie fade-up">
         <div class="dh-porovnanie-label">Pre porovnanie</div>
         <div class="dh-porovnanie-content">
-            <div class="dh-porovnanie-icon" style="font-size:4.5rem;">€</div>
+            <div class="dh-porovnanie-icon" style="font-size:4.5rem;" aria-hidden="true">€</div>
             <div class="dh-porovnanie-texts">
                 <p>Kompletný tréning <strong>iTOP</strong> — 4 sedenia v priebehu 5 mesiacov — vychádza okolo <strong>350 €</strong>.</p>
-                <p style="margin-top:0.8rem;">Táto suma je stále menej ako <strong>1</strong> zirkónová koruna na <strong>1</strong> rozpadnutý / zlomený zub.</p>
+                <p>Táto suma je stále menej ako <strong>1</strong> zirkónová koruna na <strong>1</strong> rozpadnutý / zlomený zub.</p>
             </div>
         </div>
     </div>
@@ -1767,52 +1704,60 @@
         <h2 class="fade-up">Čo hovoria naši pacienti</h2>
     </div>
 
-    <div class="testimonials-columns-wrap">
+    <div class="testimonials-columns-wrap" id="reviewsWrap">
 
         <!-- Stĺpec 1 -->
         <div class="testimonials-col">
             <div class="testimonials-track" style="animation-duration:15s">
-                <div class="review-card"><p class="review-text">Navštevujem túto pani doktorku roky... pre mňa najlepšia zubná lekárka. TOP odbornosť, trpezlivosť a rešpekt k bolesti klienta. Dentálna hygiena skvelá doplňujúca vec 2x ročne. Po nej mám zuby v stave, aký som ešte nemal... Zo srdca odporúčam všetkým, ktorí si vážia seba, svoje zdravie a myslia na budúcnosť.</p><div class="review-author-row"><div class="review-avatar" style="background:#E07A5F">R</div><div><div class="review-name">Rastislav Kmeť</div><div class="review-role">Google recenzia</div></div></div></div>
+                <div class="review-card"><p class="review-text">Navštevujem túto pani doktorku roky... pre mňa najlepšia zubná lekárka. TOP odbornosť, trpezlivosť a rešpekt k bolesti klienta. Dentálna hygiena skvelá doplňujúca vec 2x ročne. Po nej mám zuby v stave, aký som ešte nemal... Zo srdca odporúčam všetkým, ktorí si vážia seba, svoje zdravie a myslia na budúcnosť.</p><div class="review-author-row"><div class="review-avatar" data-tone="accent">R</div><div><div class="review-name">Rastislav Kmeť</div><div class="review-role">Google recenzia</div></div></div></div>
                 <div class="review-card"><p class="review-text">Na slovenské pomery neskutočne kvalitná ambulancia pani dok. Kohajdovej a profesionálna dentálna hygiena, ktorej vďačím za to, že už niekoľko rokov netrpím na zápaly ďasien, s ktorými som predtým roky bojoval. Veľká vďaka!</p><div class="review-author-row"><img class="review-avatar" src="brand_assests/Screenshot 2026-05-29 at 16.25.00.png" alt="Zorien" style="object-fit:cover"><div><div class="review-name">Zorien</div><div class="review-role">Google recenzia</div></div></div></div>
-                <div class="review-card"><p class="review-text">Som veľmi spokojný s úrovňou zubného centra. Milý personál, vysoká odborná úroveň. A špeciálne super dentálna hygiena, ktorá mi zachránila chrup pred poškodením.</p><div class="review-author-row"><div class="review-avatar" style="background:#6A8F6A">V</div><div><div class="review-name">Vojtech Kováč</div><div class="review-role">Google recenzia</div></div></div></div>
-                <div class="review-card"><p class="review-text">Odporúčame vám pre deti.</p><div class="review-author-row"><div class="review-avatar" style="background:#9B72CF">J</div><div><div class="review-name">Jozef Kováčik</div><div class="review-role">Google recenzia</div></div></div></div>
-                <div class="review-card"><p class="review-text">Túto kliniku určite odporúčam, pani doktorka aj celý tím sú veľkí profesionáli s ľudským prístupom, cítila som sa po príchode aj počas ošetrenia veľmi príjemne, majú pekné priestory, moderné vybavenie a po ošetrení môžem potvrdiť že personál je plný odborníkov, ktorí si potrpia na kvalitu. Som veľmi spokojná 🙂</p><div class="review-author-row"><div class="review-avatar" style="background:#5A7FA8">L</div><div><div class="review-name">Lenka</div><div class="review-role">Google recenzia</div></div></div></div>
-                <!-- duplicate for infinite loop -->
-                <div class="review-card"><p class="review-text">Navštevujem túto pani doktorku roky... pre mňa najlepšia zubná lekárka. TOP odbornosť, trpezlivosť a rešpekt k bolesti klienta. Dentálna hygiena skvelá doplňujúca vec 2x ročne. Po nej mám zuby v stave, aký som ešte nemal... Zo srdca odporúčam všetkým, ktorí si vážia seba, svoje zdravie a myslia na budúcnosť.</p><div class="review-author-row"><div class="review-avatar" style="background:#E07A5F">R</div><div><div class="review-name">Rastislav Kmeť</div><div class="review-role">Google recenzia</div></div></div></div>
-                <div class="review-card"><p class="review-text">Na slovenské pomery neskutočne kvalitná ambulancia pani dok. Kohajdovej a profesionálna dentálna hygiena, ktorej vďačím za to, že už niekoľko rokov netrpím na zápaly ďasien, s ktorými som predtým roky bojoval. Veľká vďaka!</p><div class="review-author-row"><img class="review-avatar" src="brand_assests/Screenshot 2026-05-29 at 16.25.00.png" alt="Zorien" style="object-fit:cover"><div><div class="review-name">Zorien</div><div class="review-role">Google recenzia</div></div></div></div>
-                <div class="review-card"><p class="review-text">Som veľmi spokojný s úrovňou zubného centra. Milý personál, vysoká odborná úroveň. A špeciálne super dentálna hygiena, ktorá mi zachránila chrup pred poškodením.</p><div class="review-author-row"><div class="review-avatar" style="background:#6A8F6A">V</div><div><div class="review-name">Vojtech Kováč</div><div class="review-role">Google recenzia</div></div></div></div>
-                <div class="review-card"><p class="review-text">Odporúčame vám pre deti.</p><div class="review-author-row"><div class="review-avatar" style="background:#9B72CF">J</div><div><div class="review-name">Jozef Kováčik</div><div class="review-role">Google recenzia</div></div></div></div>
-                <div class="review-card"><p class="review-text">Túto kliniku určite odporúčam, pani doktorka aj celý tím sú veľkí profesionáli s ľudským prístupom, cítila som sa po príchode aj počas ošetrenia veľmi príjemne, majú pekné priestory, moderné vybavenie a po ošetrení môžem potvrdiť že personál je plný odborníkov, ktorí si potrpia na kvalitu. Som veľmi spokojná 🙂</p><div class="review-author-row"><div class="review-avatar" style="background:#5A7FA8">L</div><div><div class="review-name">Lenka</div><div class="review-role">Google recenzia</div></div></div></div>
+                <div class="review-card"><p class="review-text">Som veľmi spokojný s úrovňou zubného centra. Milý personál, vysoká odborná úroveň. A špeciálne super dentálna hygiena, ktorá mi zachránila chrup pred poškodením.</p><div class="review-author-row"><div class="review-avatar" data-tone="brown">V</div><div><div class="review-name">Vojtech Kováč</div><div class="review-role">Google recenzia</div></div></div></div>
+                <div class="review-card"><p class="review-text">Odporúčame vám pre deti.</p><div class="review-author-row"><div class="review-avatar" data-tone="accent">J</div><div><div class="review-name">Jozef Kováčik</div><div class="review-role">Google recenzia</div></div></div></div>
+                <div class="review-card"><p class="review-text">Túto kliniku určite odporúčam, pani doktorka aj celý tím sú veľkí profesionáli s ľudským prístupom, cítila som sa po príchode aj počas ošetrenia veľmi príjemne, majú pekné priestory, moderné vybavenie a po ošetrení môžem potvrdiť že personál je plný odborníkov, ktorí si potrpia na kvalitu. Som veľmi spokojná 🙂</p><div class="review-author-row"><div class="review-avatar" data-tone="brown">L</div><div><div class="review-name">Lenka</div><div class="review-role">Google recenzia</div></div></div></div>
+                <!-- kópia pre plynulú slučku (čítačky ju preskočia) -->
+                <div class="review-card" aria-hidden="true"><p class="review-text">Navštevujem túto pani doktorku roky... pre mňa najlepšia zubná lekárka. TOP odbornosť, trpezlivosť a rešpekt k bolesti klienta. Dentálna hygiena skvelá doplňujúca vec 2x ročne. Po nej mám zuby v stave, aký som ešte nemal... Zo srdca odporúčam všetkým, ktorí si vážia seba, svoje zdravie a myslia na budúcnosť.</p><div class="review-author-row"><div class="review-avatar" data-tone="accent">R</div><div><div class="review-name">Rastislav Kmeť</div><div class="review-role">Google recenzia</div></div></div></div>
+                <div class="review-card" aria-hidden="true"><p class="review-text">Na slovenské pomery neskutočne kvalitná ambulancia pani dok. Kohajdovej a profesionálna dentálna hygiena, ktorej vďačím za to, že už niekoľko rokov netrpím na zápaly ďasien, s ktorými som predtým roky bojoval. Veľká vďaka!</p><div class="review-author-row"><img class="review-avatar" src="brand_assests/Screenshot 2026-05-29 at 16.25.00.png" alt="Zorien" style="object-fit:cover"><div><div class="review-name">Zorien</div><div class="review-role">Google recenzia</div></div></div></div>
+                <div class="review-card" aria-hidden="true"><p class="review-text">Som veľmi spokojný s úrovňou zubného centra. Milý personál, vysoká odborná úroveň. A špeciálne super dentálna hygiena, ktorá mi zachránila chrup pred poškodením.</p><div class="review-author-row"><div class="review-avatar" data-tone="brown">V</div><div><div class="review-name">Vojtech Kováč</div><div class="review-role">Google recenzia</div></div></div></div>
+                <div class="review-card" aria-hidden="true"><p class="review-text">Odporúčame vám pre deti.</p><div class="review-author-row"><div class="review-avatar" data-tone="accent">J</div><div><div class="review-name">Jozef Kováčik</div><div class="review-role">Google recenzia</div></div></div></div>
+                <div class="review-card" aria-hidden="true"><p class="review-text">Túto kliniku určite odporúčam, pani doktorka aj celý tím sú veľkí profesionáli s ľudským prístupom, cítila som sa po príchode aj počas ošetrenia veľmi príjemne, majú pekné priestory, moderné vybavenie a po ošetrení môžem potvrdiť že personál je plný odborníkov, ktorí si potrpia na kvalitu. Som veľmi spokojná 🙂</p><div class="review-author-row"><div class="review-avatar" data-tone="brown">L</div><div><div class="review-name">Lenka</div><div class="review-role">Google recenzia</div></div></div></div>
             </div>
         </div>
 
         <!-- Stĺpec 2 -->
         <div class="testimonials-col">
             <div class="testimonials-track" style="animation-duration:19s">
-                <div class="review-card"><p class="review-text">Pani doktorka je veľmi dobrá, milá, trpezlivá a má pekný, ľudský prístup. Ďakujem jej za zbavenie bolesti na zubnej pohotovosti, ktoré ma trápilo už od predchádzajúceho dňa.</p><div class="review-author-row"><div class="review-avatar" style="background:#C5834A">M</div><div><div class="review-name">Miroslav Markovič</div><div class="review-role">Google recenzia</div></div></div></div>
-                <div class="review-card"><p class="review-text">K pani doktorke chodím už niekoľko rokov a už chodia aj moje deti na dentálnu hygienu. Nedokážeme si predstaviť ísť niekam inam. Deti sa tešia a tým je povedané všetko :-).</p><div class="review-author-row"><div class="review-avatar" style="background:#5B8A6F">M</div><div><div class="review-name">Milada Rothová</div><div class="review-role">Google recenzia</div></div></div></div>
-                <div class="review-card"><p class="review-text">Citlivý prístup, profesionál vo svojom odbore. Odporúčam maximálne :)</p><div class="review-author-row"><div class="review-avatar" style="background:#A05C7B">M</div><div><div class="review-name">Miroslav Beňo</div><div class="review-role">Google recenzia</div></div></div></div>
-                <!-- duplicate -->
-                <div class="review-card"><p class="review-text">Pani doktorka je veľmi dobrá, milá, trpezlivá a má pekný, ľudský prístup. Ďakujem jej za zbavenie bolesti na zubnej pohotovosti, ktoré ma trápilo už od predchádzajúceho dňa.</p><div class="review-author-row"><div class="review-avatar" style="background:#C5834A">M</div><div><div class="review-name">Miroslav Markovič</div><div class="review-role">Google recenzia</div></div></div></div>
-                <div class="review-card"><p class="review-text">K pani doktorke chodím už niekoľko rokov a už chodia aj moje deti na dentálnu hygienu. Nedokážeme si predstaviť ísť niekam inam. Deti sa tešia a tým je povedané všetko :-).</p><div class="review-author-row"><div class="review-avatar" style="background:#5B8A6F">M</div><div><div class="review-name">Milada Rothová</div><div class="review-role">Google recenzia</div></div></div></div>
-                <div class="review-card"><p class="review-text">Rýchle termíny, príjemný personál a moderná ambulancia. Presne to, čo som hľadal. Konečne zubár, kde sa cítim pohodlne a v bezpečí.</p><div class="review-author-row"><div class="review-avatar" style="background:#6A8F6A">L</div><div><div class="review-name">Lukáš B.</div><div class="review-role">Sásová</div></div></div></div>
+                <div class="review-card"><p class="review-text">Pani doktorka je veľmi dobrá, milá, trpezlivá a má pekný, ľudský prístup. Ďakujem jej za zbavenie bolesti na zubnej pohotovosti, ktoré ma trápilo už od predchádzajúceho dňa.</p><div class="review-author-row"><div class="review-avatar" data-tone="accent">M</div><div><div class="review-name">Miroslav Markovič</div><div class="review-role">Google recenzia</div></div></div></div>
+                <div class="review-card"><p class="review-text">K pani doktorke chodím už niekoľko rokov a už chodia aj moje deti na dentálnu hygienu. Nedokážeme si predstaviť ísť niekam inam. Deti sa tešia a tým je povedané všetko :-).</p><div class="review-author-row"><div class="review-avatar" data-tone="brown">M</div><div><div class="review-name">Milada Rothová</div><div class="review-role">Google recenzia</div></div></div></div>
+                <div class="review-card"><p class="review-text">Citlivý prístup, profesionál vo svojom odbore. Odporúčam maximálne :)</p><div class="review-author-row"><div class="review-avatar" data-tone="accent">M</div><div><div class="review-name">Miroslav Beňo</div><div class="review-role">Google recenzia</div></div></div></div>
+                <div class="review-card"><p class="review-text">Rýchle termíny, príjemný personál a moderná ambulancia. Presne to, čo som hľadal. Konečne zubár, kde sa cítim pohodlne a v bezpečí.</p><div class="review-author-row"><div class="review-avatar" data-tone="brown">L</div><div><div class="review-name">Lukáš B.</div><div class="review-role">Sásová</div></div></div></div>
+                <!-- kópia pre plynulú slučku (čítačky ju preskočia) -->
+                <div class="review-card" aria-hidden="true"><p class="review-text">Pani doktorka je veľmi dobrá, milá, trpezlivá a má pekný, ľudský prístup. Ďakujem jej za zbavenie bolesti na zubnej pohotovosti, ktoré ma trápilo už od predchádzajúceho dňa.</p><div class="review-author-row"><div class="review-avatar" data-tone="accent">M</div><div><div class="review-name">Miroslav Markovič</div><div class="review-role">Google recenzia</div></div></div></div>
+                <div class="review-card" aria-hidden="true"><p class="review-text">K pani doktorke chodím už niekoľko rokov a už chodia aj moje deti na dentálnu hygienu. Nedokážeme si predstaviť ísť niekam inam. Deti sa tešia a tým je povedané všetko :-).</p><div class="review-author-row"><div class="review-avatar" data-tone="brown">M</div><div><div class="review-name">Milada Rothová</div><div class="review-role">Google recenzia</div></div></div></div>
+                <div class="review-card" aria-hidden="true"><p class="review-text">Citlivý prístup, profesionál vo svojom odbore. Odporúčam maximálne :)</p><div class="review-author-row"><div class="review-avatar" data-tone="accent">M</div><div><div class="review-name">Miroslav Beňo</div><div class="review-role">Google recenzia</div></div></div></div>
+                <div class="review-card" aria-hidden="true"><p class="review-text">Rýchle termíny, príjemný personál a moderná ambulancia. Presne to, čo som hľadal. Konečne zubár, kde sa cítim pohodlne a v bezpečí.</p><div class="review-author-row"><div class="review-avatar" data-tone="brown">L</div><div><div class="review-name">Lukáš B.</div><div class="review-role">Sásová</div></div></div></div>
             </div>
         </div>
 
         <!-- Stĺpec 3 -->
         <div class="testimonials-col">
             <div class="testimonials-track" style="animation-duration:17s">
-                <div class="review-card"><p class="review-text">Som maximálne spokojná.</p><div class="review-author-row"><div class="review-avatar" style="background:#9B72CF">E</div><div><div class="review-name">Eva Leštinská</div><div class="review-role">Google recenzia</div></div></div></div>
+                <div class="review-card"><p class="review-text">Som maximálne spokojná.</p><div class="review-author-row"><div class="review-avatar" data-tone="accent">E</div><div><div class="review-name">Eva Leštinská</div><div class="review-role">Google recenzia</div></div></div></div>
                 <div class="review-card"><p class="review-text">Toto zubné centrum ma príjemne prekvapilo. Mal som z návštevy trochu strach, no celý proces prebehol naozaj pokojne a bez bolesti. Zubár pristupoval opatrne a vždy sa uistil, že je všetko v poriadku. Môžem úprimne odporučiť každému, kto zubára zvyčajne odkladá práve pre strach.</p><div class="review-author-row"><img class="review-avatar" src="brand_assests/svenco.jpeg" alt="Svenco Group" style="object-fit:cover"><div><div class="review-name">Svenco Group</div><div class="review-role">Google recenzia</div></div></div></div>
-                <div class="review-card"><p class="review-text">Pani doktorka Kohajdová mi pred 8 rokmi zachránila chrup. Vysoko profesionálny prístup a nadštandardná práca. Chodíme k nej pravidelne celá rodina aj na dentálnu hygienu. Už pri vstupe sa na Vás usmeje milá pani recepčná — toto je štandard aj u pani sestričiek. Pani doktorka je základ toho príjemného prostredia. Cítim sa tam vždy príjemne.</p><div class="review-author-row"><div class="review-avatar" style="background:#4A90A4">G</div><div><div class="review-name">Gabriela Kováčová</div><div class="review-role">Google recenzia</div></div></div></div>
-                <!-- duplicate -->
-                <div class="review-card"><p class="review-text">Som maximálne spokojná.</p><div class="review-author-row"><div class="review-avatar" style="background:#9B72CF">E</div><div><div class="review-name">Eva Leštinská</div><div class="review-role">Google recenzia</div></div></div></div>
-                <div class="review-card"><p class="review-text">Toto zubné centrum ma príjemne prekvapilo. Mal som z návštevy trochu strach, no celý proces prebehol naozaj pokojne a bez bolesti. Zubár pristupoval opatrne a vždy sa uistil, že je všetko v poriadku. Môžem úprimne odporučiť každému, kto zubára zvyčajne odkladá práve pre strach.</p><div class="review-author-row"><img class="review-avatar" src="brand_assests/svenco.jpeg" alt="Svenco Group" style="object-fit:cover"><div><div class="review-name">Svenco Group</div><div class="review-role">Google recenzia</div></div></div></div>
-                <div class="review-card"><p class="review-text">Čisté, moderné prostredie a tím ktorý vám naozaj naslúcha. Pred každým zákrokom mi vysvetlili čo bude nasledovať. Takýchto lekárov je málo.</p><div class="review-author-row"><div class="review-avatar" style="background:#A05C7B">M</div><div><div class="review-name">Monika R.</div><div class="review-role">Banská Bystrica</div></div></div></div>
+                <div class="review-card"><p class="review-text">Pani doktorka Kohajdová mi pred 8 rokmi zachránila chrup. Vysoko profesionálny prístup a nadštandardná práca. Chodíme k nej pravidelne celá rodina aj na dentálnu hygienu. Už pri vstupe sa na Vás usmeje milá pani recepčná — toto je štandard aj u pani sestričiek. Pani doktorka je základ toho príjemného prostredia. Cítim sa tam vždy príjemne.</p><div class="review-author-row"><div class="review-avatar" data-tone="brown">G</div><div><div class="review-name">Gabriela Kováčová</div><div class="review-role">Google recenzia</div></div></div></div>
+                <div class="review-card"><p class="review-text">Čisté, moderné prostredie a tím ktorý vám naozaj naslúcha. Pred každým zákrokom mi vysvetlili čo bude nasledovať. Takýchto lekárov je málo.</p><div class="review-author-row"><div class="review-avatar" data-tone="brown">M</div><div><div class="review-name">Monika R.</div><div class="review-role">Banská Bystrica</div></div></div></div>
+                <!-- kópia pre plynulú slučku (čítačky ju preskočia) -->
+                <div class="review-card" aria-hidden="true"><p class="review-text">Som maximálne spokojná.</p><div class="review-author-row"><div class="review-avatar" data-tone="accent">E</div><div><div class="review-name">Eva Leštinská</div><div class="review-role">Google recenzia</div></div></div></div>
+                <div class="review-card" aria-hidden="true"><p class="review-text">Toto zubné centrum ma príjemne prekvapilo. Mal som z návštevy trochu strach, no celý proces prebehol naozaj pokojne a bez bolesti. Zubár pristupoval opatrne a vždy sa uistil, že je všetko v poriadku. Môžem úprimne odporučiť každému, kto zubára zvyčajne odkladá práve pre strach.</p><div class="review-author-row"><img class="review-avatar" src="brand_assests/svenco.jpeg" alt="Svenco Group" style="object-fit:cover"><div><div class="review-name">Svenco Group</div><div class="review-role">Google recenzia</div></div></div></div>
+                <div class="review-card" aria-hidden="true"><p class="review-text">Pani doktorka Kohajdová mi pred 8 rokmi zachránila chrup. Vysoko profesionálny prístup a nadštandardná práca. Chodíme k nej pravidelne celá rodina aj na dentálnu hygienu. Už pri vstupe sa na Vás usmeje milá pani recepčná — toto je štandard aj u pani sestričiek. Pani doktorka je základ toho príjemného prostredia. Cítim sa tam vždy príjemne.</p><div class="review-author-row"><div class="review-avatar" data-tone="brown">G</div><div><div class="review-name">Gabriela Kováčová</div><div class="review-role">Google recenzia</div></div></div></div>
+                <div class="review-card" aria-hidden="true"><p class="review-text">Čisté, moderné prostredie a tím ktorý vám naozaj naslúcha. Pred každým zákrokom mi vysvetlili čo bude nasledovať. Takýchto lekárov je málo.</p><div class="review-author-row"><div class="review-avatar" data-tone="brown">M</div><div><div class="review-name">Monika R.</div><div class="review-role">Banská Bystrica</div></div></div></div>
             </div>
         </div>
 
     </div>
+    <button class="reviews-pause" type="button" aria-controls="reviewsWrap" aria-pressed="false" aria-label="Zastaviť pohyb recenzií">
+        <svg class="ico-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5v14M15 5v14"/></svg>
+        <svg class="ico-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l11 7-11 7z"/></svg>
+    </button>
 </section>
 
 
@@ -1820,7 +1765,7 @@
 <section id="platenie" class="platenie-section">
     <div class="platenie-inner">
         <div class="platenie-text">
-            <span class="label label--large">financie</span>
+            <span class="label">financie</span>
             <h2 class="fade-up">Ako je to s platením?</h2>
             <p class="fade-up d1">Na každú situáciu existuje viacero riešení, či bolestivý zub ideme zachraňovať výplňou, korunkou alebo koreňovými kanálikmi. Alebo zub extrahujeme a budeme zvažovať náhradu – mostík / implantát.</p>
             <p class="fade-up d2">Od dohodnutého postupu sa odvíja cena prác a aj časový harmonogram tejto liečby. Nie všetko je potrebné stihnúť za mesiac - dva, niekedy sa liečba naplánuje na dlhšie obdobie napríklad na rok alebo aj viac.</p>
@@ -1892,6 +1837,10 @@
             <img src="brand_assests/poistovne.webp" alt="Zdravotné poisťovne" loading="lazy">
         </div>
     </div>
+
+    <div class="call-block fade-up">
+        <a class="cta-call" href="tel:+421484145196"><span class="cta-call-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.95 13a19.79 19.79 0 01-3.07-8.67A2 2 0 012.85 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></span><span class="cta-call-text"><span class="cta-call-label">Zavolajte</span> <span class="cta-call-number">048 414 51 96</span></span></a>
+    </div>
 </section>
 
 
@@ -1901,8 +1850,8 @@
         <span class="label">Navštívte nás</span>
         <div class="fade-up" style="display:flex; align-items:center; gap:2rem; margin-bottom:2rem;">
             <h2 style="margin:0;">Kontakt</h2>
-            <a href="tel:048414519" class="nav-phone">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <a href="tel:+421484145196" class="nav-phone">
+                <svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.95 13a19.79 19.79 0 01-3.07-8.67A2 2 0 012.85 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
                 </svg>
                 048 414 51 96
@@ -1911,14 +1860,14 @@
 
         <div class="contact-row fade-up d1">
             <div class="contact-ico">
-                <svg viewBox="0 0 24 24">
+                <svg aria-hidden="true" viewBox="0 0 24 24">
                     <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
                     <circle cx="12" cy="10" r="3"/>
                 </svg>
             </div>
             <div>
                 <span class="contact-row-label">Adresa</span>
-                <div class="contact-row-val">Horná 61/A, Banská Bystrica, polyfunkčný dom Gallery<br>3. poschodie, oproti starému Prioru</div>
+                <div class="contact-row-val"><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=MUDr.+Ot%C3%ADlia+Kohajdov%C3%A1%2C+Bansk%C3%A1+Bystrica" target="_blank" rel="noopener">Horná 61/A, Banská Bystrica, polyfunkčný dom Gallery<br>3. poschodie, oproti starému Prioru</a></div>
             </div>
         </div>
 
@@ -1926,7 +1875,7 @@
 
         <div class="contact-row fade-up d3" style="margin-top: 3rem;">
             <div class="contact-ico">
-                <svg viewBox="0 0 24 24">
+                <svg aria-hidden="true" viewBox="0 0 24 24">
                     <circle cx="12" cy="12" r="10"/>
                     <polyline points="12,6 12,12 16,14"/>
                 </svg>
@@ -1970,36 +1919,45 @@
 </section>
 
 
+</main>
+
 <!-- ═══ FOOTER ═══ -->
 <footer>
     <div class="footer-top">
         <div class="footer-brand">
-            <div class="footer-logo-text">
-                <div class="footer-logo-wordmark">DENT<span>ALL</span></div>
-                <div class="footer-logo-centrum">Centrum</div>
-            </div>
+            <img class="footer-logo logo-light" src="brand_assests/logo/dentall-centrum-logo.svg" alt="DentAll Centrum" width="120" height="80" loading="lazy">
+            <img class="footer-logo logo-dark" src="brand_assests/logo/dentall-centrum-logo-dark.svg" alt="DentAll Centrum" width="120" height="80" loading="lazy">
             <span class="footer-doctor">MUDr. Otília Kohajdová</span>
         </div>
         <div class="footer-copy">
-            © 2026 DENTALL Centrum · Banská Bystrica<br>
-            <span style="font-size:0.8rem;">design <span style="color:var(--orange);font-style:italic;font-family:'Great Vibes',cursive;font-size:1.1rem;">by</span>&nbsp; Kohajda s.r.o</span>
+            © 2026 DENTALL Centrum · Banská Bystrica
+            <p class="footer-info"><a href="https://www.google.com/maps/search/?api=1&amp;query=MUDr.+Ot%C3%ADlia+Kohajdov%C3%A1%2C+Bansk%C3%A1+Bystrica" target="_blank" rel="noopener">Horná 61/A, Banská Bystrica · 3. poschodie</a><br>Po–St 7:30–15:30 · Št 7:30–16:00 · Pi 7:30–14:00</p>
         </div>
-        <a href="tel:048414519" class="footer-phone">
-            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.95 13a19.79 19.79 0 01-3.07-8.67A2 2 0 012.85 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        <a href="tel:+421484145196" class="footer-phone">
+            <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.95 13a19.79 19.79 0 01-3.07-8.67A2 2 0 012.85 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
             048 414 51 96
         </a>
     </div>
     <div class="footer-legal">
         <a href="terms.html">Podmienky používania</a>
         <a href="privacy.html">Ochrana osobných údajov</a>
+        <span class="footer-credit">design <span class="by">by</span>&nbsp; Kohajda s.r.o</span>
     </div>
 </footer>
+
+<!-- pevný pruh s telefónom (mobil) -->
+<a class="call-bar" href="tel:+421484145196" aria-label="Zavolajte 048 414 51 96">
+    <span class="cta-call-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.95 13a19.79 19.79 0 01-3.07-8.67A2 2 0 012.85 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></span>
+    <span class="call-bar-text"><span class="cta-call-label">Zavolajte</span> <span class="cta-call-number">048 414 51 96</span></span>
+</a>
 
 
 <script>
     // Nav shadow on scroll
     window.addEventListener('scroll', () => {
-        document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
+        const nb = document.getElementById('navbar');
+        nb.classList.toggle('scrolled', window.scrollY > 40);
+        nb.classList.toggle('compact', window.scrollY > 140);
     });
 
 
@@ -2009,28 +1967,6 @@
     }, { threshold: 0.08 });
     document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
-    // Hero-sub marquee on mobile
-    (function () {
-        if (window.innerWidth > 640) return;
-        const heroSub = document.querySelector('.hero-sub');
-        const scriptInner = document.querySelector('.hero-script-inner');
-        const tagline = document.querySelector('.hero-sub-tagline');
-        if (!heroSub || !scriptInner || !tagline) return;
-
-        // Build content: clone inner span, strip underline SVG, keep heart SVG
-        const clone = scriptInner.cloneNode(true);
-        const underline = clone.querySelector('.hero-underline-svg');
-        if (underline) underline.remove();
-        const textHTML = clone.innerHTML.trim() + ' · ' + tagline.textContent.trim();
-
-        heroSub.innerHTML =
-            '<div class="hero-marquee-wrap">' +
-              '<div class="hero-marquee-track">' +
-                '<span class="hero-marquee-item">' + textHTML + '</span>' +
-                '<span class="hero-marquee-item" aria-hidden="true">' + textHTML + '</span>' +
-              '</div>' +
-            '</div>';
-    })();
 
     // Hero reveals on load
     setTimeout(() => {
@@ -2101,8 +2037,10 @@
     // 3D scroll card animation
     const processCard = document.getElementById('processCard');
     const cardWrap = processCard ? processCard.closest('.scroll-card-wrap') : null;
+    const flatCard = window.matchMedia('(max-width: 640px), (prefers-reduced-motion: reduce)');
     if (processCard && cardWrap) {
         const update = () => {
+            if (flatCard.matches) { processCard.style.transform = 'none'; return; }
             const rect = cardWrap.getBoundingClientRect();
             const vh = window.innerHeight;
             const progress = Math.min(1, Math.max(0, (vh - rect.top) / (vh * 0.85)));
@@ -2117,7 +2055,7 @@
 
     (function alignFooterLogo() {
         function sync() {
-            const navLogo = document.querySelector('.nav-logo-name');
+            const navLogo = [...document.querySelectorAll('.nav-logo')].find(e => e.offsetParent);
             const footerBrand = document.querySelector('.footer-brand');
             if (!navLogo || !footerBrand) return;
             footerBrand.style.marginLeft = '0';
@@ -2132,50 +2070,57 @@
         document.fonts.ready.then(rafSync);
     })();
 
-    // Theme toggle
+
+
+    // Pruh s telefónom: zobrazí sa, keď výzva v úvode zmizne, a skryje sa pri kontakte a pri cookie lište
+    (function () {
+        const bar = document.querySelector('.call-bar');
+        if (!bar || !('IntersectionObserver' in window)) return;
+        const watched = [document.querySelector('.hero-cta'), ...document.querySelectorAll('.call-block'), document.querySelector('#kontakt .nav-phone'), document.querySelector('footer')].filter(Boolean);
+        const inView = new Set();
+        const cookie = document.getElementById('cookieBanner');
+        const update = () => {
+            const cookieOpen = cookie && cookie.style.display !== 'none' && !cookie.classList.contains('hidden') && cookie.classList.contains('visible');
+            bar.classList.toggle('is-visible', inView.size === 0 && !cookieOpen && window.scrollY > 200);
+        };
+        const io = new IntersectionObserver(entries => {
+            entries.forEach(e => { e.isIntersecting ? inView.add(e.target) : inView.delete(e.target); });
+            update();
+        });
+        watched.forEach(el => io.observe(el));
+        window.addEventListener('scroll', update, { passive: true });
+        if (cookie) new MutationObserver(update).observe(cookie, { attributes: true, attributeFilter: ['class', 'style'] });
+    })();
+
+    // Recenzie: tlačidlo pauza
+    (function () {
+        const btn = document.querySelector('.reviews-pause');
+        const wrap = document.getElementById('reviewsWrap');
+        if (!btn || !wrap) return;
+        btn.addEventListener('click', () => {
+            const paused = wrap.classList.toggle('is-paused');
+            btn.setAttribute('aria-pressed', paused ? 'true' : 'false');
+            btn.setAttribute('aria-label', paused ? 'Spustiť pohyb recenzií' : 'Zastaviť pohyb recenzií');
+        });
+    })();
+
+    // Prepínač tmavého režimu
     (function () {
         const btn = document.getElementById('themeToggle');
         if (!btn) return;
-        const isDark = () => document.documentElement.getAttribute('data-theme') === 'dark';
-
-        function applyTheme(dark) {
-            if (dark) {
-                document.documentElement.setAttribute('data-theme', 'dark');
-            } else {
-                document.documentElement.removeAttribute('data-theme');
-            }
-            btn.setAttribute('aria-checked', dark ? 'true' : 'false');
-            localStorage.setItem('dac-theme', dark ? 'dark' : 'light');
-        }
-
-        // Sync button state with current theme on load
-        applyTheme(isDark());
-
+        const root = document.documentElement;
+        const isDark = () => root.getAttribute('data-theme') === 'dark';
+        const sync = () => btn.setAttribute('aria-checked', isDark() ? 'true' : 'false');
+        sync();
         btn.addEventListener('click', () => {
-            const dark = !isDark();
-            applyTheme(dark);
-
-            // Particle burst
-            const particle = document.createElement('span');
-            particle.className = 'toggle-particle ' + (dark ? 'toggle-particle-dark' : 'toggle-particle-light');
-            btn.appendChild(particle);
-            setTimeout(() => particle.remove(), 700);
+            if (isDark()) root.removeAttribute('data-theme'); else root.setAttribute('data-theme', 'dark');
+            try { localStorage.setItem('dac-theme', isDark() ? 'dark' : 'light'); } catch (e) {}
+            sync();
         });
     })();
 
 </script>
 
-<!-- COOKIE CONSENT BANNER -->
-<div id="cookieBanner" class="cookie-banner" role="dialog" aria-label="Súhlas s externými zdrojmi">
-    <div class="cookie-text">
-        <strong>Externé zdroje &amp; súkromie</strong>
-        <p>Na našej stránke využívame Google Fonts, Google Analytics. Pri ich načítaní môže dochádzať k spracovaniu vašej IP adresy spoločnosťou Google LLC. Viac informácií nájdete v našich <a href="privacy.html">zásadách ochrany údajov</a>.</p>
-    </div>
-    <div class="cookie-actions">
-        <button id="cookieDecline" class="cookie-btn cookie-btn--decline">Len nevyhnutné</button>
-        <button id="cookieAccept" class="cookie-btn cookie-btn--accept">Prijať</button>
-    </div>
-</div>
 
 <script>
     // Cookie consent
@@ -2184,11 +2129,6 @@
         var banner = document.getElementById('cookieBanner');
         if (localStorage.getItem(CONSENT_KEY)) { banner.style.display = 'none'; return; }
 
-        function loadFonts() {
-            var pc1=document.createElement('link');pc1.rel='preconnect';pc1.href='https://fonts.googleapis.com';document.head.appendChild(pc1);
-            var pc2=document.createElement('link');pc2.rel='preconnect';pc2.href='https://fonts.gstatic.com';pc2.crossOrigin='anonymous';document.head.appendChild(pc2);
-            var f=document.createElement('link');f.rel='stylesheet';f.href='https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Great+Vibes&family=Dancing+Script:wght@400;600;700&display=swap';document.head.appendChild(f);
-        }
         function loadAnalytics() {
             var ga=document.createElement('script');ga.async=true;ga.src='https://www.googletagmanager.com/gtag/js?id=G-H6TRTWEFND';document.head.appendChild(ga);
             window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('js', new Date());gtag('config', 'G-H6TRTWEFND');
@@ -2200,7 +2140,7 @@
         setTimeout(function(){ banner.classList.add('visible'); }, 700);
 
         document.getElementById('cookieAccept').addEventListener('click', function() {
-            localStorage.setItem(CONSENT_KEY, 'accepted'); loadFonts(); loadAnalytics(); hideBanner();
+            localStorage.setItem(CONSENT_KEY, 'accepted'); loadAnalytics(); hideBanner();
         });
         document.getElementById('cookieDecline').addEventListener('click', function() {
             localStorage.setItem(CONSENT_KEY, 'declined'); hideBanner();
