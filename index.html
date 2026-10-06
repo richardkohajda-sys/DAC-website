@@ -324,6 +324,7 @@
         /* hlavička je vždy charcoal → vždy biele logo */
         nav .logo-light, footer .logo-light { display: none !important; }
         nav .nav-logo.logo-dark, footer .footer-logo.logo-dark { display: block; }
+        nav .nav-mark.logo-dark { display: flex; }
         .nav-mark.logo-dark { display: none; }
         html[data-theme="dark"] .nav-mark.logo-light { display: none; }
         html[data-theme="dark"] .nav-mark.logo-dark { display: flex; }
@@ -494,13 +495,16 @@
         }
         .about-content-inner p.d3 { margin-top: var(--s2); }
 
-        /* ══ ŠTATISTIKY ══ */
-        #stats {
-            background: var(--cream-2);
-            border-top: 1px solid var(--line);
-            border-bottom: 1px solid var(--line);
+        /* ══ PÁS FAKTOV ══ plná hnedá plocha, ružové sgrafito hore aj dole */
+        #fakty { --frieze-ink: var(--pink); }
+        .facts {
             display: grid; grid-template-columns: repeat(4, 1fr);
-            padding: 0 var(--pad-x);
+            padding: var(--s3) var(--pad-x) 0;
+        }
+        .facts-insurers {
+            text-align: center; padding: var(--s3) var(--pad-x) var(--s5);
+            font-size: var(--t-caps-sm); font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
+            color: var(--text);
         }
         .stat-item {
             min-width: 0; overflow-wrap: anywhere;
@@ -875,11 +879,6 @@
         .cennik-name { flex: 1 1 12em; min-width: 0; font-size: var(--t-body); color: var(--text); }
         .cennik-price { flex: 0 0 auto; margin-left: auto; font-size: var(--t-body); font-weight: 600; color: var(--text); white-space: nowrap; }
         .poistovne { margin-top: var(--s6); text-align: center; }
-        .poistovne-label {
-            font-size: var(--t-body-sm); font-weight: 500;
-            letter-spacing: 0;
-            color: var(--text); margin-bottom: var(--s3);
-        }
         .poistovne-logos {
             display: flex; justify-content: center; align-items: center;
             max-width: 820px; margin: 0 auto;
@@ -1084,7 +1083,7 @@
             .about-content-inner p { margin-left: auto; margin-right: auto; }
             .about-content-inner p.d3 { margin-top: 0; }
 
-            #stats { grid-template-columns: repeat(2, 1fr); padding: 0; }
+            .facts { grid-template-columns: repeat(2, 1fr); padding-inline: 0; }
             .stat-item { padding: var(--s4) var(--s2); }
             .stat-item:nth-child(3)::before { display: none; }
             .stat-item:nth-child(3), .stat-item:nth-child(4) { border-top: 1px solid var(--line); }
@@ -1378,7 +1377,46 @@
     </div>
 </section>
 
-<!-- ═══ STATS ═══ -->
+<!-- ═══ FAKTY ═══ -->
+<section id="fakty" class="surface-brown" aria-label="Fakty o ambulancii">
+    <span class="frieze" aria-hidden="true"></span>
+    <div class="facts">
+    <div class="stat-item">
+        <div class="stat-num">20+</div>
+        <div class="stat-label">Rokov skúseností</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-num">5</div>
+        <div class="stat-label">Odborníkov</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-num">
+            <svg aria-hidden="true" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 8h1a4 4 0 010 8h-1"/>
+                <path d="M3 8h14v9a4 4 0 01-4 4H7a4 4 0 01-4-4V8z"/>
+                <line x1="6" y1="2" x2="6" y2="4"/>
+                <line x1="10" y1="2" x2="10" y2="4"/>
+                <line x1="14" y1="2" x2="14" y2="4"/>
+            </svg>
+        </div>
+        <div class="stat-label">Kávička na recepcii</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-num">
+            <svg aria-hidden="true" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12.55a11 11 0 0114.08 0"/>
+                <path d="M1.42 9a16 16 0 0121.16 0"/>
+                <path d="M8.53 16.11a6 6 0 016.95 0"/>
+                <circle cx="12" cy="20" r="1" fill="currentColor"/>
+            </svg>
+        </div>
+        <div class="stat-label">Free WiFi</div>
+    </div>
+    </div>
+    <p class="facts-insurers">Sme zmluvní partneri všetkých zdravotných poisťovní</p>
+    <span class="frieze" aria-hidden="true"></span>
+</section>
+
 <!-- ═══ O NÁS ═══ -->
 <section id="o-nas">
     <div class="about-content about-content--full">
@@ -1398,39 +1436,6 @@
     </div>
 </section>
 
-<div id="stats">
-    <div class="stat-item fade-up">
-        <div class="stat-num">20+</div>
-        <div class="stat-label">Rokov skúseností</div>
-    </div>
-    <div class="stat-item fade-up d1">
-        <div class="stat-num">5</div>
-        <div class="stat-label">Odborníkov</div>
-    </div>
-    <div class="stat-item fade-up d2">
-        <div class="stat-num">
-            <svg aria-hidden="true" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M17 8h1a4 4 0 010 8h-1"/>
-                <path d="M3 8h14v9a4 4 0 01-4 4H7a4 4 0 01-4-4V8z"/>
-                <line x1="6" y1="2" x2="6" y2="4"/>
-                <line x1="10" y1="2" x2="10" y2="4"/>
-                <line x1="14" y1="2" x2="14" y2="4"/>
-            </svg>
-        </div>
-        <div class="stat-label">Kávička na recepcii</div>
-    </div>
-    <div class="stat-item fade-up d3">
-        <div class="stat-num">
-            <svg aria-hidden="true" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 12.55a11 11 0 0114.08 0"/>
-                <path d="M1.42 9a16 16 0 0121.16 0"/>
-                <path d="M8.53 16.11a6 6 0 016.95 0"/>
-                <circle cx="12" cy="20" r="1" fill="currentColor"/>
-            </svg>
-        </div>
-        <div class="stat-label">Free WiFi</div>
-    </div>
-</div>
 
 
 <!-- ═══ PHOTO STRIP 1 ═══ -->
@@ -1863,7 +1868,6 @@
 
 
     <div class="poistovne fade-up">
-        <p class="poistovne-label">Sme zmluvní partneri všetkých zdravotných poisťovní</p>
         <div class="poistovne-logos">
             <img src="brand_assests/poistovne.webp" alt="Zdravotné poisťovne" loading="lazy">
         </div>
