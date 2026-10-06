@@ -95,6 +95,12 @@
             --t-caption: 0.875rem;
             --measure:   32em;
 
+            /* svet „Bystrické arkády a sgrafito“ */
+            --charcoal:    #212121;
+            --brown-field: #76665E;
+            --bay-gap:     clamp(1rem, 2.4vw, 2rem);
+            --pier:        var(--pad-x);
+
             --radius:    22px;
             --radius-sm: 14px;
             --nav-h:     84px;
@@ -143,6 +149,42 @@
             outline: 2px solid var(--focus); outline-offset: 4px; border-radius: 6px;
         }
         ::selection { background: var(--tint-pink); color: var(--text); }
+
+        /* ══ POVRCHY ══ každý povrch si nastaví vlastný text, akcent, fokus a linku */
+        .surface-charcoal, .surface-cream, .surface-cream-2, .surface-brown {
+            --text: var(--surface-text);
+            --accent-text: var(--surface-accent-text);
+            background-color: var(--surface-bg);
+            color: var(--surface-text);
+        }
+        .surface-charcoal {
+            --surface-bg: #212121; --surface-text: #FEFAF9; --surface-accent-text: #CC857F;
+            --focus: #FEFAF9; --line: rgba(254,250,249,0.14); --line-pink: rgba(var(--accent-rgb),0.5);
+        }
+        .surface-cream {
+            --surface-bg: #FEFAF9; --surface-text: #76665E; --surface-accent-text: #76665E;
+            --focus: #76665E; --line: rgba(var(--shade-rgb),0.16);
+        }
+        .surface-cream-2 {
+            --surface-bg: #FAF2EF; --surface-text: #76665E; --surface-accent-text: #76665E;
+            --focus: #76665E; --line: rgba(var(--shade-rgb),0.18);
+        }
+        .surface-brown {
+            --surface-bg: #76665E; --surface-text: #FEFAF9; --surface-accent-text: #FEFAF9;
+            --focus: #FEFAF9; --line: rgba(254,250,249,0.22);
+        }
+        html[data-theme="dark"] .surface-charcoal { --surface-bg: #212121; --surface-text: #FEFEFE; --surface-accent-text: #CC857F; --focus: #CC857F; }
+        html[data-theme="dark"] .surface-cream { --surface-bg: #262626; --surface-text: #FEFEFE; --surface-accent-text: #CC857F; --focus: #CC857F; --line: rgba(254,254,254,0.10); }
+        html[data-theme="dark"] .surface-cream-2 { --surface-bg: #2A2A2A; --surface-text: #FEFEFE; --surface-accent-text: #CC857F; --focus: #CC857F; --line: rgba(254,254,254,0.10); }
+        html[data-theme="dark"] .surface-brown { --surface-bg: #2A2A2A; --surface-text: #FEFEFE; --surface-accent-text: #CC857F; --focus: #CC857F; --line: rgba(254,254,254,0.10); }
+
+        /* ══ MRIEŽKA ARKÁD ══ 12 polí, jednotné stĺpy */
+        .bays {
+            display: grid;
+            grid-template-columns: repeat(12, minmax(0, 1fr));
+            column-gap: var(--bay-gap);
+            padding-inline: var(--pier);
+        }
 
         .label {
             display: inline-flex; align-items: center; gap: 0.75rem;
