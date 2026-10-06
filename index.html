@@ -603,7 +603,7 @@
         .path-stop.is-here .path-num { background: var(--pink); color: #212121; transform: scale(1.12); }
         .path-stop p { font-size: var(--t-lead); line-height: 1.65; color: var(--text); padding-top: 0.6rem; max-width: var(--measure); }
 
-        mark, .dh-porovnanie-content p strong {
+        mark {
             background: none;
             color: var(--text);
             font-weight: 500;
@@ -614,46 +614,40 @@
             text-decoration-skip-ink: none;
         }
 
-        /* ══ DENTÁLNA HYGIENA ══ */
-        .dh-section {
-            background: var(--cream-2);
-            border-top: 1px solid var(--line);
-            padding: var(--s8) var(--pad-x);
-        }
-        .dh-body { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2.5rem, 5vw, 4.5rem); align-items: center; margin-bottom: var(--s6); }
+        /* ══ PREVENCIA (DENTÁLNA HYGIENA) ══ */
+        .dh-section { padding: var(--s8) var(--pier); }
+        .dh-body { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2.5rem, 5vw, 4.5rem); align-items: center; margin-bottom: var(--s7); }
         .dh-text p { font-size: var(--t-body); line-height: 1.7; color: var(--text); margin-bottom: 1em; max-width: var(--measure); }
-        .dh-photo-right { width: 100%; }
-        .dh-photos-stack { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s2); }
+        .dh-photos-stack { display: grid; grid-template-columns: 1fr 1fr; gap: var(--bay-gap); }
+        .dh-photos-stack .arch { --arch-ratio: 3 / 4; }
         .dh-photos-stack .dh-photo-caption { grid-column: 1 / -1; }
         .dh-photo-caption {
             font-size: var(--t-caps-sm); font-weight: 600; letter-spacing: 0.12em; line-height: 1.4; text-transform: uppercase;
-            color: var(--text); text-align: center; margin-top: 0.2rem;
+            color: var(--text); text-align: center; margin-top: var(--s2);
         }
-        .dh-photo {
-            width: 100%; display: block; border-radius: var(--radius-sm);
-            object-fit: cover; aspect-ratio: 4/3;
-            box-shadow: var(--shadow-2);
-        }
+        .dh-po { color: var(--accent-text); text-decoration: underline; text-decoration-color: var(--pink); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+        /* kľúčové slová: ružový pás ako pri farbení plaku */
+        #dentalna-hygiena mark { text-decoration-color: rgba(var(--accent-rgb),0.55); transition: text-decoration-color 0.8s var(--ease-out); }
+        .js #dentalna-hygiena mark:not(.is-revealed) { text-decoration-color: transparent; }
+
         .dh-porovnanie {
-            background: var(--cream);
-            border: 1px solid var(--line);
             border-radius: var(--radius);
-            padding: var(--s5) clamp(1.5rem, 4vw, 3.5rem);
-            box-shadow: var(--shadow-1);
+            padding: var(--s6) clamp(1.5rem, 5vw, 4.5rem);
             position: relative; overflow: hidden;
         }
         .dh-porovnanie-label {
             font-size: var(--t-caps-lg); font-weight: 600; letter-spacing: 0.2em; line-height: 1.4;
-            text-transform: uppercase; color: var(--accent-text); margin-bottom: var(--s2);
+            text-transform: uppercase; color: var(--accent-text); margin-bottom: var(--s4);
         }
-        .dh-porovnanie-content { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: var(--s4); }
-        .dh-porovnanie-texts { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s4); align-items: center; }
-        .dh-porovnanie-texts p + p { border-left: 1px solid var(--line); padding-left: var(--s4); }
-        .dh-porovnanie-icon {
-            font-weight: 300; color: var(--pink);
-            flex-shrink: 0; line-height: 1;
+        .dh-porovnanie-texts { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s5); }
+        .cmp-col + .cmp-col { border-left: 1px solid var(--line); padding-left: var(--s5); }
+        .cmp-figure {
+            display: block; margin-bottom: var(--s2);
+            font-size: clamp(3.2rem, 1.5rem + 5vw, 6.5rem); font-weight: 300; letter-spacing: -0.04em; line-height: 1;
+            color: var(--pink);
         }
-        .dh-porovnanie-content p { font-size: var(--t-lead); line-height: 1.55; color: var(--text); margin: 0; }
+        .dh-porovnanie-texts p { font-size: var(--t-lead); line-height: 1.55; color: var(--text); margin: 0; max-width: 26em; }
+        .dh-porovnanie-texts strong { font-weight: 600; color: var(--text); text-decoration: none; }
 
         /* ══ TÍM ══ */
         #tym { padding: 0; background: var(--cream); }
@@ -1042,8 +1036,8 @@
             .path-stop { grid-template-columns: 44px minmax(0, 1fr); column-gap: var(--s3); padding-bottom: var(--s5); }
             .path-num { width: 44px; height: 44px; font-size: 1.1rem; }
             .path-stop:not(:last-child)::before { left: 21px; top: 22px; bottom: -22px; }
-            .dh-porovnanie-content { grid-template-columns: 1fr; gap: var(--s2); }
-            .dh-porovnanie-texts p + p { border-left: 0; padding-left: 0; border-top: 1px solid var(--line); padding-top: var(--s3); }
+            .dh-porovnanie-texts { grid-template-columns: 1fr; gap: var(--s4); }
+            .cmp-col + .cmp-col { border-left: 0; padding-left: 0; border-top: 1px solid var(--line); padding-top: var(--s4); }
             .poistovne-logos { padding: 0.5rem; }
             .poistovne-logos img { height: auto; object-fit: contain; }
             .team-members-grid { grid-template-columns: 1fr; }
@@ -1543,7 +1537,7 @@
 
 
 <!-- ═══ DENTÁLNA HYGIENA ═══ -->
-<section id="dentalna-hygiena" class="dh-section">
+<section id="dentalna-hygiena" class="dh-section surface-cream">
 
     <div class="section-header">
         <span class="label fade-up">Naša metóda</span>
@@ -1556,22 +1550,25 @@
             <p>Toto je naša metóda na udržanie dlhodobého úsmevu <mark>bez bolesti</mark>, neustáleho vrtania a plombovania zubov. Týmto šetríme náš <mark>čas</mark> a vaše <mark>peniaze</mark>.</p>
             <p>Počet sedení je individuálny, zvyčajne 2–4. Následne sú <mark>recally</mark>, čiže kontroly, ako sa nám to darí udržovať.</p>
         </div>
-        <div class="dh-photo-right fade-up d1">
+        <div class="dh-photo-right">
             <div class="dh-photos-stack">
-                <img src="brand_assests/159b0e1a-59d3-447f-8bfd-e8a4f06176b3.webp" alt="Farbenie plaku - dentálna hygiena" class="dh-photo">
-                <img src="brand_assests/IMG_7619.webp" alt="Farbenie plaku - zubný kameň" class="dh-photo">
-                <p class="dh-photo-caption"><span style="color:var(--pink)">po</span> nesprávnom umytí zubov</p>
+                <div class="arch"><img src="brand_assests/159b0e1a-59d3-447f-8bfd-e8a4f06176b3.webp" alt="Farbenie plaku - dentálna hygiena" class="dh-photo" loading="lazy"></div>
+                <div class="arch"><img src="brand_assests/IMG_7619.webp" alt="Farbenie plaku - zubný kameň" class="dh-photo" loading="lazy"></div>
+                <p class="dh-photo-caption"><span class="dh-po">po</span> nesprávnom umytí zubov</p>
             </div>
         </div>
     </div>
 
     <!-- Porovnanie -->
-    <div class="dh-porovnanie fade-up">
+    <div class="dh-porovnanie surface-charcoal">
         <div class="dh-porovnanie-label">Pre porovnanie</div>
-        <div class="dh-porovnanie-content">
-            <div class="dh-porovnanie-icon" style="font-size:4.5rem;" aria-hidden="true">€</div>
-            <div class="dh-porovnanie-texts">
+        <div class="dh-porovnanie-texts">
+            <div class="cmp-col">
+                <span class="cmp-figure" aria-hidden="true">350 €</span>
                 <p>Kompletný tréning <strong>iTOP</strong> — 4 sedenia v priebehu 5 mesiacov — vychádza okolo <strong>350 €</strong>.</p>
+            </div>
+            <div class="cmp-col">
+                <span class="cmp-figure" aria-hidden="true">1</span>
                 <p>Táto suma je stále menej ako <strong>1</strong> zirkónová koruna na <strong>1</strong> rozpadnutý / zlomený zub.</p>
             </div>
         </div>
