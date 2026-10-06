@@ -1005,6 +1005,17 @@
             .hours-list { min-width: 0; }
         }
 
+        /* najužšie telefóny (320–360 px): hlavička sa musí zmestiť bez orezania */
+        @media (max-width: 360px) {
+            .nav-inner { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); }
+            .nav-brand { padding-inline: 0.7rem; }
+            .nav-logo { width: 76px; }
+            .nav-doctor { font-size: 0.6875rem; }
+            .nav-end { padding: 0 0.25rem; }
+            .nav-end .nav-phone { font-size: 0.75rem; letter-spacing: 0; }
+            .nav-links a { padding-inline: 0.3rem; }
+        }
+
         @media (max-width: 480px) {
             .arcade { grid-template-columns: 1fr; row-gap: var(--s4); }
             .bay {
