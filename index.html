@@ -435,10 +435,16 @@
         .dh-photo-frame { aspect-ratio: 4 / 5; }
         .dh-caption { grid-column: 1 / -1; margin-top: 12px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
         .dh-caption span { color: var(--fg); }
-        .compare { margin-top: clamp(80px, 9vw, 140px); padding-top: 36px; border-top: 1px solid var(--line); display: grid; grid-template-columns: auto minmax(0, 1fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 72px); align-items: start; }
+        .compare { margin-top: clamp(80px, 9vw, 140px); padding-top: 36px; border-top: 1px solid var(--line); display: grid; grid-template-columns: auto minmax(0, 1fr); gap: clamp(24px, 4vw, 72px); align-items: start; }
         .compare .label { grid-column: 1 / -1; margin-bottom: 0; }
         .compare-sign { font-size: clamp(3.5rem, 2rem + 4vw, 6.5rem); font-weight: 300; line-height: 0.85; color: var(--pink); }
         .compare p { font-size: clamp(1.125rem, 1rem + 0.5vw, 1.375rem); line-height: 1.55; color: var(--body); }
+        /* cena hore väčšie, pod ňou porovnania pod sebou (= porovnateľné, ≠ neporovnateľné) */
+        .compare-body { max-width: 780px; }
+        .compare .compare-price { font-size: clamp(1.375rem, 1.1rem + 1vw, 1.875rem); line-height: 1.4; color: var(--fg); }
+        .compare-vs { margin-top: clamp(24px, 3vw, 36px); border-top: 1px solid var(--line); }
+        .compare-vs li { display: grid; grid-template-columns: 2.25rem minmax(0, 1fr); align-items: baseline; gap: 12px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+        .compare-mark { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 1.75rem; font-weight: 300; line-height: 1; color: var(--pink); text-align: center; }  /* oba znaky z jedného písma, aby boli rovnako veľké */
 
         /* ══ TÍM ══ */
         .team-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: clamp(24px, 4vw, 64px); }
@@ -1016,8 +1022,13 @@
         <div class="compare rise">
             <p class="label">Pre porovnanie</p>
             <div class="compare-sign" aria-hidden="true">€</div>
-            <p>Kompletný tréning <strong>iTOP</strong> — 4 sedenia v priebehu 5 mesiacov — vychádza okolo <strong>350 €</strong>.</p>
-            <p>Táto suma je stále menej ako <strong>1</strong> zirkónová koruna na <strong>1</strong> rozpadnutý / zlomený zub.</p>
+            <div class="compare-body">
+                <p class="compare-price">Štandardná <strong>dentálna hygiena s nácvikom čistenia</strong> — 2 sedenia v priebehu 8 mesiacov — vychádza okolo <strong>138 €</strong>.</p>
+                <ul class="compare-vs">
+                    <li><span class="compare-mark" aria-hidden="true">=</span><p>Táto suma je porovnateľná s <strong>jednou</strong> bielou výplňou na <strong>jeden</strong> pokazený zub.</p></li>
+                    <li><span class="compare-mark" aria-hidden="true">≠</span><p>Neporovnateľná s cenou <strong>jednej</strong> korunky na <strong>jeden</strong> rozpadnutý / zlomený zub.</p></li>
+                </ul>
+            </div>
         </div>
     </div>
 </section>
