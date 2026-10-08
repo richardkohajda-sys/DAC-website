@@ -2,7 +2,7 @@
 <html lang="sk">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="description" content="Zásady ochrany osobných údajov – DENTALL Centrum, MUDr. Otília Kohajdová, Banská Bystrica. Informácie o spracúvaní osobných údajov podľa GDPR.">
     <title>Ochrana osobných údajov · DENTALL Centrum</title>
 
@@ -11,17 +11,20 @@
     <link rel="icon" type="image/png" sizes="48x48" href="brand_assests/favicon-48x48.png">
     <link rel="icon" type="image/png" sizes="512x512" href="brand_assests/favicon-512x512.png">
     <link rel="apple-touch-icon" sizes="180x180" href="brand_assests/apple-touch-icon.png">
+    <link rel="icon" type="image/svg+xml" href="brand_assests/logo/dentall-centrum-icon.svg">
+
+    <!-- DM Sans hostované priamo na webe (žiadne spojenie s Googlom kvôli GDPR); licencia fonts/OFL.txt -->
+    <link rel="preload" href="fonts/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
 
     <script>
+      document.documentElement.classList.add('js');
       (function(){
-        var t=localStorage.getItem('dac-theme')||(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
-        if(t==='dark')document.documentElement.setAttribute('data-theme','dark');
+        var t=null; try{t=localStorage.getItem('dac-theme');}catch(e){}
+        if(!t) t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';
+        if(t==='dark') document.documentElement.setAttribute('data-theme','dark');
       })();
       (function(){
         if(localStorage.getItem('dac-cookie-consent')==='accepted'){
-          var pc1=document.createElement('link');pc1.rel='preconnect';pc1.href='https://fonts.googleapis.com';document.head.appendChild(pc1);
-          var pc2=document.createElement('link');pc2.rel='preconnect';pc2.href='https://fonts.gstatic.com';pc2.crossOrigin='anonymous';document.head.appendChild(pc2);
-          var f=document.createElement('link');f.rel='stylesheet';f.href='https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Great+Vibes&display=swap';document.head.appendChild(f);
           var ga=document.createElement('script');ga.async=true;ga.src='https://www.googletagmanager.com/gtag/js?id=G-H6TRTWEFND';document.head.appendChild(ga);
           window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('js', new Date());gtag('config', 'G-H6TRTWEFND');
         }
@@ -30,447 +33,512 @@
 
     <style>
         :root {
-            --orange:       #eb532f;
-            --orange-h:     #d44422;
-            --orange-light: #f06c4d;
-            --peach:        #fbddd6;
-            --peach-mid:    #f0b89a;
-            --cream:        #f8efea;
-            --cream-light:  #fef5f3;
-            --dark:         #1a1410;
-            --text:         #3a2e28;
-            --muted:        #8a7268;
-            --line:         rgba(235,83,47,0.15);
-            --white:        #ffffff;
-        }
+            --ink: #212121;
+            --paper: #FEFAF9;
+            --cream-2: #FAF2EF;
+            --cream-3: #F5E9E5;
+            --brown: #76665E;
+            --pink: #CC857F;
+            --pink-hover: #D89D97;
+            --accent-rgb: 204,133,127;
 
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body {
-            font-family: 'Jost', sans-serif;
-            font-weight: 300;
-            color: var(--text);
-            background: var(--white);
-            overflow-x: hidden;
-        }
-        img { max-width: 100%; display: block; }
-        a { color: inherit; text-decoration: none; }
+            --bg: var(--paper);
+            --fg: var(--ink);
+            --body: var(--brown);
+            --muted: var(--brown);
+            --surface: var(--cream-2);
+            --band: var(--cream-3);
+            --line: rgba(118,102,94,0.22);
+            --line-strong: rgba(33,33,33,0.32);
+            --icon: var(--pink);
+            --focus: var(--ink);
 
-        /* ══ NAV ══ */
-        nav {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 900;
-            background: rgba(255,255,255,0.97);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--line);
-            box-shadow: 0 4px 30px rgba(0,0,0,0.06);
-        }
-        .nav-inner {
-            display: flex; align-items: center;
-            padding: 0 5% 0 1.5rem;
-            gap: 2rem;
-        }
+            --gutter: clamp(16px, 3.4vw, 48px);
+            --wrap: 1320px;
+            --sec: clamp(96px, 11vw, 168px);
+            --nav-h: 104px;
+            --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
+            --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);
 
-        @property --beam-angle {
-            syntax: '<angle>';
-            initial-value: 0deg;
-            inherits: false;
+            /* iskra z loga (brand guideline: linky zakončené iskrou, vodoznak „D“) */
+            --sparkle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='175 36 38 45'%3E%3Cpath d='M211.89,58.71s-12.36-1.13-13.66-21.49c0,0,1.24,19.76-22.68,21.49,0,0,21.14-.91,22.44,20.91,0,0,.94-17.85,13.9-20.91Z'/%3E%3C/svg%3E");
+            --rule: rgba(var(--accent-rgb), 0.5);
+            --wm: rgba(118,102,94,0.08);
+            --wm-spark: rgba(var(--accent-rgb), 0.16);
         }
-        @keyframes beam-travel { to { --beam-angle: 360deg; } }
-
-        .nav-brand {
-            display: flex; flex-direction: column; align-items: center;
-            padding: 0.6rem 2rem 1.8rem;
-            flex-shrink: 0;
-            background: var(--white);
-            border-radius: 0 0 24px 24px;
-            box-shadow: 0 12px 36px rgba(0,0,0,0.1);
-            position: relative; z-index: 1;
-            margin-bottom: -3rem;
-            isolation: isolate;
-        }
-        .nav-brand::before {
-            content: '';
-            position: absolute; inset: -1px; top: 0;
-            border-radius: 0 0 25px 25px;
-            padding: 1.5px;
-            background: conic-gradient(
-                from var(--beam-angle) at 50% 50%,
-                transparent 0deg, transparent 160deg,
-                var(--orange) 220deg, #fbddd6 270deg,
-                transparent 320deg, transparent 360deg
-            );
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor; mask-composite: exclude;
-            animation: beam-travel 4s linear infinite;
-            pointer-events: none; z-index: -1;
-        }
-        .nav-logo-css { display: flex; align-items: center; }
-        .nav-logo-words { display: flex; flex-direction: column; line-height: 1; gap: 0.2rem; align-items: center; }
-        .nav-logo-name { font-size: 3.64rem; font-weight: 300; letter-spacing: 0.18em; color: var(--dark); }
-        .nav-logo-accent { color: var(--orange); }
-        .nav-logo-sub {
-            font-size: 1.31rem; font-weight: 300;
-            letter-spacing: 0.45em; text-transform: uppercase;
-            color: var(--muted);
-            border-top: 1px solid var(--line);
-            padding-top: 0.32rem; width: 100%; text-align: center;
-        }
-        .nav-doctor { font-size: 1.14rem; font-weight: 300; color: #4a3c34; letter-spacing: 0.08em; margin-top: 2.2rem; }
-
-        .nav-links {
-            display: flex; gap: 0; list-style: none; flex: 1;
-            justify-content: center;
-        }
-        .nav-links a {
-            display: block; padding: 1.6rem 1.1rem;
-            font-weight: 600; font-size: 0.85rem;
-            letter-spacing: 0.1em; text-transform: uppercase;
-            color: var(--text); transition: color 0.2s; white-space: nowrap;
-        }
-        .nav-links a:hover { color: var(--orange); }
-
-        .nav-end { display: flex; align-items: center; gap: 1.2rem; flex-shrink: 0; }
-        .nav-phone {
-            display: flex; align-items: center; gap: 0.5rem;
-            font-weight: 700; font-size: 1.6rem;
-            color: var(--text); white-space: nowrap; flex-shrink: 0;
-        }
-        .nav-phone svg { stroke: var(--orange); }
-        .nav-phone:hover { color: var(--orange); }
-
-        /* ══ THEME TOGGLE ══ */
-        .theme-toggle {
-            position: relative; display: flex; align-items: center;
-            width: 84px; height: 50px; border-radius: 9999px; padding: 5px;
-            border: 2px solid rgba(203,213,225,0.6); cursor: pointer; outline: none;
-            background: radial-gradient(ellipse at top left, #ffffff 0%, #f1f5f9 40%, #cbd5e1 100%);
-            box-shadow: inset 5px 5px 12px rgba(148,163,184,0.5), inset -5px -5px 12px rgba(255,255,255,1),
-                        0 8px 16px rgba(0,0,0,0.08);
-            transition: background 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
-            flex-shrink: 0;
-        }
-        .theme-toggle[aria-checked="true"] {
-            background: radial-gradient(ellipse at top left, #1e293b 0%, #0f172a 40%, #020617 100%);
-            border-color: rgba(51,65,85,0.6);
-            box-shadow: inset 5px 5px 12px rgba(0,0,0,0.9), inset -5px -5px 12px rgba(71,85,105,0.4),
-                        0 8px 16px rgba(0,0,0,0.4);
-        }
-        .toggle-bg-icons { position: absolute; inset: 0; display: flex; align-items: center; justify-content: space-between; padding: 0 13px; pointer-events: none; }
-        .toggle-bg-sun { color: #b45309; transition: color 0.3s; width: 16px; height: 16px; }
-        .toggle-bg-moon { color: #475569; transition: color 0.3s; width: 16px; height: 16px; }
-        .theme-toggle[aria-checked="true"] .toggle-bg-sun,
-        .theme-toggle[aria-checked="true"] .toggle-bg-moon { color: #fef9c3; }
-        .toggle-thumb {
-            position: relative; z-index: 10; width: 36px; height: 36px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center; overflow: hidden;
-            background: linear-gradient(145deg, #ffffff 0%, #fefefe 50%, #f8fafc 100%);
-            border: 2px solid rgba(255,255,255,0.9);
-            box-shadow: inset 2px 2px 4px rgba(203,213,225,0.3), 0 8px 32px rgba(0,0,0,0.18);
-            transition: transform 0.45s cubic-bezier(0.34,1.56,0.64,1), background 0.3s ease;
-            transform: translateX(0);
-        }
-        .theme-toggle[aria-checked="true"] .toggle-thumb {
-            transform: translateX(34px);
-            background: linear-gradient(145deg, #64748b 0%, #475569 50%, #334155 100%);
-        }
-        .toggle-icon { position: absolute; transition: opacity 0.25s ease; width: 16px; height: 16px; }
-        .toggle-sun { opacity: 1; color: #f59e0b; }
-        .toggle-moon { opacity: 0; color: #e2e8f0; }
-        .theme-toggle[aria-checked="true"] .toggle-sun { opacity: 0; }
-        .theme-toggle[aria-checked="true"] .toggle-moon { opacity: 1; }
-
-        /* ══ PAGE HEADER ══ */
-        .page-header {
-            padding: 9rem 5% 4rem;
-            background: linear-gradient(160deg, var(--cream-light) 0%, var(--cream) 60%, var(--peach) 100%);
-            border-bottom: 1px solid var(--line);
-        }
-        .page-header .breadcrumb {
-            font-size: 0.72rem; font-weight: 600; letter-spacing: 0.2em;
-            text-transform: uppercase; color: var(--muted);
-            margin-bottom: 1.2rem;
-        }
-        .page-header .breadcrumb span { color: var(--orange); }
-        .page-header h1 {
-            font-size: clamp(2rem, 4vw, 3rem); font-weight: 300;
-            letter-spacing: 0.06em; color: var(--dark); line-height: 1.15;
-        }
-        .page-header .updated { margin-top: 1rem; font-size: 0.82rem; color: var(--muted); letter-spacing: 0.04em; }
-
-        /* ══ LEGAL CONTENT ══ */
-        .legal-wrap {
-            max-width: 820px; margin: 0 auto;
-            padding: 4rem 5% 6rem;
-        }
-        .legal-wrap h2 {
-            font-size: 1.05rem; font-weight: 700;
-            letter-spacing: 0.18em; text-transform: uppercase;
-            color: var(--orange);
-            margin-top: 3rem; margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid var(--line);
-        }
-        .legal-wrap h2:first-child { margin-top: 0; }
-        .legal-wrap h3 {
-            font-size: 0.95rem; font-weight: 600;
-            letter-spacing: 0.08em; color: var(--dark);
-            margin-top: 1.5rem; margin-bottom: 0.6rem;
-        }
-        .legal-wrap p {
-            font-size: 1rem; line-height: 1.8;
-            color: var(--text); margin-bottom: 0.9rem;
-        }
-        .legal-wrap ul {
-            list-style: none; padding: 0; margin-bottom: 0.9rem;
-        }
-        .legal-wrap ul li {
-            font-size: 1rem; line-height: 1.8; color: var(--text);
-            padding-left: 1.4rem; position: relative; margin-bottom: 0.3rem;
-        }
-        .legal-wrap ul li::before {
-            content: '—'; position: absolute; left: 0;
-            color: var(--orange); font-weight: 400;
-        }
-        .legal-wrap .highlight-box {
-            background: var(--cream-light);
-            border-left: 3px solid var(--orange);
-            border-radius: 0 8px 8px 0;
-            padding: 1.2rem 1.5rem; margin: 1.5rem 0;
-        }
-        .legal-wrap .highlight-box p { margin-bottom: 0; }
-        .legal-wrap .rights-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 1rem; margin: 1.5rem 0;
-        }
-        .legal-wrap .right-card {
-            background: var(--cream-light);
-            border: 1px solid var(--line);
-            border-radius: 10px; padding: 1rem 1.2rem;
-        }
-        .legal-wrap .right-card strong {
-            display: block; font-size: 0.8rem; font-weight: 700;
-            letter-spacing: 0.1em; text-transform: uppercase;
-            color: var(--orange); margin-bottom: 0.4rem;
-        }
-        .legal-wrap .right-card p {
-            font-size: 0.88rem; line-height: 1.6; margin-bottom: 0;
-        }
-        .legal-wrap a { color: var(--orange); text-decoration: underline; text-underline-offset: 3px; }
-        .legal-wrap a:hover { color: var(--orange-h); }
-        .legal-wrap strong { font-weight: 600; }
-
-        /* ══ FOOTER ══ */
-        footer {
-            background: #3d3028;
-            border-top: 1px solid rgba(255,255,255,0.08);
-            padding: 2.5rem 5%;
-            display: flex; flex-direction: column; align-items: center;
-            gap: 1.5rem;
-        }
-        .footer-top {
-            width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1.2rem;
-        }
-        .footer-brand { display: flex; flex-direction: column; align-items: flex-start; gap: 0.4rem; margin-left: 2rem; }
-        .footer-logo-text { display: flex; flex-direction: column; line-height: 1; align-items: flex-start; gap: 0.2rem; }
-        .footer-logo-wordmark { font-size: 2rem; font-weight: 300; color: rgba(255,255,255,0.85); letter-spacing: 0.18em; }
-        .footer-logo-wordmark span { color: var(--orange); }
-        .footer-logo-centrum {
-            font-size: 0.6rem; font-weight: 300; letter-spacing: 0.45em; text-transform: uppercase;
-            color: rgba(255,255,255,0.45); border-top: 1px solid rgba(255,255,255,0.15);
-            padding-top: 0.28rem; width: 100%; text-align: center;
-        }
-        .footer-doctor { font-size: 0.85rem; font-weight: 300; color: rgba(255,255,255,0.4); letter-spacing: 0.08em; margin-top: 0.6rem; }
-        .footer-copy { font-size: 1rem; color: rgba(255,255,255,0.4); flex: 1; text-align: center; }
-        .footer-phone {
-            display: flex; align-items: center; gap: 0.5rem;
-            font-weight: 700; font-size: 1.6rem; color: rgba(255,255,255,0.85);
-            white-space: nowrap;
-        }
-        .footer-phone svg { stroke: var(--orange); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; width: 28px; height: 28px; flex-shrink: 0; }
-        .footer-legal {
-            width: 100%; display: flex; align-items: center; justify-content: center;
-            gap: 2rem; padding-top: 1rem;
-            border-top: 1px solid rgba(255,255,255,0.08);
-        }
-        .footer-legal a {
-            font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em;
-            text-transform: uppercase; color: rgba(255,255,255,0.35);
-            transition: color 0.2s;
-        }
-        .footer-legal a:hover { color: var(--orange); }
-        .footer-legal a.active { color: rgba(255,255,255,0.6); }
-
-        /* ══ DARK MODE ══ */
         html[data-theme="dark"] {
-            --white: #1b1410; --cream: #201915; --cream-light: #231c18;
-            --dark: #f0e4dc; --text: #d4c8c0; --muted: #a09088;
-            --line: rgba(235,83,47,0.2); --peach: #3d2820; --peach-mid: #5a3828;
+            color-scheme: dark;
+            --bg: #212121;
+            --fg: #FEFEFE;
+            --body: rgba(254,254,254,0.8);
+            --muted: rgba(254,254,254,0.66);
+            --surface: #262626;
+            --cream-3: #2A2A2A;
+            --band: #1A1A1A;
+            --line: rgba(254,254,254,0.14);
+            --line-strong: rgba(254,254,254,0.34);
+            --focus: #CC857F;
+            --wm: rgba(254,254,254,0.045);
+            --wm-spark: rgba(var(--accent-rgb), 0.1);
         }
-        html[data-theme="dark"] nav { background: rgba(27,20,16,0.97); }
-        html[data-theme="dark"] .nav-doctor { color: #b0a098; }
-        html[data-theme="dark"] .page-header {
-            background: linear-gradient(160deg, #201915 0%, #231c18 60%, #2d1f14 100%);
-        }
-        html[data-theme="dark"] .legal-wrap .highlight-box,
-        html[data-theme="dark"] .legal-wrap .right-card { background: #201915; }
 
-        /* ══ RESPONSIVE ══ */
-        .toggle-v-wrap {
-            width: 50px; height: 84px;
+        /* DM Sans (variabilné, hrúbky 300–600), latin + latin-ext pre slovenské znaky */
+        @font-face {
+            font-family: 'DM Sans'; font-style: normal; font-weight: 300 600; font-display: swap;
+            src: url("fonts/dm-sans-latin-ext.woff2") format("woff2");
+            unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+        }
+        @font-face {
+            font-family: 'DM Sans'; font-style: normal; font-weight: 300 600; font-display: swap;
+            src: url("fonts/dm-sans-latin.woff2") format("woff2");
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        }
+        @font-face {
+            font-family: 'DM Sans Fallback';
+            src: local('Arial'), local('Helvetica');
+            size-adjust: 102%;
+            ascent-override: 98%; descent-override: 30%; line-gap-override: 0%;
+        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; overflow-x: clip; -webkit-text-size-adjust: 100%; }
+        body {
+            font-family: 'DM Sans', 'DM Sans Fallback', system-ui, sans-serif;
+            font-size: 1.0625rem; line-height: 1.7; font-weight: 400;
+            color: var(--body); background: var(--bg);
+            overflow-x: clip;
+            -webkit-font-smoothing: antialiased;
+        }
+        img { display: block; max-width: 100%; }
+        a { color: inherit; text-decoration: none; }
+        ul, ol { list-style: none; }
+        button { font: inherit; color: inherit; }
+        p { text-wrap: pretty; }
+        h1, h2, h3 { font-weight: 500; text-wrap: balance; }
+        :focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; }
+        ::selection { background: rgba(var(--accent-rgb),0.3); color: var(--fg); }
+        [id] { scroll-margin-top: 24px; }
+
+        .skip-link {
+            position: absolute; left: 16px; top: -100px; z-index: 10000;
+            padding: 12px 18px; background: var(--ink); color: #FEFAF9; font-weight: 600;
+        }
+        .skip-link:focus { top: 16px; }
+
+        .wrap { width: 100%; max-width: calc(var(--wrap) + 2 * var(--gutter)); margin-inline: auto; padding-inline: var(--gutter); }
+        .sec { padding-block: var(--sec); background: var(--bg); }
+
+        /* ── typografia ── */
+        .label {
+            display: flex; align-items: center; gap: 12px;
+            margin-bottom: clamp(18px, 2.2vw, 28px);
+            font-size: 0.75rem; font-weight: 600; line-height: 1.4; letter-spacing: 0.16em; text-transform: uppercase;
+            color: var(--muted);
+        }
+        .label::before {
+            content: ''; flex-shrink: 0; width: 40px; height: 13px; background: var(--pink);
+            -webkit-mask: var(--sparkle) left center / 11px 13px no-repeat, linear-gradient(#000 0 0) 6px center / 34px 1px no-repeat;
+            mask: var(--sparkle) left center / 11px 13px no-repeat, linear-gradient(#000 0 0) 6px center / 34px 1px no-repeat;
+        }
+        .h2 {
+            font-size: clamp(2.2rem, 1rem + 3.4vw, 4.25rem);
+            font-weight: 500; line-height: 1; letter-spacing: -0.015em; text-transform: uppercase;
+            color: var(--fg);
+        }
+        .lead { font-size: clamp(1.125rem, 1rem + 0.5vw, 1.375rem); line-height: 1.6; color: var(--body); }
+
+        /* ── tlačidlo (jedno pre celú stránku) ── */
+        .btn {
+            display: inline-flex; align-items: center; gap: 18px;
+            height: 58px; padding: 0 28px;
+            background: var(--pink); color: var(--ink);
+            transition: background-color 200ms ease, transform 160ms var(--ease-out-strong);
+        }
+        .btn-label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap; }
+        .btn-number { font-size: 1.1875rem; font-weight: 600; letter-spacing: 0.01em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+        @media (hover: hover) and (pointer: fine) { .btn:hover { background: var(--pink-hover); } }
+        .btn:active { transform: scale(0.97); }
+
+        /* ══ HLAVIČKA ══ logo | čiarka | meno vľavo, zvyšok vpravo; nad úvodom priehľadná;
+           pri scrolle dole sa schová, pri scrolle hore sa vráti (ako Spyker) */
+        .site-nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+            color: var(--fg); background: var(--bg);
+            border-bottom: 1px solid var(--line);
+            transition: background-color 240ms ease, color 240ms ease, border-color 240ms ease,
+                        transform 320ms var(--ease-out-strong), opacity 240ms ease;
+        }
+        .site-nav.is-hidden:not(.is-open):not(:focus-within) { transform: translateY(-100%); opacity: 0; pointer-events: none; }
+        .js .site-nav:not(.is-solid):not(.is-open) { background: transparent; color: #FEFAF9; border-bottom-color: transparent; }
+        .site-nav.is-open { background: var(--ink); color: #FEFAF9; border-bottom-color: rgba(254,250,249,0.12); }
+        @media (max-height: 520px) and (min-width: 768px) { .site-nav { position: absolute; } }
+
+        .sn-inner {
+            position: relative; z-index: 2;
+            display: flex; align-items: center; justify-content: space-between; gap: 24px;
+            height: var(--nav-h); padding-inline: var(--gutter);
+        }
+        .sn-brand { display: flex; align-items: center; gap: 18px; flex-shrink: 0; color: inherit; }
+        .sn-logo { height: 68px; width: auto; display: block; }
+        .sn-rule { width: 1px; height: 48px; background: currentColor; opacity: 0.32; flex-shrink: 0; }
+        /* meno ako súčasť loga (rovnako ako v päte): hnedá, veľké písmená s riedkym rozostupom; na fotke biele */
+        .sn-doctor { font-size: 0.875rem; font-weight: 500; line-height: 1.75; letter-spacing: 0.2em; text-transform: uppercase; white-space: nowrap; color: var(--brown); }
+        html[data-theme="dark"] .sn-doctor, .site-nav.is-open .sn-doctor, .js .site-nav:not(.is-solid) .sn-doctor { color: inherit; }
+        .sn-logo-h { display: none; height: 46px; width: auto; }
+        .sn-logo--white { display: none; }
+        html[data-theme="dark"] .sn-logo--white, .site-nav.is-open .sn-logo--white, .js .site-nav:not(.is-solid) .sn-logo--white { display: block; }
+        html[data-theme="dark"] .sn-logo--brand, .site-nav.is-open .sn-logo--brand, .js .site-nav:not(.is-solid) .sn-logo--brand { display: none; }
+        .js .site-nav:not(.is-solid) .theme-toggle, .site-nav.is-open .theme-toggle { background: rgba(254,250,249,0.12); border-color: rgba(254,250,249,0.42); }
+        .js .site-nav:not(.is-solid) :focus-visible, .site-nav.is-open :focus-visible { outline-color: #FEFAF9; }
+
+        .sn-end { display: flex; align-items: center; gap: clamp(16px, 2vw, 32px); }
+        .sn-links { display: flex; gap: clamp(18px, 2.4vw, 36px); margin-right: clamp(0px, 1vw, 16px); }
+        .sn-links a {
+            position: relative; display: inline-flex; align-items: center; min-height: 44px;
+            font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap;
+        }
+        .sn-links a::after {
+            content: ''; position: absolute; left: 0; right: 0; bottom: 10px; height: 1px; background: currentColor;
+            transform: scaleX(0); transform-origin: left center; transition: transform 200ms var(--ease-out-strong);
+        }
+        @media (hover: hover) and (pointer: fine) { .sn-links a:hover::after { transform: scaleX(1); } }
+        .sn-links a:focus-visible::after { transform: scaleX(1); }
+        .sn-phone {
+            display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 44px; min-width: 44px;
+            font-size: 0.9375rem; font-weight: 600; letter-spacing: 0.02em; font-variant-numeric: tabular-nums; white-space: nowrap;
+            transition: opacity 200ms ease, transform 160ms var(--ease-out-strong);
+        }
+        .sn-phone svg { width: 18px; height: 18px; flex-shrink: 0; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+        @media (hover: hover) and (pointer: fine) { .sn-phone:hover { opacity: 0.72; } }
+        .sn-phone:active { transform: scale(0.97); }
+
+        .sn-menu {
+            display: none; align-items: center; justify-content: center; gap: 12px;
+            min-height: 44px; min-width: 44px; padding: 0;
+            background: none; border: 0; cursor: pointer;
+            font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+            transition: transform 160ms var(--ease-out-strong);
+        }
+        .sn-menu:active { transform: scale(0.97); }
+        .sn-menu-lines { position: relative; width: 22px; height: 10px; }
+        .sn-menu-lines::before, .sn-menu-lines::after {
+            content: ''; position: absolute; left: 0; right: 0; height: 1.5px; background: currentColor;
+            transition: transform 240ms var(--ease-out-strong);
+        }
+        .sn-menu-lines::before { top: 0; }
+        .sn-menu-lines::after { bottom: 0; }
+        .site-nav.is-open .sn-menu-lines::before { transform: translateY(4.25px) rotate(45deg); }
+        .site-nav.is-open .sn-menu-lines::after { transform: translateY(-4.25px) rotate(-45deg); }
+
+        .sn-overlay {
+            position: fixed; inset: 0; z-index: 1;
+            display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); align-items: end; gap: 40px;
+            padding: calc(var(--nav-h) + 40px) var(--gutter) calc(40px + env(safe-area-inset-bottom, 0px));
+            overflow-y: auto;
+            background: var(--ink); color: #FEFAF9;
+            clip-path: inset(0 0 100% 0); visibility: hidden;
+            transition: clip-path 420ms var(--ease-out-strong), visibility 0s linear 420ms;
+        }
+        .site-nav.is-open .sn-overlay { clip-path: inset(0 0 0 0); visibility: visible; transition-delay: 0s; }
+        .sn-big { display: flex; flex-direction: column; }
+        .sn-big a {
+            display: inline-block; width: fit-content; min-height: 44px;
+            font-size: clamp(2.2rem, 1rem + 4.4vw, 5.2rem); font-weight: 500; line-height: 1.1; letter-spacing: -0.02em;
+            color: #FEFAF9; transition: opacity 200ms ease;
+        }
+        @media (hover: hover) and (pointer: fine) { .sn-big:hover a { opacity: 0.4; } .sn-big a:hover { opacity: 1; } }
+        .sn-info { justify-self: end; max-width: 300px; font-size: 0.9375rem; line-height: 1.6; color: rgba(254,250,249,0.72); }
+        .sn-info p + p { margin-top: 1.1em; }
+        .sn-info-name { color: #FEFAF9; font-weight: 600; }
+        .sn-info-phone { display: inline-flex; align-items: center; min-height: 44px; margin-top: 0.8em; font-size: 1.5rem; font-weight: 600; color: #FEFAF9; }
+        .sn-info-theme { margin-top: 1.2em; padding-top: 1.2em; border-top: 1px solid rgba(254,250,249,0.16); display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+        .sn-info-theme .theme-toggle { background: rgba(254,250,249,0.12); border-color: rgba(254,250,249,0.42); }
+        html.menu-open { overflow: hidden; }
+
+        /* prepínač tmavého režimu */
+        .theme-toggle {
+            position: relative; flex-shrink: 0;
+            width: 58px; height: 32px; padding: 3px;
+            border-radius: 999px; border: 1px solid rgba(var(--accent-rgb),0.45);
+            background: var(--surface); cursor: pointer;
+            display: inline-flex; align-items: center;
+            transition: opacity 200ms ease;
+        }
+        .theme-toggle::before { content: ''; position: absolute; inset: -7px -4px; }
+        @media (hover: hover) and (pointer: fine) { .theme-toggle:hover { opacity: 0.85; } }
+        .theme-toggle-thumb {
+            width: 24px; height: 24px; border-radius: 50%;
+            background: var(--brown);
             display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0; margin-right: -0.5rem;
+            transition: transform 320ms var(--ease-out-strong);
         }
-        .toggle-v-wrap .theme-toggle { transform: rotate(-90deg); flex-shrink: 0; }
+        .theme-toggle[aria-checked="true"] .theme-toggle-thumb { transform: translateX(26px); background: var(--pink); }
+        .theme-toggle svg { position: absolute; width: 14px; height: 14px; stroke: #FEFEFE; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: opacity 200ms ease; }
+        .theme-toggle .ico-moon { opacity: 0; }
+        .theme-toggle[aria-checked="true"] .ico-sun { opacity: 0; }
+        .theme-toggle[aria-checked="true"] .ico-moon { opacity: 1; }
+        .theme-toggle[aria-checked="true"] svg { stroke: #212121; }
 
-        @media (max-width: 1200px) {
-            .nav-links a { padding: 1.6rem 0.7rem; font-size: 0.66rem; }
-            .nav-phone { font-size: 0.78rem; }
-            .theme-toggle { width: 76px; height: 46px; }
-            .theme-toggle[aria-checked="true"] .toggle-thumb { transform: translateX(30px); }
-        }
-        @media (max-width: 860px) {
-            .nav-links a { padding: 1.4rem 0.5rem; font-size: 0.62rem; }
-            .nav-phone { font-size: 0.72rem; }
-        }
-        @media (max-width: 640px) {
-            nav { overflow: visible; }
-            .nav-inner { display: grid; grid-template-areas: "toggle brand phone" "links links links"; grid-template-columns: 1fr auto 1fr; padding: 0; gap: 0; align-items: stretch; }
-            .nav-brand {
-                grid-area: brand; background: transparent;
-                border-radius: 0 0 20px 20px; box-shadow: 0 10px 32px rgba(0,0,0,0.09);
-                margin-bottom: 0; padding: 0.6rem 1.4rem 1.3rem;
-                align-items: center; border-bottom: none;
-                position: relative; z-index: 2; isolation: isolate;
-            }
-            .nav-brand::before { display: block; border-radius: 0 0 21px 21px; }
-            .nav-logo-name { font-size: 1.9rem; }
-            .nav-logo-sub { font-size: 0.72rem; }
-            .nav-doctor { margin-top: 0.4rem; font-size: 0.78rem; }
-            .nav-links { grid-area: links; flex-wrap: wrap; justify-content: center; padding: 0.25rem 0; border-top: none; }
-            .nav-links a { padding: 0.5rem 0.6rem; font-size: 0.62rem; }
-            .nav-end { grid-area: phone; display: flex; align-items: center; justify-content: center; padding: 0 0.4rem 0 0.7rem; overflow: hidden; }
-            .nav-end .nav-phone { flex-direction: column; align-items: center; gap: 0.1rem; font-size: clamp(0.65rem, 2.4vw, 0.88rem); padding: 0; white-space: nowrap; }
-            .nav-end .nav-phone svg { width: clamp(14px, 4vw, 20px); height: clamp(14px, 4vw, 20px); }
-            .toggle-v-wrap { grid-area: toggle; display: flex; align-items: center; justify-content: center; overflow: clip; width: auto; height: auto; align-self: stretch; justify-self: stretch; margin: 0; padding: 0 0.7rem 0 0.4rem; }
-            .toggle-v-wrap .theme-toggle { transform: rotate(-90deg); flex-shrink: 0; }
-            .page-header { padding: 7rem 5% 2.5rem; }
-            .legal-wrap .rights-grid { grid-template-columns: 1fr; }
-            .footer-top { flex-direction: column; align-items: center; text-align: center; }
-            .footer-brand { margin-left: 0; align-items: center; }
-            .footer-legal { flex-wrap: wrap; gap: 1rem; }
+        @media (max-width: 1180px) {
+            .sn-links { display: none; }
+            .js .sn-menu { display: inline-flex; }
+            html:not(.js) .site-nav { position: relative; }
+            html:not(.js) .sn-inner { flex-wrap: wrap; height: auto; padding-block: 14px; row-gap: 4px; }
+            html:not(.js) .sn-end { display: contents; }
+            html:not(.js) .sn-links { display: flex; order: 3; width: 100%; overflow-x: auto; }
         }
 
-        /* ══ COOKIE CONSENT ══ */
+        .legal-head-in::after, .foot-bottom::after {
+            content: ''; position: absolute; width: 18px; height: 22px; background: var(--pink);
+            -webkit-mask: var(--sparkle) center / contain no-repeat; mask: var(--sparkle) center / contain no-repeat;
+        }
+        /* päta: vlastná krémová plocha oddelená od mapy; hore logo s menom a odkazy, pod linkou s iskrou tlačidlá, © a telefón */
+        .foot { padding: clamp(72px, 8vw, 120px) 0 calc(32px + env(safe-area-inset-bottom, 0px)); background: var(--band); color: var(--fg); }
+        .foot-top { display: flex; align-items: center; justify-content: space-between; gap: 48px; }
+        .foot-brand { display: flex; align-items: center; gap: clamp(20px, 2.4vw, 32px); color: var(--fg); }
+        .foot-logo { display: block; height: clamp(88px, 8vw, 124px); width: auto; flex-shrink: 0; }
+        .foot-logo--white { display: none; }
+        html[data-theme="dark"] .foot-logo--white { display: block; }
+        html[data-theme="dark"] .foot-logo--brand { display: none; }
+        .foot-rule { width: 1px; align-self: stretch; margin-block: 10%; background: currentColor; opacity: 0.28; flex-shrink: 0; }
+        /* meno ako súčasť loga: hnedá z loga, veľké písmená s riedkym prestrkaním ako „CENTRUM“ */
+        .foot-doctor { font-size: clamp(0.875rem, 0.8rem + 0.25vw, 1rem); font-weight: 500; line-height: 1.75; letter-spacing: 0.2em; text-transform: uppercase; color: var(--brown); }
+        html[data-theme="dark"] .foot-doctor { color: var(--fg); }
+        .foot-links { display: flex; flex-direction: column; align-items: flex-end; }
+        .foot-links a {
+            display: block; width: fit-content;
+            font-size: clamp(2rem, 1rem + 2.4vw, 3.5rem); font-weight: 500; line-height: 1.15; letter-spacing: -0.02em;
+            color: var(--fg); transition: opacity 200ms ease;
+        }
+        @media (hover: hover) and (pointer: fine) { .foot-links:hover a { opacity: 0.4; } .foot-links a:hover { opacity: 1; } }
+        .foot-bottom {
+            position: relative; margin-top: clamp(64px, 7vw, 104px); padding-top: clamp(28px, 3vw, 40px); border-top: 1px solid var(--rule);
+            display: grid; grid-template-columns: minmax(0, 1fr) auto auto; grid-template-areas: "meta phone legal"; align-items: center; gap: 28px clamp(32px, 4vw, 64px);
+        }
+        .foot-bottom::after { top: 0; right: 0; transform: translate(50%, -50%); }
+        .foot-meta { grid-area: meta; display: flex; flex-direction: column; gap: 2px; font-size: 0.875rem; line-height: 1.6; color: var(--muted); }
+        .foot-copy { color: var(--fg); font-weight: 500; }
+        .foot-credit .by { color: var(--fg); font-weight: 600; }
+        /* telefón ako v hornej lište: piktogram + číslo, zvýraznený */
+        .foot-phone {
+            grid-area: phone; display: inline-flex; align-items: center; gap: 12px; min-height: 44px;
+            font-size: clamp(1.125rem, 1rem + 0.4vw, 1.375rem); font-weight: 600; letter-spacing: 0.02em; font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--fg);
+            transition: opacity 200ms ease, transform 160ms var(--ease-out-strong);
+        }
+        .foot-phone svg { width: 22px; height: 22px; flex-shrink: 0; stroke: var(--pink); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+        @media (hover: hover) and (pointer: fine) { .foot-phone:hover { opacity: 0.72; } }
+        .foot-phone:active { transform: scale(0.97); }
+        /* dve tlačidlá: podmienky a ochrana údajov */
+        .foot-legal { grid-area: legal; display: flex; flex-wrap: wrap; gap: 12px; }
+        .foot-btn {
+            display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 20px;
+            border: 1px solid var(--line-strong); font-size: 0.875rem; font-weight: 500; color: var(--fg); white-space: nowrap;
+            transition: transform 160ms var(--ease-out-strong);
+        }
+        @media (hover: hover) and (pointer: fine) { .foot-btn:hover { background: var(--fg); border-color: var(--fg); color: var(--bg); } }
+        .foot-btn:active { transform: scale(0.97); }
+
+        /* ══ COOKIE LIŠTA ══ */
         .cookie-banner {
-            position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999;
-            background: rgba(45,34,27,0.97);
-            backdrop-filter: blur(16px);
-            border-top: 1px solid rgba(235,83,47,0.25);
-            padding: 1.1rem 5%;
-            display: flex; align-items: center; gap: 2rem;
-            box-shadow: 0 -8px 40px rgba(0,0,0,0.3);
-            transform: translateY(100%); opacity: 0;
-            transition: opacity 0.4s ease, transform 0.45s cubic-bezier(0.34,1.56,0.64,1);
+            position: fixed; bottom: 16px; left: 16px; right: 16px; z-index: 9999;
+            max-width: 1100px; margin: 0 auto;
+            display: flex; align-items: center; gap: 32px;
+            padding: 20px 24px;
+            background: var(--bg); border: 1px solid var(--line);
+            transform: translateY(120%); opacity: 0;
+            transition: opacity 400ms ease, transform 500ms var(--ease-out-strong);
         }
         .cookie-banner.visible { transform: translateY(0); opacity: 1; }
-        .cookie-banner.hidden { transform: translateY(110%); opacity: 0; pointer-events: none; }
+        .cookie-banner.hidden { transform: translateY(130%); opacity: 0; pointer-events: none; }
+        .menu-open .cookie-banner.visible { transform: translateY(130%); opacity: 0; pointer-events: none; }
         .cookie-text { flex: 1; }
-        .cookie-text strong {
-            font-size: 0.76rem; font-weight: 700; letter-spacing: 0.14em;
-            text-transform: uppercase; color: rgba(255,255,255,0.85);
-            display: block; margin-bottom: 0.25rem;
-        }
-        .cookie-text p { font-size: 0.8rem; color: rgba(255,255,255,0.5); line-height: 1.55; margin: 0; }
-        .cookie-text a { color: var(--orange); text-decoration: underline; text-underline-offset: 2px; }
-        .cookie-actions { display: flex; gap: 0.7rem; flex-shrink: 0; align-items: center; }
+        .cookie-text strong { display: block; margin-bottom: 4px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg); }
+        .cookie-text p { font-size: 0.875rem; line-height: 1.55; color: var(--body); max-width: 40em; }
+        .cookie-text a { color: var(--fg); font-weight: 600; text-decoration: underline; text-decoration-color: var(--pink); text-underline-offset: 3px; }
+        .cookie-actions { display: flex; flex-wrap: wrap; gap: 10px; flex-shrink: 0; }
         .cookie-btn {
-            padding: 0.55rem 1.3rem; border-radius: 6px; cursor: pointer;
-            font-family: 'Jost', sans-serif;
-            font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-            transition: background 0.2s, transform 0.15s, border-color 0.2s, color 0.2s;
-            white-space: nowrap;
+            min-height: 44px; padding: 0 20px; cursor: pointer;
+            font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap;
+            transition: transform 160ms var(--ease-out-strong), background-color 200ms ease;
         }
-        .cookie-btn--accept { background: var(--orange); color: #fff; border: 1px solid var(--orange); }
-        .cookie-btn--accept:hover { background: var(--orange-h); border-color: var(--orange-h); transform: translateY(-1px); }
-        .cookie-btn--decline { background: transparent; color: rgba(255,255,255,0.45); border: 1px solid rgba(255,255,255,0.18); }
-        .cookie-btn--decline:hover { border-color: rgba(255,255,255,0.4); color: rgba(255,255,255,0.7); }
-        @media (max-width: 640px) {
-            .cookie-banner { flex-direction: column; align-items: flex-start; gap: 0.9rem; padding: 1.1rem 5% 1.4rem; }
-            .cookie-actions { width: 100%; }
-            .cookie-btn { flex: 1; text-align: center; }
+        .cookie-btn:active { transform: scale(0.97); }
+        .cookie-btn--decline { background: transparent; color: var(--fg); border: 1px solid var(--fg); }
+        .cookie-btn--accept { background: var(--pink); color: var(--ink); border: 1px solid var(--pink); }
+
+
+        /* ══ PRÁVNE STRÁNKY ══ hlavička s veľkým nadpisom, text v pohodlnej šírke stĺpca */
+        .legal-head { padding: calc(var(--nav-h) + clamp(56px, 8vw, 128px)) 0 0; }
+        .legal-head-in { position: relative; padding-bottom: clamp(48px, 6vw, 88px); border-bottom: 1px solid var(--rule); }
+        .legal-head-in::after { right: 0; bottom: 0; transform: translate(50%, 50%); }
+        .legal-title { max-width: 14ch; font-size: clamp(2.6rem, 1rem + 5vw, 5.75rem); font-weight: 500; line-height: 0.98; letter-spacing: -0.02em; text-transform: uppercase; color: var(--fg); }
+        .legal-updated { margin-top: clamp(20px, 2.4vw, 32px); font-size: 0.9375rem; color: var(--muted); }
+        .legal { max-width: 780px; padding-block: clamp(48px, 6vw, 88px) var(--sec); }
+        .legal > * + * { margin-top: 16px; }
+        .legal p, .legal li { font-size: 1.0625rem; line-height: 1.75; color: var(--body); }
+        .legal h2 { margin-top: clamp(56px, 6vw, 80px); padding-top: 28px; border-top: 1px solid var(--line); font-size: clamp(1.25rem, 1rem + 0.8vw, 1.625rem); line-height: 1.25; letter-spacing: -0.005em; text-transform: uppercase; color: var(--fg); }
+        .legal h3 { margin-top: 32px; font-size: 1.0625rem; font-weight: 600; line-height: 1.4; color: var(--fg); }
+        .legal h2 + p, .legal h2 + ul, .legal h3 + p, .legal h3 + ul { margin-top: 12px; }
+        .legal strong { font-weight: 600; color: var(--fg); }
+        .legal a { color: var(--fg); text-decoration: underline; text-decoration-color: var(--pink); text-decoration-thickness: 1px; text-underline-offset: 3px; overflow-wrap: anywhere; }
+        @media (hover: hover) and (pointer: fine) { .legal a:hover { text-decoration-thickness: 2px; } }
+        .legal code { padding: 1px 6px; background: var(--surface); font-size: 0.9em; color: var(--fg); }
+        .legal ul li { position: relative; padding-left: 26px; }
+        .legal ul li + li { margin-top: 6px; }
+        /* odrážka: malá iskra z loga */
+        .legal ul li::before {
+            content: ''; position: absolute; left: 2px; top: 0.62em; width: 9px; height: 11px; background: var(--pink);
+            -webkit-mask: var(--sparkle) center / contain no-repeat; mask: var(--sparkle) center / contain no-repeat;
+        }
+        .highlight-box { padding: clamp(22px, 3vw, 32px) clamp(22px, 3vw, 36px); background: var(--band); }
+        .legal > .highlight-box:first-child { margin-top: 0; }
+        .highlight-box p { color: var(--fg); }
+        .rights-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 48px; margin-top: 28px !important; margin-bottom: 28px; }
+        .right-card { padding-top: 18px; border-top: 1px solid var(--line); }
+        .right-card strong { display: block; font-size: 1rem; }
+        .right-card p { margin-top: 6px; font-size: 0.9375rem; line-height: 1.6; }
+        /* aktuálna stránka v päte */
+        .foot-btn[aria-current="page"] { background: var(--fg); border-color: var(--fg); color: var(--bg); }
+
+        /* ══ TABLET A MOBIL ══ */
+        @media (max-width: 1023px) {
+            .foot-bottom { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "meta phone" "legal legal"; }
+        }
+        @media (max-width: 767px) {
+            :root { --nav-h: 72px; }
+            .sn-inner { gap: 12px; }
+            .sn-end { gap: 4px; }
+            .sn-end > .theme-toggle { display: none; }
+            .sn-logo, .sn-rule, .sn-doctor { display: none !important; }
+            .sn-logo-h--brand { display: block; }
+            html[data-theme="dark"] .sn-logo-h--brand, .site-nav.is-open .sn-logo-h--brand, .js .site-nav:not(.is-solid) .sn-logo-h--brand { display: none; }
+            html[data-theme="dark"] .sn-logo-h--white, .site-nav.is-open .sn-logo-h--white, .js .site-nav:not(.is-solid) .sn-logo-h--white { display: block; }
+            .sn-phone span, .sn-menu-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+            .sn-phone svg { width: 20px; height: 20px; }
+            .sn-overlay { grid-template-columns: minmax(0, 1fr); align-content: space-between; align-items: start; gap: 32px; padding-top: calc(var(--nav-h) + 28px); }
+            .sn-info { justify-self: start; }
+
+            /* cookie lišta: nízky pruh pri spodnom okraji, aby nezakrývala úvodnú fotku (texty bez zmeny) */
+            .cookie-banner {
+                left: 8px; right: 8px; bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+                flex-direction: column; align-items: stretch; gap: 10px; padding: 12px 14px;
+            }
+            .cookie-text strong { margin-bottom: 2px; font-size: 0.6875rem; }
+            .cookie-text p { font-size: 0.75rem; line-height: 1.45; }
+            .cookie-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; width: 100%; }
+            .cookie-btn { padding: 0 12px; }
+
+            /* päta na mobile: veľké logo v strede, pod ním meno a odkazy; pod linkou telefón, tlačidlá, © */
+            .foot-top { flex-direction: column; align-items: center; gap: 40px; text-align: center; }
+            .foot-brand { flex-direction: column; gap: 16px; }
+            .foot-logo { height: 120px; }
+            .foot-rule, .foot-br { display: none; }
+            .foot-links { align-items: center; }
+            .foot-links a { font-size: clamp(2rem, 9vw, 2.5rem); }
+            .foot-bottom { grid-template-columns: minmax(0, 1fr); grid-template-areas: "phone" "legal" "meta"; justify-items: center; text-align: center; gap: 24px; }
+            .foot-meta { align-items: center; }
+            .foot-legal { flex-direction: column; align-items: stretch; width: 100%; max-width: 360px; }
+        
+            .rights-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 359px) {
+            .sn-logo-h { height: 40px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation: none !important; transition: none !important; }
+            html { scroll-behavior: auto; }
         }
     </style>
 </head>
 <body>
+<a class="skip-link" href="#main">Preskočiť na obsah</a>
 
-<!-- ═══ NAV ═══ -->
-<nav id="navbar">
-    <div class="nav-inner">
-        <div class="toggle-v-wrap">
-            <button id="themeToggle" class="theme-toggle" aria-label="Prepnúť tmavý/svetlý režim" role="switch" aria-checked="false">
-                <div class="toggle-bg-icons">
-                    <svg class="toggle-bg-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-                        <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-                    </svg>
-                    <svg class="toggle-bg-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                    </svg>
-                </div>
-                <div class="toggle-thumb">
-                    <svg class="toggle-icon toggle-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-                        <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-                    </svg>
-                    <svg class="toggle-icon toggle-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                    </svg>
-                </div>
+<!-- COOKIE CONSENT BANNER -->
+<div id="cookieBanner" class="cookie-banner" role="region" aria-label="Súhlas s externými zdrojmi">
+    <div class="cookie-text">
+        <strong>Externé zdroje &amp; súkromie</strong>
+        <p>Na našej stránke využívame Google Analytics na meranie návštevnosti. Pri jeho načítaní môže dochádzať k spracovaniu vašej IP adresy spoločnosťou Google LLC. Viac informácií nájdete v našich <a href="privacy.html">zásadách ochrany údajov</a>.</p>
+    </div>
+    <div class="cookie-actions">
+        <button id="cookieDecline" class="cookie-btn cookie-btn--decline">Len nevyhnutné</button>
+        <button id="cookieAccept" class="cookie-btn cookie-btn--accept">Prijať</button>
+    </div>
+</div>
+
+<!-- ═══ HLAVIČKA ═══ -->
+<nav id="navbar" class="site-nav is-solid" aria-label="Hlavná navigácia">
+    <div class="sn-inner">
+
+        <a href="index.html" class="sn-brand" aria-label="DentAll Centrum, MUDr. Otília Kohajdová – hlavná stránka">
+            <img class="sn-logo sn-logo--brand" src="brand_assests/logo/dentall-centrum-logo.svg" alt="" width="102" height="68">
+            <img class="sn-logo sn-logo--white" src="brand_assests/logo/dentall-centrum-logo-dark.svg" alt="" width="102" height="68">
+            <span class="sn-rule" aria-hidden="true"></span>
+            <span class="sn-doctor">MUDr. Otília<br>Kohajdová</span>
+            <img class="sn-logo-h sn-logo-h--brand" src="brand_assests/logo/dentall-centrum-logo-horizontal.svg" alt="" width="220" height="46">
+            <img class="sn-logo-h sn-logo-h--white" src="brand_assests/logo/dentall-centrum-logo-horizontal-dark.svg" alt="" width="220" height="46">
+        </a>
+
+        <div class="sn-end">
+            <ul class="sn-links" id="snLinks">
+                <li><a href="index.html#sluzby">Naše služby</a></li>
+                <li><a href="index.html#dentalna-hygiena">Dentálna hygiena</a></li>
+                <li><a href="index.html#cennik">Cenník</a></li>
+                <li><a href="index.html#kontakt">Kontakt</a></li>
+            </ul>
+            <button id="themeToggle" class="theme-toggle" type="button" role="switch" aria-checked="false" aria-label="Tmavý režim">
+                <span class="theme-toggle-thumb">
+                    <svg class="ico-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+                    <svg class="ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                </span>
+            </button>
+            <a href="tel:+421484145196" class="sn-phone" aria-label="Zavolajte 048 414 51 96">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.95 13a19.79 19.79 0 01-3.07-8.67A2 2 0 012.85 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                <span>048 414 51 96</span>
+            </a>
+            <button class="sn-menu" type="button" aria-expanded="false" aria-controls="snOverlay">
+                <span class="sn-menu-lines" aria-hidden="true"></span>
+                <span class="sn-menu-label">Menu</span>
             </button>
         </div>
 
-        <a href="index.html" class="nav-brand">
-            <div class="nav-logo-css">
-                <div class="nav-logo-words">
-                    <span class="nav-logo-name">DENT<span class="nav-logo-accent">ALL</span></span>
-                    <span class="nav-logo-sub">Centrum</span>
-                </div>
-            </div>
-            <span class="nav-doctor">MUDr. Otília Kohajdová</span>
-        </a>
+    </div>
 
-        <ul class="nav-links">
+    <div class="sn-overlay" id="snOverlay">
+        <ul class="sn-big" aria-label="Sekcie stránky">
             <li><a href="index.html#sluzby">Naše služby</a></li>
             <li><a href="index.html#dentalna-hygiena">Dentálna hygiena</a></li>
             <li><a href="index.html#cennik">Cenník</a></li>
             <li><a href="index.html#kontakt">Kontakt</a></li>
         </ul>
-
-        <div class="nav-end">
-            <a href="tel:048414519" class="nav-phone">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.95 13a19.79 19.79 0 01-3.07-8.67A2 2 0 012.85 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
-                </svg>
-                048 414 51 96
-            </a>
+        <div class="sn-info">
+            <p class="sn-info-name">MUDr. Otília Kohajdová</p>
+            <p>Horná 61/A, Banská Bystrica, polyfunkčný dom Gallery<br>3. poschodie, oproti starému Prioru</p>
+            <p>Po–St 7:30–15:30<br>Št 7:30–16:00<br>Pi 7:30–14:00</p>
+            <a class="sn-info-phone" href="tel:+421484145196">048 414 51 96</a>
+            <div class="sn-info-theme">
+                <span>Tmavý režim</span>
+                <button class="theme-toggle" type="button" role="switch" aria-checked="false" aria-label="Tmavý režim">
+                    <span class="theme-toggle-thumb">
+                        <svg class="ico-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+                        <svg class="ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    </span>
+                </button>
+            </div>
         </div>
     </div>
 </nav>
 
-<!-- ═══ PAGE HEADER ═══ -->
-<div class="page-header">
-    <div class="breadcrumb">DENTALL Centrum <span>·</span> Právne informácie</div>
-    <h1>Ochrana osobných údajov</h1>
-    <p class="updated">Platné od: 27. mája 2026 · V súlade s nariadením GDPR (EÚ) 2016/679</p>
-</div>
+<main id="main">
+<header class="legal-head">
+    <div class="wrap"><div class="legal-head-in">
+        <p class="label">DENTALL Centrum · Právne informácie</p>
+        <h1 class="legal-title">Ochrana osobných údajov</h1>
+        <p class="legal-updated">Platné od: 27. mája 2026 · V súlade s nariadením GDPR (EÚ) 2016/679</p>
+    </div></div>
+</header>
 
-<!-- ═══ LEGAL CONTENT ═══ -->
-<div class="legal-wrap">
+<div class="wrap">
+<article class="legal">
+
 
     <div class="highlight-box">
         <p>Ochrana vašich osobných údajov je pre nás dôležitá. Tento dokument vysvetľuje, aké údaje spracúvame, prečo a aké máte práva. Vzťahuje sa na návštevníkov tejto webovej stránky.</p>
@@ -482,7 +550,7 @@
         <li><strong>Kohajda s.r.o.</strong></li>
         <li>Adresa: Sielnica 499, 962 31 Sielnica</li>
         <li>IČO: 36618799</li>
-        <li>Telefón: <a href="tel:048414519">048 414 51 96</a></li>
+        <li>Telefón: <a href="tel:+421484145196">048 414 51 96</a></li>
         <li>E-mail: <a href="mailto:jozefkohajda@gmail.com">jozefkohajda@gmail.com</a></li>
     </ul>
 
@@ -503,16 +571,18 @@
     <h3>2.2 Preferencie zobrazenia (lokálne úložisko)</h3>
     <p>Web si pamätá vašu voľbu svetlého alebo tmavého režimu. Táto informácia (<code>dac-theme</code>) sa ukladá výlučne vo vašom zariadení prostredníctvom technológie <strong>localStorage</strong> — nejde o cookie, údaj sa neposiela na server a zostáva len vo vašom prehliadači. Môžete ho kedykoľvek vymazať vymazaním dát prehliadača.</p>
 
-    <h3>2.3 Google Fonts</h3>
-    <p>Na zobrazenie písma načítava web súbory zo serverov spoločnosti <strong>Google LLC</strong> (fonts.googleapis.com). Pri tomto načítaní môže Google zaznamenať vašu IP adresu. Spracovanie zo strany Google sa riadi <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Zásadami ochrany súkromia Google</a>.</p>
+    <h3>2.3 Písmo</h3>
+    <p>Písmo DM Sans je uložené priamo na našom serveri. Pri jeho načítaní sa neodosielajú žiadne údaje spoločnosti Google ani iným tretím stranám.</p>
 
     <h3>2.4 Google Analytics</h3>
     <p>So súhlasom udeleným prostredníctvom cookie lišty používame službu <strong>Google Analytics</strong> (Google LLC). Služba pritom ukladá do vášho zariadenia cookies. Ak súhlas neudelíte alebo ho odmietnete, táto služba sa nenačíta. Súhlas môžete kedykoľvek odvolať vymazaním dát prehliadača (localStorage) pre túto stránku. Spracovanie zo strany Google sa riadi <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Zásadami ochrany súkromia Google</a>.</p>
 
+    <h3>2.5 Mapa Google</h3>
+    <p>Na stránke zobrazujeme mapu zo služby <strong>Google Maps</strong> (Google LLC). Pri jej zobrazení môže Google zaznamenať vašu IP adresu a ďalšie technické údaje. Spracovanie sa riadi <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Zásadami ochrany súkromia Google</a>.</p>
+
     <h2>3. Účel a právny základ spracúvania</h2>
     <ul>
         <li><strong>Serverové logy</strong> — oprávnený záujem prevádzkovateľa (čl. 6 ods. 1 písm. f) GDPR): bezpečnosť webu, odhaľovanie chýb</li>
-        <li><strong>Google Fonts</strong> — oprávnený záujem (správne zobrazenie webu); prípadne súhlas implicitný používaním webu</li>
         <li><strong>Google Analytics</strong> — súhlas (čl. 6 ods. 1 písm. a) GDPR), udelený kliknutím na „Prijať" v cookie lište</li>
         <li><strong>Lokálne úložisko</strong> — nevyhnutné pre fungovanie funkcie, nespracúva osobné údaje na serveri</li>
     </ul>
@@ -521,13 +591,13 @@
     <p>Vaše osobné údaje <strong>nepredávame ani neposkytujeme</strong> tretím stranám na marketingové účely. Údaje môžu byť sprístupnené:</p>
     <ul>
         <li><strong>Webhostingový poskytovateľ</strong> — technická prevádzka servera (spracovateľ podľa zmluvy o spracúvaní)</li>
-        <li><strong>Google LLC</strong> — v rozsahu načítania Google Fonts (IP adresa) a, pri udelení súhlasu, Google Analytics (údaje o návštevnosti)</li>
+        <li><strong>Google LLC</strong> — pri udelení súhlasu, Google Analytics (údaje o návštevnosti) a pri zobrazení mapy Google Maps (IP adresa)</li>
         <li><strong>Orgány verejnej moci</strong> — iba v prípadoch stanovených zákonom</li>
     </ul>
 
     <h2>5. Prenos osobných údajov do tretích krajín</h2>
     <p>Osobné údaje návštevníkov <strong>nie sú prenášané do tretích krajín</strong> zo strany prevádzkovateľa ani webhostingového poskytovateľa.</p>
-    <p>Výnimkou je načítavanie písma prostredníctvom služby <strong>Google Fonts</strong> a, pri udelení súhlasu, služba <strong>Google Analytics</strong> (obe Google LLC, USA). Pri týchto operáciách môžu byť údaje návštevníka odoslané na servery Google v USA. Spoločnosť Google LLC je certifikovaná v rámci mechanizmu <strong>Data Privacy Framework</strong> (rozhodnutie Európskej komisie zo dňa 10. júla 2023), ktorý zabezpečuje primeranú úroveň ochrany osobných údajov pri prenose do USA. Podrobnosti nájdete v <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Zásadách ochrany súkromia Google</a>.</p>
+    <p>Výnimkou je zobrazenie mapy zo služby <strong>Google Maps</strong> a, pri udelení súhlasu, služba <strong>Google Analytics</strong> (obe Google LLC, USA). Pri týchto operáciách môžu byť údaje návštevníka odoslané na servery Google v USA. Spoločnosť Google LLC je certifikovaná v rámci mechanizmu <strong>Data Privacy Framework</strong> (rozhodnutie Európskej komisie zo dňa 10. júla 2023), ktorý zabezpečuje primeranú úroveň ochrany osobných údajov pri prenose do USA. Podrobnosti nájdete v <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Zásadách ochrany súkromia Google</a>.</p>
 
     <h2>6. Doba uchovávania</h2>
     <ul>
@@ -570,7 +640,6 @@
 
     <h2>8. Súbory cookie</h2>
     <p>Táto webová stránka <strong>nepoužíva súbory cookie</strong> (cookies) vlastného pôvodu. Na uloženie preferencií zobrazenia používame technológiu localStorage, ktorá funguje výlučne lokálne vo vašom zariadení.</p>
-    <p>Načítavanie Google Fonts môže technicky využívať cookies tretích strán zo strany Google. Ich použitie sa riadi podmienkami spoločnosti Google.</p>
     <p>Ak v cookie lište kliknete na „Prijať", spustí sa aj <strong>Google Analytics</strong>, ktorý do vášho zariadenia ukladá cookies tretej strany na účely merania návštevnosti. Ak kliknete na „Len nevyhnutné" alebo lištu zavriete bez potvrdenia, Google Analytics sa nenačíta a žiadne súvisiace cookies sa neuložia.</p>
 
     <h2>9. Bezpečnosť</h2>
@@ -594,63 +663,109 @@
     <p>Pre otázky týkajúce sa ochrany osobných údajov nás kontaktujte:</p>
     <ul>
         <li>E-mail: <a href="mailto:jozefkohajda@gmail.com">jozefkohajda@gmail.com</a></li>
-        <li>Telefón: <a href="tel:048414519">048 414 51 96</a></li>
+        <li>Telefón: <a href="tel:+421484145196">048 414 51 96</a></li>
         <li>Adresa: Sielnica 499, 962 31 Sielnica</li>
     </ul>
-
+</article>
 </div>
+</main>
 
-<!-- ═══ FOOTER ═══ -->
-<footer>
-    <div class="footer-top">
-        <div class="footer-brand">
-            <div class="footer-logo-text">
-                <div class="footer-logo-wordmark">DENT<span>ALL</span></div>
-                <div class="footer-logo-centrum">Centrum</div>
+<!-- ═══ PÄTA ═══ -->
+<footer class="foot">
+    <div class="wrap">
+        <div class="foot-top">
+            <div class="foot-brand">
+                <img class="foot-logo foot-logo--brand" src="brand_assests/logo/dentall-centrum-logo.svg" alt="DentAll Centrum" width="181" height="120" loading="lazy">
+                <img class="foot-logo foot-logo--white" src="brand_assests/logo/dentall-centrum-logo-dark.svg" alt="DentAll Centrum" width="181" height="120" loading="lazy">
+                <span class="foot-rule" aria-hidden="true"></span>
+                <span class="foot-doctor">MUDr. Otília <br class="foot-br">Kohajdová</span>
             </div>
-            <span class="footer-doctor">MUDr. Otília Kohajdová</span>
+            <nav class="foot-links" aria-label="Sekcie stránky v päte">
+                <a href="index.html#sluzby">Naše služby</a>
+                <a href="index.html#dentalna-hygiena">Dentálna hygiena</a>
+                <a href="index.html#cennik">Cenník</a>
+                <a href="index.html#kontakt">Kontakt</a>
+            </nav>
         </div>
-        <div class="footer-copy">
-            © 2026 DENTALL Centrum · Banská Bystrica<br>
-            <span style="font-size:0.8rem;">design <span style="color:var(--orange);font-style:italic;font-family:'Great Vibes',cursive;font-size:1.1rem;">by</span>&nbsp; Kohajda s.r.o</span>
+        <div class="foot-bottom">
+            <div class="foot-meta">
+                <span class="foot-copy">© 2026 DentAll Centrum · Banská Bystrica</span>
+                <span class="foot-credit">design <span class="by">by</span>&nbsp; Kohajda s.r.o</span>
+            </div>
+            <a class="foot-phone" href="tel:+421484145196" aria-label="Zavolajte 048 414 51 96">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.95 13a19.79 19.79 0 01-3.07-8.67A2 2 0 012.85 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                <span>048 414 51 96</span>
+            </a>
+            <div class="foot-legal">
+                <a class="foot-btn" href="terms.html">Podmienky používania</a>
+                <a class="foot-btn" href="privacy.html" aria-current="page">Ochrana osobných údajov</a>
+            </div>
         </div>
-        <a href="tel:048414519" class="footer-phone">
-            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.95 13a19.79 19.79 0 01-3.07-8.67A2 2 0 012.85 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-            048 414 51 96
-        </a>
-    </div>
-    <div class="footer-legal">
-        <a href="terms.html">Podmienky používania</a>
-        <a href="privacy.html" class="active">Ochrana osobných údajov</a>
     </div>
 </footer>
 
 <script>
-    const toggle = document.getElementById('themeToggle');
-    const html = document.documentElement;
-    const saved = localStorage.getItem('dac-theme');
-    const sys = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    let current = saved || sys;
-    if (current === 'dark') { html.setAttribute('data-theme', 'dark'); toggle.setAttribute('aria-checked', 'true'); }
+    // ── Lišta ako na Spykeri: pri scrolle dole sa schová, pri scrolle hore sa vráti ──
+    (function () {
+        const nav = document.getElementById('navbar');
+        if (!nav) return;
+        let last = window.scrollY, ticking = false;
+        const update = () => {
+            const y = window.scrollY, d = y - last;
+            if (y < 80) { nav.classList.remove('is-hidden'); last = y; }
+            else if (d > 8) { nav.classList.add('is-hidden'); last = y; }
+            else if (d < -8) { nav.classList.remove('is-hidden'); last = y; }
+            ticking = false;
+        };
+        window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    })();
 
-    toggle.addEventListener('click', () => {
-        current = current === 'dark' ? 'light' : 'dark';
-        if (current === 'dark') { html.setAttribute('data-theme', 'dark'); toggle.setAttribute('aria-checked', 'true'); }
-        else { html.removeAttribute('data-theme'); toggle.setAttribute('aria-checked', 'false'); }
-        localStorage.setItem('dac-theme', current);
-    });
+    // ── Menu (tablet a mobil) ──
+    (function () {
+        const nav = document.getElementById('navbar');
+        const btn = nav && nav.querySelector('.sn-menu');
+        const overlay = document.getElementById('snOverlay');
+        if (!btn || !overlay) return;
+        const label = btn.querySelector('.sn-menu-label');
+        const set = open => {
+            nav.classList.toggle('is-open', open);
+            document.documentElement.classList.toggle('menu-open', open);
+            btn.setAttribute('aria-expanded', String(open));
+            label.textContent = open ? 'Zavrieť' : 'Menu';
+            if (open) { const first = overlay.querySelector('a'); if (first) first.focus({ preventScroll: true }); }
+        };
+        btn.addEventListener('click', () => set(btn.getAttribute('aria-expanded') !== 'true'));
+        overlay.addEventListener('click', e => { if (e.target.closest('a')) set(false); });
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape' && nav.classList.contains('is-open')) { set(false); btn.focus(); }
+        });
+        const wide = window.matchMedia('(min-width: 1181px)');
+        const onWide = e => { if (e.matches) set(false); };
+        if (wide.addEventListener) wide.addEventListener('change', onWide); else wide.addListener(onWide);
+    })();
 
+
+    // ── Prepínač tmavého režimu (v lište aj v menu) ──
+    (function () {
+        const btns = [...document.querySelectorAll('.theme-toggle')];
+        if (!btns.length) return;
+        const root = document.documentElement;
+        const isDark = () => root.getAttribute('data-theme') === 'dark';
+        const sync = () => btns.forEach(b => b.setAttribute('aria-checked', isDark() ? 'true' : 'false'));
+        sync();
+        btns.forEach(b => b.addEventListener('click', () => {
+            if (isDark()) root.removeAttribute('data-theme'); else root.setAttribute('data-theme', 'dark');
+            try { localStorage.setItem('dac-theme', isDark() ? 'dark' : 'light'); } catch (e) {}
+            sync();
+        }));
+    })();</script>
+<script>
     // Cookie consent
     (function() {
         var CONSENT_KEY = 'dac-cookie-consent';
         var banner = document.getElementById('cookieBanner');
         if (localStorage.getItem(CONSENT_KEY)) { banner.style.display = 'none'; return; }
 
-        function loadFonts() {
-            var pc1=document.createElement('link');pc1.rel='preconnect';pc1.href='https://fonts.googleapis.com';document.head.appendChild(pc1);
-            var pc2=document.createElement('link');pc2.rel='preconnect';pc2.href='https://fonts.gstatic.com';pc2.crossOrigin='anonymous';document.head.appendChild(pc2);
-            var f=document.createElement('link');f.rel='stylesheet';f.href='https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Great+Vibes&display=swap';document.head.appendChild(f);
-        }
         function loadAnalytics() {
             var ga=document.createElement('script');ga.async=true;ga.src='https://www.googletagmanager.com/gtag/js?id=G-H6TRTWEFND';document.head.appendChild(ga);
             window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('js', new Date());gtag('config', 'G-H6TRTWEFND');
@@ -662,25 +777,13 @@
         setTimeout(function(){ banner.classList.add('visible'); }, 700);
 
         document.getElementById('cookieAccept').addEventListener('click', function() {
-            localStorage.setItem(CONSENT_KEY, 'accepted'); loadFonts(); loadAnalytics(); hideBanner();
+            localStorage.setItem(CONSENT_KEY, 'accepted'); loadAnalytics(); hideBanner();
         });
         document.getElementById('cookieDecline').addEventListener('click', function() {
             localStorage.setItem(CONSENT_KEY, 'declined'); hideBanner();
         });
     })();
 </script>
-
-<!-- COOKIE CONSENT BANNER -->
-<div id="cookieBanner" class="cookie-banner" role="dialog" aria-label="Súhlas s externými zdrojmi">
-    <div class="cookie-text">
-        <strong>Externé zdroje &amp; súkromie</strong>
-        <p>Na našej stránke využívame Google Fonts, Google Analytics. Pri ich načítaní môže dochádzať k spracovaniu vašej IP adresy spoločnosťou Google LLC. Viac informácií nájdete v našich <a href="privacy.html">zásadách ochrany údajov</a>.</p>
-    </div>
-    <div class="cookie-actions">
-        <button id="cookieDecline" class="cookie-btn cookie-btn--decline">Len nevyhnutné</button>
-        <button id="cookieAccept" class="cookie-btn cookie-btn--accept">Prijať</button>
-    </div>
-</div>
 
 </body>
 </html>
