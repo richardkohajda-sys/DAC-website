@@ -11,6 +11,9 @@
     <link rel="icon" type="image/png" sizes="48x48" href="brand_assests/favicon-48x48.png">
     <link rel="icon" type="image/png" sizes="512x512" href="brand_assests/favicon-512x512.png">
     <link rel="apple-touch-icon" sizes="180x180" href="brand_assests/apple-touch-icon.png">
+    <!-- farba lišty prehliadača na mobile (krémová, v tmavom režime charcoal) -->
+    <meta name="theme-color" content="#FEFAF9" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#212121" media="(prefers-color-scheme: dark)">
 
     <!-- DM Sans hostované priamo na webe (žiadne spojenie s Googlom kvôli GDPR); licencia fonts/OFL.txt -->
     <link rel="preload" href="fonts/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -147,8 +150,8 @@
 
         /* ── tlačidlo (jedno pre celú stránku) ── */
         .btn {
-            display: inline-flex; align-items: center; gap: 18px;
-            height: 58px; padding: 0 28px;
+            display: inline-flex; flex-wrap: wrap; align-items: center; column-gap: 18px; row-gap: 2px;
+            min-height: 58px; padding: 8px 28px;   /* pri veľkom písme sa číslo zalomí pod popis namiesto pretečenia */
             background: var(--pink); color: var(--ink);
             transition: background-color 200ms ease, transform 160ms var(--ease-out-strong);
         }
@@ -394,6 +397,8 @@
         .right-card { padding-top: 18px; border-top: 1px solid var(--line); }
         .right-card strong { display: block; font-size: 1rem; }
         .right-card p { margin-top: 6px; font-size: 0.9375rem; line-height: 1.6; }
+        .crumb-home { display: inline-flex; align-items: center; min-height: 44px; color: inherit; text-decoration: underline; text-decoration-color: var(--pink); text-underline-offset: 4px; }
+        @media (hover: hover) and (pointer: fine) { .crumb-home:hover { color: var(--fg); } }
         /* aktuálna stránka v päte */
         .foot-btn[aria-current="page"] { background: var(--fg); border-color: var(--fg); color: var(--bg); }
 
@@ -431,7 +436,7 @@
             .foot-logo { height: 120px; }
             .foot-rule, .foot-br { display: none; }
             .foot-links { align-items: center; }
-            .foot-links a { font-size: clamp(2rem, 9vw, 2.5rem); }
+            .foot-links a { display: flex; align-items: center; min-height: 48px; font-size: clamp(2rem, 9vw, 2.5rem); }   /* pohodlné ťuknutie prstom */
             .foot-bottom { grid-template-columns: minmax(0, 1fr); grid-template-areas: "phone" "legal" "meta"; justify-items: center; text-align: center; gap: 24px; }
             .foot-meta { align-items: center; }
             .foot-legal { flex-direction: column; align-items: stretch; width: 100%; max-width: 360px; }
@@ -529,7 +534,7 @@
 <main id="main">
 <header class="legal-head">
     <div class="wrap"><div class="legal-head-in">
-        <p class="label">DentAll Centrum · Právne informácie</p>
+        <p class="label"><a class="crumb-home" href="index.html">DentAll Centrum</a> · Právne informácie</p>
         <h1 class="legal-title">Podmienky používania</h1>
         <p class="legal-updated">Platné od: 27. mája 2026</p>
     </div></div>

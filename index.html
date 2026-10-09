@@ -12,18 +12,25 @@
     <meta property="og:site_name" content="DentAll Centrum">
     <meta property="og:title" content="DentAll Centrum – MUDr. Otília Kohajdová · Banská Bystrica">
     <meta property="og:description" content="Zubná ambulancia v Banskej Bystrici – komplexná stomatologická starostlivosť s viac ako 20-ročnou tradíciou. Objednajte sa telefonicky.">
-    <meta property="og:image" content="https://zubnaambulanciabb.sk/brand_assests/IMG_7541.webp">
+    <meta property="og:image" content="https://zubnaambulanciabb.sk/img/og-dentall.jpg">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="DentAll Centrum – Zdravý úsmev. Lepší život.">
     <meta property="og:url" content="https://zubnaambulanciabb.sk/">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="DentAll Centrum – MUDr. Otília Kohajdová · Banská Bystrica">
     <meta name="twitter:description" content="Zubná ambulancia v Banskej Bystrici – komplexná stomatologická starostlivosť s viac ako 20-ročnou tradíciou.">
-    <meta name="twitter:image" content="https://zubnaambulanciabb.sk/brand_assests/IMG_7541.webp">
+    <meta name="twitter:image" content="https://zubnaambulanciabb.sk/img/og-dentall.jpg">
 
     <link rel="icon" type="image/png" sizes="16x16" href="brand_assests/favicon-16x16.png">
     <link rel="icon" type="image/png" sizes="32x32" href="brand_assests/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="48x48" href="brand_assests/favicon-48x48.png">
     <link rel="icon" type="image/png" sizes="512x512" href="brand_assests/favicon-512x512.png">
     <link rel="apple-touch-icon" sizes="180x180" href="brand_assests/apple-touch-icon.png">
+    <!-- farba lišty prehliadača na mobile (krémová, v tmavom režime charcoal) -->
+    <meta name="theme-color" content="#FEFAF9" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#212121" media="(prefers-color-scheme: dark)">
 
     <!-- DM Sans hostované priamo na webe (žiadne spojenie s Googlom kvôli GDPR); licencia fonts/OFL.txt -->
     <link rel="preload" href="fonts/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -165,8 +172,8 @@
 
         /* ── tlačidlo (jedno pre celú stránku) ── */
         .btn {
-            display: inline-flex; align-items: center; gap: 18px;
-            height: 58px; padding: 0 28px;
+            display: inline-flex; flex-wrap: wrap; align-items: center; column-gap: 18px; row-gap: 2px;
+            min-height: 58px; padding: 8px 28px;   /* pri veľkom písme sa číslo zalomí pod popis namiesto pretečenia */
             background: var(--pink); color: var(--ink);
             transition: background-color 200ms ease, transform 160ms var(--ease-out-strong);
         }
@@ -334,7 +341,8 @@
         /* úvod: hlbší tieň len pod nadpisom, aby ružový riadok vynikol aj na fotke */
         .scene--hero .shade-right {
             background:
-                linear-gradient(to bottom, rgba(46,37,33,0.42) 0%, rgba(46,37,33,0) 20%),
+                /* hore pod lištou silnejší teplý prechod, aby biele odkazy boli čitateľné aj na svetlých miestach fotky */
+                linear-gradient(to bottom, rgba(40,32,28,0.88) 0%, rgba(40,32,28,0.78) 10%, rgba(40,32,28,0.4) 18%, rgba(40,32,28,0) 28%),
                 radial-gradient(40% 34% at 66% 66%, rgba(40,32,28,0.62) 0%, rgba(40,32,28,0.3) 60%, rgba(40,32,28,0) 100%),
                 radial-gradient(62% 78% at 76% 66%, rgba(46,37,33,0.7) 0%, rgba(46,37,33,0.4) 48%, rgba(46,37,33,0) 80%);
         }
@@ -514,9 +522,9 @@
         .pay-text::after { right: 0; bottom: 0; transform: translate(50%, 50%); }
         .price-note { margin-top: clamp(20px, 2.4vw, 28px); max-width: 36em; }
         .price-grid { margin-top: clamp(48px, 6vw, 80px); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(32px, 6vw, 96px); }
-        .price-row { display: flex; justify-content: space-between; align-items: baseline; gap: 24px; padding: 18px 0; border-top: 1px solid var(--line); }
-        .price-name { color: var(--fg); }
-        .price-val { flex-shrink: 0; font-weight: 600; color: var(--fg); white-space: nowrap; font-variant-numeric: tabular-nums; }
+        .price-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 4px 24px; padding: 18px 0; border-top: 1px solid var(--line); }
+        .price-name { flex: 1 1 10rem; min-width: 0; color: var(--fg); }   /* keď sa riadok nezmestí (veľké písmo), cena sa zalomí pod názov */
+        .price-val { flex: 0 0 auto; margin-left: auto; font-weight: 600; color: var(--fg); white-space: nowrap; font-variant-numeric: tabular-nums; }
         .insurers { margin-top: clamp(64px, 7vw, 112px); padding-top: 32px; border-top: 1px solid var(--line); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: clamp(24px, 4vw, 64px); align-items: center; }
         .insurers-label { font-size: clamp(1.25rem, 1rem + 0.8vw, 1.75rem); font-weight: 500; line-height: 1.2; text-transform: uppercase; color: var(--fg); }
         .insurers-logos { background: #FFFFFF; border: 1px solid var(--line); padding: 4px 32px; }
@@ -637,10 +645,10 @@
         /* pevný pruh s telefónom: na počítači vpravo dole, na mobile cez celú šírku;
            objaví sa, keď nie je vidieť iné tlačidlo na telefonát */
         .call-bar {
-            display: flex; align-items: center; justify-content: space-between; gap: 18px;
+            display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; column-gap: 18px; row-gap: 2px;
             position: fixed; z-index: 950; right: var(--gutter);
             bottom: calc(24px + env(safe-area-inset-bottom, 0px));
-            height: 56px; padding: 0 24px;
+            min-height: 56px; padding: 6px 24px;
             background: var(--pink); color: var(--ink);
             transform: translateY(160%); opacity: 0; visibility: hidden;
             transition: transform 400ms var(--ease-out-strong), opacity 240ms ease, visibility 0s linear 400ms, background-color 200ms ease;
@@ -658,7 +666,7 @@
             .insurers { grid-template-columns: 1fr; }
         }
         @media (max-width: 930px) {
-            .call-bar { left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); padding: 0 20px; }
+            .call-bar { left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); padding: 6px 20px; }
             .foot { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)); }
         }
         @media (max-width: 767px) {
@@ -708,7 +716,7 @@
             .at-hero { bottom: calc(28px + env(safe-area-inset-bottom, 0px)); }
             .scene:not(.scene--hero) .scene-copy { bottom: 28px; }
             .hx-title { font-size: clamp(1.85rem, 8vw, 2.6rem); }
-            .scene-copy .btn { display: flex; width: 100%; justify-content: space-between; padding: 0 22px; }
+            .scene-copy .btn { display: flex; width: 100%; justify-content: space-between; padding: 8px 22px; }
             .statement { font-size: clamp(2rem, 9vw, 3rem); }
 
             .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -719,7 +727,7 @@
             .compare { grid-template-columns: 1fr; }
             .team-grid { grid-template-columns: 1fr; }
             .contact-grid { grid-template-columns: 1fr; }
-            .call-block .btn { display: flex; width: 100%; justify-content: space-between; padding: 0 22px; }
+            .call-block .btn { display: flex; width: 100%; justify-content: space-between; padding: 8px 22px; }
             /* cookie lišta: nízky pruh pri spodnom okraji, aby nezakrývala úvodnú fotku (texty bez zmeny) */
             .cookie-banner {
                 left: 8px; right: 8px; bottom: calc(8px + env(safe-area-inset-bottom, 0px));
@@ -736,14 +744,14 @@
             .foot-logo { height: 120px; }
             .foot-rule, .foot-br { display: none; }
             .foot-links { align-items: center; }
-            .foot-links a { font-size: clamp(2rem, 9vw, 2.5rem); }
+            .foot-links a { display: flex; align-items: center; min-height: 48px; font-size: clamp(2rem, 9vw, 2.5rem); }   /* pohodlné ťuknutie prstom */
             .foot-bottom { grid-template-columns: minmax(0, 1fr); grid-template-areas: "phone" "legal" "meta"; justify-items: center; text-align: center; gap: 24px; }
             .foot-meta { align-items: center; }
             .foot-legal { flex-direction: column; align-items: stretch; width: 100%; max-width: 360px; }
         }
         @media (max-width: 359px) {
             .sn-logo-h { height: 40px; }
-            .btn { gap: 12px; padding: 0 16px; }
+            .btn { column-gap: 12px; padding: 8px 16px; }
             .btn-label { letter-spacing: 0.08em; }
             .btn-number { font-size: 1.0625rem; }
         }
@@ -1309,15 +1317,18 @@
             const mobile = vw < 768;
             const padX = (mobile ? 0.05 : 0.075) * vw;
             const padY = (mobile ? 0.04 : 0.07) * vh;
-            for (const it of items) {
-                const r = it.s.getBoundingClientRect();
+            const navH = nav ? (nav.offsetHeight || 64) : 64;
+            // najprv zmerať všetky scény naraz, až potom zapisovať štýly (prehliadač neprepočítava stránku opakovane)
+            const rects = items.map(it => it.s.getBoundingClientRect());
+            for (let i = 0; i < items.length; i++) {
+                const it = items[i], r = rects[i];
                 const pin = Math.max(1, r.height - vh);
                 const scrolled = clamp(-r.top, 0, pin);
                 const enter = it.hero ? 1 : clamp(1 - r.top / vh);
                 const exit = clamp((scrolled - pin * 0.3) / (pin * 0.7));
 
                 // hlavička: priehľadná len kým je úvodná fotka celá pod ňou
-                if (it.hero && nav) nav.classList.toggle('is-solid', !(r.bottom > (nav.offsetHeight || 64) && exit < 0.02));
+                if (it.hero && nav) nav.classList.toggle('is-solid', !(r.bottom > navH && exit < 0.02));
 
                 if (r.bottom < -40 || r.top > vh + 40) continue;
                 if (reduce.matches) { reset(it); continue; }
@@ -1421,13 +1432,15 @@
         if (!bar) return;
         const links = [...document.querySelectorAll('a[href^="tel:"]')].filter(a => a !== bar && !a.closest('.sn-overlay'));
         const cookie = document.getElementById('cookieBanner');
+        // ktoré čísla sú aspoň čiastočne v obraze – sleduje prehliadač sám, bez merania pri každom posune
+        const near = new Set();
         const shown = a => {
             const r = a.getBoundingClientRect();
             if (!r.width || r.top < 0 || r.bottom > window.innerHeight) return false;
             for (let e = a; e && e !== document.body; e = e.parentElement) {
+                if (e.classList.contains('is-hidden')) return false;
                 const c = getComputedStyle(e);
                 if (c.visibility === 'hidden' || parseFloat(c.opacity) < 0.5) return false;
-                if (e.classList.contains('is-hidden')) return false;
             }
             return true;
         };
@@ -1435,15 +1448,26 @@
         const update = () => {
             ticking = false;
             const cookieOpen = cookie && cookie.style.display !== 'none' && cookie.classList.contains('visible') && !cookie.classList.contains('hidden');
-            bar.classList.toggle('is-visible', !cookieOpen && !links.some(shown));
+            let any = false;
+            for (const a of near) { if (shown(a)) { any = true; break; } }
+            bar.classList.toggle('is-visible', !cookieOpen && !any);
         };
         const req = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
-        window.addEventListener('scroll', req, { passive: true });
+        if ('IntersectionObserver' in window) {
+            const io = new IntersectionObserver(entries => {
+                entries.forEach(en => { en.isIntersecting ? near.add(en.target) : near.delete(en.target); });
+                req();
+            });
+            links.forEach(a => io.observe(a));
+        } else {
+            links.forEach(a => near.add(a));
+        }
+        window.addEventListener('scroll', () => { if (near.size) req(); }, { passive: true });
         window.addEventListener('resize', req);
         if (cookie) new MutationObserver(req).observe(cookie, { attributes: true, attributeFilter: ['class', 'style'] });
         // texty sa zjavujú s oneskorením (prechod), preto ešte jedna kontrola po jeho skončení
         document.addEventListener('transitionend', req, true);
-        update();
+        req();
     })();
 
     // ── Prepínač tmavého režimu (v lište aj v menu) ──
