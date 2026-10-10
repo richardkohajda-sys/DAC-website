@@ -316,7 +316,7 @@
            a po bokoch ostanú biele pásy; pri ceste späť sa všetko otočí. Riadi to JS (orez rámu, mierka fotky).
            Bez JS a pri obmedzenom pohybe je fotka jednoducho cez celú obrazovku. */
         .scene { position: relative; height: 160vh; height: 160svh; background: var(--bg); }
-        .scene--hero { height: 150vh; height: 150svh; }
+        .scene--hero { height: 240vh; height: 240svh; }   /* 134 % javisko + 106 % pomalé zastavenie */
         .scene-pin { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
         .scene-frame { position: absolute; inset: 0; overflow: hidden; background: var(--cream-3); }
         .scene-media, .scene-media img { position: absolute; inset: 0; width: 100%; height: 100%; }
@@ -390,6 +390,35 @@
         #o-nas .wm { top: clamp(48px, 6vw, 96px); height: clamp(320px, 46vw, 700px); }
         @media (max-width: 767px) {
             #o-nas .wm { top: clamp(220px, 62vw, 280px); height: 300px; }
+        }
+
+        /* ══ PRIJÍMAME NOVÝCH PACIENTOV ══ (ako „Nulla tenaci“ na Spykeri)
+           Úvodná fotka sa pri scrolle ponára do tmy, pod ňou je tmavý pás (34 % výšky) s veľkým textom v strede.
+           Riadky sa vysúvajú spoza masky, scroll sa na chvíľu zastaví a hneď pokračuje do krémovej sekcie O nás.
+           Javisko úvodu je o výšku pásu vyššie ako obrazovka a lepí sa s top: −34 %. */
+        .scene--hero .scene-pin { top: -34vh; top: -34svh; height: 134vh; height: 134svh; }
+        .hero-view { position: relative; height: 100vh; height: 100svh; overflow: hidden; }
+        /* javisko je od začiatku samostatná vrstva – zmenšenie na konci potom nemusí nič prekresľovať (žiadne zaseknutie) */
+        .scene--hero .scene-pin { transform-origin: 50% 62.7%; will-change: transform; }
+        .scene--hero .scene-media { will-change: transform; }
+        .hero-fade { will-change: opacity; }
+        .hero-fade { position: absolute; inset: 0; pointer-events: none; opacity: 0; background: linear-gradient(to bottom, rgba(33,33,33,0) 40%, rgba(33,33,33,0.5) 74%, #212121 100%); }
+        .newpat { position: relative; height: 34vh; height: 34svh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: clamp(14px, 2.2svh, 24px); padding: 0 var(--gutter) 7svh; background: #212121;   /* spodný okraj = miesto, ktoré zaberie krémový rám pri zmenšení */ color: #FEFAF9; text-align: center; overflow: hidden; }
+        .newpat-text { font-size: min(7.4vw, 9.6svh); font-weight: 500; line-height: 0.96; letter-spacing: -0.03em; text-transform: uppercase; color: #FEFAF9; }
+        /* maska riadku: dĺžne nad Í a Ý potrebujú miesto, preto vnútorný odsadený okraj */
+        .np-line { display: block; overflow: hidden; padding-top: 0.14em; margin-top: -0.14em; }
+        .np-in { display: inline-block; }
+        .np-sub { display: inline-flex; align-items: center; gap: 14px; min-height: 44px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(254,250,249,0.78); transition: color 200ms ease; }
+        @media (hover: hover) and (pointer: fine) { .np-sub:hover { color: #FEFAF9; } }
+        .np-rule { width: 40px; height: 13px; flex-shrink: 0; background: var(--pink); -webkit-mask: var(--sparkle) left center / 11px 13px no-repeat, linear-gradient(#000 0 0) 6px center / 34px 1px no-repeat; mask: var(--sparkle) left center / 11px 13px no-repeat, linear-gradient(#000 0 0) 6px center / 34px 1px no-repeat; }
+        .newpat :focus-visible { outline-color: #FEFAF9; }
+        @media (prefers-reduced-motion: no-preference) {
+            .js .np-in { transform: translateY(125%); }
+            .js .np-sub { opacity: 0; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .scene--hero { height: auto !important; }
+            .scene--hero .scene-pin { position: relative; top: 0; height: auto; }
         }
 
         /* ══ O NÁS ══ */
@@ -685,7 +714,7 @@
 
             /* mobil ako na Spykeri: úvod ostáva cez celú obrazovku, ostatné fotky idú v toku stránky
                v pomere 4:5 (nie sú pripnuté ani natiahnuté na výšku displeja) */
-            .scene--hero { height: 140vh; height: 140svh; }
+            .scene--hero { height: 220vh; height: 220svh; }
             .scene:not(.scene--hero) { height: auto; }
             .scene:not(.scene--hero) .scene-pin { position: relative; height: auto; aspect-ratio: 4 / 5; }
             /* tím a budova širšie (4:3), aby bolo vidieť všetkých ľudí a celý vchod */
@@ -719,6 +748,8 @@
             .scene-copy .btn { display: flex; width: 100%; justify-content: space-between; padding: 8px 22px; }
             .statement { font-size: clamp(2rem, 9vw, 3rem); }
 
+            .newpat { padding-bottom: 4svh; }
+            .newpat-text { font-size: min(12.4vw, 6.4svh); }
             .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
             .stat:nth-child(3) { padding-left: 0; border-left: 0; }
             .stat:nth-child(n+3) { margin-top: 32px; border-top: 1px solid var(--line); }
@@ -846,12 +877,14 @@
 <!-- ═══ ÚVOD (scéna) ═══ -->
 <section id="hero" class="scene scene--hero" aria-labelledby="hx-title">
     <div class="scene-pin">
+      <div class="hero-view">
         <div class="scene-frame">
             <picture class="scene-media">
                 <source media="(max-width: 767px)" srcset="img/foto/scena-uvod-mobil-1080.webp 1080w, img/foto/scena-uvod-mobil-1440.webp 1440w" sizes="100vw" width="1440" height="2560">
                 <img src="img/foto/scena-uvod-1920.webp" srcset="img/foto/scena-uvod-1280.webp 1280w, img/foto/scena-uvod-1920.webp 1920w, img/foto/scena-uvod-2880.webp 2880w, img/foto/scena-uvod-3840.webp 3840w" sizes="100vw" alt="Dentálna ambulancia DentAll Centrum" width="1920" height="1080" fetchpriority="high" decoding="async">
             </picture>
             <div class="scene-shade shade-right" aria-hidden="true"></div>
+            <div class="hero-fade" aria-hidden="true"></div>
         </div>
         <div class="scene-copy at-hero"><div class="scene-copy-in">
             <h1 id="hx-title" class="hx-title">
@@ -864,6 +897,15 @@
                 <a class="btn" href="tel:+421484145196"><span class="btn-label">Objednajte sa</span><span class="btn-number">048 414 51 96</span></a>
             </div>
         </div></div>
+      </div>
+      <!-- pás pod fotkou: keď je vidieť asi 70 % fotky, scroll sa na chvíľu zastaví a text sa rozsvieti -->
+      <div class="newpat">
+        <h2 class="newpat-text">
+            <span class="np-line"><span class="np-in">Prijímame</span></span>
+            <span class="np-line"><span class="np-in">nových pacientov</span></span>
+        </h2>
+        <a class="np-sub" href="tel:+421484145196"><i class="np-rule" aria-hidden="true"></i>Objednajte sa · 048 414 51 96</a>
+      </div>
     </div>
 </section>
 
@@ -1298,6 +1340,14 @@
             copy: s.querySelector('.scene-copy-in')
         }));
         if (!items.length) return;
+        // pás „Prijímame nových pacientov“ pod úvodnou fotkou
+        const band = document.querySelector('.newpat');
+        const bandLines = band ? [...band.querySelectorAll('.np-in')] : [];
+        const bandSub = band && band.querySelector('.np-sub');
+        const heroFade = document.querySelector('.hero-fade');
+        const heroMedia = document.querySelector('.scene--hero .scene-media');
+        const heroPin = document.querySelector('.scene--hero .scene-pin');
+        let heroQ = null;   // vyhladený priebeh úvodu – dobieha k skutočnej polohe scrollu
         const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
         const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
         const easeOut = t => 1 - Math.pow(1 - t, 3);
@@ -1320,6 +1370,8 @@
             const navH = nav ? (nav.offsetHeight || 64) : 64;
             // najprv zmerať všetky scény naraz, až potom zapisovať štýly (prehliadač neprepočítava stránku opakovane)
             const rects = items.map(it => it.s.getBoundingClientRect());
+            const bandRect = band ? band.getBoundingClientRect() : null;
+            const bandH = band ? band.offsetHeight : 0;
             for (let i = 0; i < items.length; i++) {
                 const it = items[i], r = rects[i];
                 const pin = Math.max(1, r.height - vh);
@@ -1327,8 +1379,49 @@
                 const enter = it.hero ? 1 : clamp(1 - r.top / vh);
                 const exit = clamp((scrolled - pin * 0.3) / (pin * 0.7));
 
-                // hlavička: priehľadná len kým je úvodná fotka celá pod ňou
-                if (it.hero && nav) nav.classList.toggle('is-solid', !(r.bottom > navH && exit < 0.02));
+                if (it.hero) {
+                    // hlavička je priehľadná, kým je pod ňou úvodná fotka (fotka končí tam, kde začína pás)
+                    const photoBottom = bandRect ? bandRect.top : r.bottom;
+                    if (nav) nav.classList.toggle('is-solid', !(photoBottom > navH));
+                    if (!band || reduce.matches) {
+                        bandLines.forEach(l => { l.style.transform = ''; l.style.opacity = ''; });
+                        if (bandSub) bandSub.style.opacity = '';
+                        if (heroFade) heroFade.style.opacity = '';
+                        if (heroMedia) heroMedia.style.transform = '';
+                        if (heroPin) heroPin.style.transform = '';
+                        it.copy.style.opacity = '';
+                        continue;
+                    }
+                    if (r.bottom < -40) continue;
+                    // q: 0 = začiatok stránky, qIn = pás celý v obraze (zastavenie), 1 = koniec zastavenia
+                    const target = clamp(-r.top / Math.max(1, r.height - vh));
+                    if (heroQ === null || Math.abs(target - heroQ) > 0.25) heroQ = target;      // veľký skok (načítanie, kotva) bez dobiehania
+                    else heroQ += (target - heroQ) * 0.16;
+                    if (Math.abs(target - heroQ) > 0.0004) req(); else heroQ = target;          // dobiehaj ďalšie snímky, kým sa nezastaví
+                    const q = heroQ;
+                    const qIn = bandH / Math.max(1, r.height - vh);
+                    const sink = easeOut(clamp(q / qIn));
+                    if (heroFade) heroFade.style.opacity = sink.toFixed(3);                       // fotka sa ponára do tmy
+                    if (heroMedia) heroMedia.style.transform = 'scale(' + (1 + 0.05 * q).toFixed(4) + ')';
+                    it.copy.style.opacity = (1 - clamp(q / (qIn * 0.8))).toFixed(3);              // úvodný text ustúpi
+                    // riadky sa vysunú spoza masky (prvý skôr), podnadpis sa objaví na konci
+                    bandLines.forEach((l, k) => {
+                        const t = easeInOut(clamp((q - qIn * 0.5 - k * 0.1) / 0.24));
+                        l.style.transform = 'translateY(' + ((1 - t) * 125).toFixed(1) + '%)';
+                        l.style.opacity = clamp(t * 5).toFixed(3);   // dĺžeň nevykukne spoza masky skôr, než riadok začne stúpať
+                    });
+                    // koniec zastavenia: celé javisko (fotka aj tmavý pás) sa zmenší a z bokov prídu krémové okraje – ako pri ostatných fotkách
+                    if (heroPin) {
+                        const e = easeInOut(clamp((target - 0.8) / 0.2));     // skutočná poloha scrollu – okraje reagujú hneď
+                        heroPin.style.transform = e > 0 ? 'scale(' + (1 - (mobile ? 0.1 : 0.15) * e).toFixed(4) + ')' : '';
+                    }
+                    if (bandSub) {
+                        const t = easeOut(clamp((q - 0.42) / 0.2));
+                        bandSub.style.opacity = t.toFixed(3);
+                        bandSub.style.transform = 'translateY(' + ((1 - t) * 12).toFixed(1) + 'px)';
+                    }
+                    continue;
+                }
 
                 if (r.bottom < -40 || r.top > vh + 40) continue;
                 if (reduce.matches) { reset(it); continue; }
