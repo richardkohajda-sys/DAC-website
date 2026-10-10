@@ -87,8 +87,6 @@
             /* iskra z loga (brand guideline: linky zakončené iskrou, vodoznak „D“) */
             --sparkle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='175 36 38 45'%3E%3Cpath d='M211.89,58.71s-12.36-1.13-13.66-21.49c0,0,1.24,19.76-22.68,21.49,0,0,21.14-.91,22.44,20.91,0,0,.94-17.85,13.9-20.91Z'/%3E%3C/svg%3E");
             --rule: rgba(var(--accent-rgb), 0.5);
-            --wm: rgba(118,102,94,0.08);
-            --wm-spark: rgba(var(--accent-rgb), 0.16);
         }
         html[data-theme="dark"] {
             color-scheme: dark;
@@ -102,8 +100,6 @@
             --line: rgba(254,254,254,0.14);
             --line-strong: rgba(254,254,254,0.34);
             --focus: #CC857F;
-            --wm: rgba(254,254,254,0.045);
-            --wm-spark: rgba(var(--accent-rgb), 0.1);
         }
 
         /* DM Sans (variabilné, hrúbky 300–600), latin + latin-ext pre slovenské znaky */
@@ -379,19 +375,6 @@
         /* veľký výrok na fotke */
         .statement { font-size: clamp(2.4rem, 1rem + 4.2vw, 5.4rem); font-weight: 500; line-height: 0.98; letter-spacing: -0.02em; text-transform: uppercase; color: #FEFAF9; }
 
-        /* ══ VODOZNAK „D“ — ako na úvodných stranách guidelinu: veľké, jemné, orezané pravým okrajom ══ */
-        .has-wm { position: relative; }
-        .wm-clip { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
-        .has-wm > .wrap { position: relative; z-index: 1; }
-        .wm { position: absolute; right: 0; aspect-ratio: 119.66 / 118.17; translate: 24% 0; }
-        .wm::before, .wm::after { content: ''; position: absolute; }
-        .wm::before { inset: 0; background: var(--wm); -webkit-mask: url("brand_assests/logo/dentall-sign-mask.svg") center / contain no-repeat; mask: url("brand_assests/logo/dentall-sign-mask.svg") center / contain no-repeat; }
-        .wm::after { left: 46%; top: 31.5%; width: 30.4%; height: 35.9%; background: var(--wm-spark); -webkit-mask: var(--sparkle) center / contain no-repeat; mask: var(--sparkle) center / contain no-repeat; }
-        #o-nas .wm { top: clamp(48px, 6vw, 96px); height: clamp(320px, 46vw, 700px); }
-        @media (max-width: 767px) {
-            #o-nas .wm { top: clamp(220px, 62vw, 280px); height: 300px; }
-        }
-
         /* ══ PRIJÍMAME NOVÝCH PACIENTOV ══ (ako „Nulla tenaci“ na Spykeri)
            Úvodná fotka sa pri scrolle ponára do tmy, pod ňou je tmavý pás (34 % výšky) s veľkým textom v strede.
            Riadky sa vysúvajú spoza masky, scroll sa na chvíľu zastaví a hneď pokračuje do krémovej sekcie O nás.
@@ -421,10 +404,31 @@
             .scene--hero .scene-pin { position: relative; top: 0; height: auto; }
         }
 
-        /* ══ O NÁS ══ */
-        .intro-title { max-width: 16ch; }
-        .intro-body { width: min(100%, 560px); margin: clamp(32px, 4vw, 56px) 0 0 auto; }
-        .intro-body p + p { margin-top: 1em; }
+        /* ══ O NÁS ══ na stred: iskra, nadpis (riadky sa vysunú spoza masky), text sa pri scrolle rozsvieti slovo po slove,
+           čísla sa napočítajú a ikonky sa nakreslia */
+        .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+        .intro .wrap { text-align: center; }
+        .intro-mark { display: flex; justify-content: center; margin-bottom: clamp(24px, 3vw, 36px); }
+        .intro-mark i { width: 22px; height: 27px; background: var(--pink); -webkit-mask: var(--sparkle) center / contain no-repeat; mask: var(--sparkle) center / contain no-repeat; }
+        .intro-title { max-width: none; margin-inline: auto; }
+        .ml { display: block; overflow: hidden; padding-top: 0.14em; margin-top: -0.14em; }
+        .ml-in { display: inline-block; }
+        .intro-body { max-width: 860px; margin: clamp(36px, 4vw, 56px) auto 0; }
+        .intro-body p { font-size: clamp(1.375rem, 1rem + 1.1vw, 2rem); line-height: 1.4; color: var(--fg); }
+        .intro-body p + p { margin-top: 0.6em; color: var(--body); }
+        .intro-body .w { transition: opacity 120ms linear; }
+        .intro .stats { text-align: left; }
+        @media (prefers-reduced-motion: no-preference) {
+            .js .intro .ml-in { transform: translateY(115%); transition: transform 1100ms var(--ease-out-strong); }
+            .js .intro .ml + .ml .ml-in { transition-delay: 120ms; }
+            .js .intro.is-in .ml-in { transform: none; }
+            .js .intro-mark i { transform: scale(0.4) rotate(-90deg); opacity: 0; transition: transform 900ms var(--ease-out-strong), opacity 400ms ease; }
+            .js .intro.is-in .intro-mark i { transform: none; opacity: 1; }
+            .js .intro .stat-num svg :is(path, line) { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1400ms var(--ease-out-strong); }
+            .js .intro .stats.is-drawn .stat-num svg :is(path, line) { stroke-dashoffset: 0; }
+            .js .intro .stat-num svg circle { opacity: 0; transition: opacity 400ms ease 900ms; }
+            .js .intro .stats.is-drawn .stat-num svg circle { opacity: 1; }
+        }
         .stats { margin-top: clamp(72px, 8vw, 128px); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line); }
         .stat { padding: 32px 24px 0 0; }
         .stat + .stat { padding-left: 24px; border-left: 1px solid var(--line); }
@@ -637,11 +641,9 @@
             @supports (animation-timeline: view()) {
                 .rv:not(.rv--still) { animation: rv-float linear both; animation-timeline: view(); animation-range: cover 0% cover 100%; }
                 .rv-layer { animation: rv-depth linear both; animation-timeline: view(); animation-range: cover 0% cover 100%; }
-                .wm { animation: wm-drift linear both; animation-timeline: view(); animation-range: cover 0% cover 100%; }
             }
         }
         @keyframes rv-float { from { transform: translateY(var(--rv-float, 32px)); } to { transform: translateY(calc(var(--rv-float, 32px) * -1)); } }
-        @keyframes wm-drift { from { transform: translateY(10%); } to { transform: translateY(-10%); } }
         @keyframes rv-depth { from { transform: translateY(-7%); } to { transform: translateY(7%); } }
 
         /* ══ COOKIE LIŠTA ══ */
@@ -910,18 +912,17 @@
 </section>
 
 <!-- ═══ O NÁS ═══ -->
-<section id="o-nas" class="sec has-wm">
-    <span class="wm-clip" aria-hidden="true"><span class="wm"></span></span>
+<section id="o-nas" class="sec intro">
     <div class="wrap">
-        <p class="label rise">O našom centre</p>
-        <h2 class="h2 intro-title rise">Komplexná starostlivosť<br>o váš chrup</h2>
-        <div class="intro-body rise">
+        <p class="intro-mark"><i aria-hidden="true"></i><span class="sr-only">O našom centre</span></p>
+        <h2 class="h2 intro-title"><span class="ml"><span class="ml-in">Komplexná starostlivosť</span></span> <span class="ml"><span class="ml-in">o váš chrup</span></span></h2>
+        <div class="intro-body">
             <p class="lead">Vidíme Vás aj nás ako rovnocenných partnerov. Najdôležitejšia je pre nás kvalita, bezpečnosť a bezbolestnosť.</p>
             <p class="lead">Každou návštevou budujeme vzťah založený na vzájomnej dôvere.</p>
         </div>
         <div id="stats" class="stats rise">
-            <div class="stat"><div class="stat-num">20+</div><div class="stat-label">Rokov skúseností</div></div>
-            <div class="stat"><div class="stat-num">5</div><div class="stat-label">Odborníkov</div></div>
+            <div class="stat"><div class="stat-num" data-count="20" data-suffix="+">20+</div><div class="stat-label">Rokov skúseností</div></div>
+            <div class="stat"><div class="stat-num" data-count="5">5</div><div class="stat-label">Odborníkov</div></div>
             <div class="stat"><div class="stat-num"><svg aria-hidden="true" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M17 8h1a4 4 0 010 8h-1"/>
                 <path d="M3 8h14v9a4 4 0 01-4 4H7a4 4 0 01-4-4V8z"/>
@@ -1453,6 +1454,55 @@
         window.addEventListener('scroll', req, { passive: true });
         window.addEventListener('resize', req);
         if (reduce.addEventListener) reduce.addEventListener('change', req);
+        update();
+    })();
+
+    // ── O nás: nadpis, rozsvietenie textu slovo po slove, napočítanie čísel, nakreslenie ikon ──
+    (function () {
+        const sec = document.querySelector('.intro');
+        if (!sec) return;
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+        const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+        // rozdelenie textu na slová (obsah sa nemení, len sa obalí)
+        const body = sec.querySelector('.intro-body');
+        const words = [];
+        body.querySelectorAll('p').forEach(p => {
+            const parts = p.textContent.split(/(\s+)/);
+            p.textContent = '';
+            parts.forEach(t => {
+                if (/^\s+$/.test(t) || !t) { p.appendChild(document.createTextNode(t)); return; }
+                const s = document.createElement('span'); s.className = 'w'; s.textContent = t; p.appendChild(s); words.push(s);
+            });
+        });
+        // ikonky: dĺžka čiary = 1, aby sa dali „nakresliť“
+        sec.querySelectorAll('.stat-num svg path, .stat-num svg line').forEach(el => el.setAttribute('pathLength', '1'));
+        const stats = sec.querySelector('.stats');
+        const counters = [...sec.querySelectorAll('[data-count]')];
+        if (!('IntersectionObserver' in window) || reduce.matches) { sec.classList.add('is-in'); if (stats) stats.classList.add('is-drawn'); return; }
+        new IntersectionObserver((es, o) => { es.forEach(e => { if (e.isIntersecting) { sec.classList.add('is-in'); o.disconnect(); } }); }, { rootMargin: '0px 0px -20% 0px' }).observe(sec.querySelector('.intro-title'));
+        if (stats) new IntersectionObserver((es, o) => {
+            es.forEach(e => {
+                if (!e.isIntersecting) return;
+                stats.classList.add('is-drawn'); o.disconnect();
+                counters.forEach(c => {
+                    const to = +c.dataset.count, suf = c.dataset.suffix || '', t0 = performance.now(), dur = 1400;
+                    const tick = now => { const t = clamp((now - t0) / dur), v = Math.round(to * (1 - Math.pow(1 - t, 3))); c.textContent = v + (t === 1 ? suf : ''); if (t < 1) requestAnimationFrame(tick); };
+                    requestAnimationFrame(tick);
+                });
+            });
+        }, { rootMargin: '0px 0px -15% 0px' }).observe(stats);
+        // text sa rozsvieti podľa toho, ako ďaleko je na obrazovke (slovo po slove)
+        let ticking = false;
+        const update = () => {
+            ticking = false;
+            const r = body.getBoundingClientRect(), vh = window.innerHeight;
+            const p = clamp((vh * 0.88 - r.top) / (vh * 0.5));
+            const n = words.length;
+            words.forEach((w, i) => { w.style.opacity = (0.16 + 0.84 * clamp(p * (n + 6) / 1 - i, 0, 1)).toFixed(2); });
+        };
+        const req = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+        window.addEventListener('scroll', req, { passive: true });
+        window.addEventListener('resize', req);
         update();
     })();
 
