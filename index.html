@@ -1878,11 +1878,13 @@
         if (document.documentElement.classList.contains('touch')) {
             // dotyk: nič sa neprepočítava pri scrolle – scény a pás sa raz odhalia (CSS prechody)
             const show = el => el.classList.add('is-in');
+            const targets = items.filter(it => !it.hero).map(it => it.s).concat(band ? [band] : []);
             if ('IntersectionObserver' in window) {
-                const io = new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting) { show(e.target); o.unobserve(e.target); } }), { threshold: 0.2 });
-                items.forEach(it => { if (!it.hero) io.observe(it.s); });
-                if (band) io.observe(band);
-            } else { items.forEach(it => show(it.s)); if (band) show(band); }
+                // odhalí sa pri každom príchode do obrazu (dole aj hore); keď celé zmizne z obrazovky, potichu sa vráti do východiskovej polohy
+                const enter = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) show(e.target); }), { threshold: 0.2 });
+                const leave = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) e.target.classList.remove('is-in'); }), { threshold: 0 });
+                targets.forEach(t => { enter.observe(t); leave.observe(t); });
+            } else { targets.forEach(show); }
             // hlavička je priehľadná len nad úvodnou fotkou
             if (nav && band) {
                 let t = false;
@@ -2143,15 +2145,21 @@
         if (wide.addEventListener) wide.addEventListener('change', onWide); else wide.addListener(onWide);
     })();
 
-    // ── Fotky a texty v sekciách: „vzniknú“ pri príchode do obrazu (raz) ──
+    // ── Fotky a texty v sekciách: „vzniknú“ pri príchode do obrazu (na počítači raz, na mobile pri každom príchode) ──
     (function () {
         const els = [...document.querySelectorAll('.rv, .rise')];
         if (!els.length) return;
         if (!('IntersectionObserver' in window)) { els.forEach(e => e.classList.add('is-in')); return; }
+        const repeat = document.documentElement.classList.contains('touch');
         const io = new IntersectionObserver(entries => {
-            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-in'); if (!repeat) io.unobserve(e.target); } });
         }, { rootMargin: '0px 0px -8% 0px' });
         els.forEach(e => io.observe(e));
+        if (repeat) {
+            // mobil: keď prvok celý zmizne z obrazovky, vráti sa do východiskovej polohy, aby sa pri návrate (aj hore) znova zjavil
+            const out = new IntersectionObserver(entries => entries.forEach(e => { if (!e.isIntersecting) e.target.classList.remove('is-in'); }), { threshold: 0 });
+            els.forEach(e => out.observe(e));
+        }
     })();
 
     // ── Recenzie: tlačidlo pauza ──
