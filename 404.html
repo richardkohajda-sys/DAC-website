@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="robots" content="noindex">
+    <title>Stránka sa nenašla · DentAll Centrum</title>
+    <!-- GitHub Pages zobrazí túto stránku pri neexistujúcej adrese v akejkoľvek hĺbke, preto všetky cesty začínajú lomkou -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/brand_assests/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/brand_assests/apple-touch-icon.png">
+    <link rel="preload" href="/fonts/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <meta name="theme-color" content="#FEFAF9" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#212121" media="(prefers-color-scheme: dark)">
+    <script>try { const t = localStorage.getItem('dac-theme'); if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t; } catch (e) {}</script>
+    <style>
+        @font-face { font-family: 'DM Sans'; font-style: normal; font-weight: 300 600; font-display: swap; src: url('/fonts/dm-sans-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+        @font-face { font-family: 'DM Sans'; font-style: normal; font-weight: 300 600; font-display: swap; src: url('/fonts/dm-sans-latin-ext.woff2') format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+        :root { --bg: #FEFAF9; --band: #F5E9E5; --fg: #212121; --brown: #76665E; --pink: #CC857F; --line: rgba(118,102,94,0.24); --ease: cubic-bezier(0.23, 1, 0.32, 1); }
+        /* tmavý režim: podľa voľby na webe (dac-theme), inak podľa zariadenia */
+        :root[data-theme="dark"] { --bg: #212121; --band: #1A1A1A; --fg: #FEFEFE; --brown: rgba(254,254,254,0.72); --line: rgba(254,254,254,0.2); }
+        :root[data-theme="dark"] .logo-light { display: none; } :root[data-theme="dark"] .logo-dark { display: block !important; }
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) { --bg: #212121; --band: #1A1A1A; --fg: #FEFEFE; --brown: rgba(254,254,254,0.72); --line: rgba(254,254,254,0.2); }
+            :root:not([data-theme="light"]) .logo-light { display: none; } :root:not([data-theme="light"]) .logo-dark { display: block !important; }
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { -webkit-text-size-adjust: 100%; }
+        body { min-height: 100svh; display: grid; grid-template-rows: auto 1fr auto; background: var(--bg); color: var(--fg); font-family: 'DM Sans', system-ui, sans-serif; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+        .wrap { width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 60px); }
+        header .wrap { display: flex; align-items: center; min-height: 88px; border-bottom: 1px solid var(--line); }
+        header a { display: inline-flex; min-height: 44px; align-items: center; }
+        header img { height: 40px; width: auto; }
+        .logo-dark { display: none; }
+        main .wrap { display: flex; flex-direction: column; justify-content: center; padding-block: clamp(56px, 10vh, 120px); }
+        .code { font-size: clamp(6rem, 3rem + 14vw, 15rem); font-weight: 300; line-height: 0.8; letter-spacing: -0.05em; color: var(--brown); }
+        h1 { margin-top: clamp(24px, 3vw, 40px); font-size: clamp(2rem, 1.2rem + 3vw, 3.75rem); font-weight: 500; line-height: 1.02; letter-spacing: -0.03em; text-transform: uppercase; }
+        p.lead { margin-top: 20px; max-width: 46ch; font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem); color: var(--brown); }
+        .acts { margin-top: 36px; display: flex; flex-wrap: wrap; gap: 12px; }
+        .btn, .ghost { display: inline-flex; align-items: center; gap: 14px; min-height: 58px; padding: 0 26px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; transition: transform 160ms var(--ease), opacity 200ms ease; }
+        .btn { background: var(--pink); color: #212121; }
+        .btn b { font-size: 1.125rem; letter-spacing: 0.02em; }
+        .ghost { border: 1px solid currentColor; color: var(--fg); }
+        @media (hover: hover) and (pointer: fine) { .btn:hover, .ghost:hover { opacity: 0.8; } }
+        .btn:active, .ghost:active { transform: scale(0.97); }
+        :focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
+        footer .wrap { padding-block: 24px; border-top: 1px solid var(--line); font-size: 0.8125rem; color: var(--brown); }
+        @media (max-width: 520px) { .btn, .ghost { width: 100%; justify-content: space-between; } }
+    </style>
+</head>
+<body>
+<header><div class="wrap">
+    <a href="/" aria-label="DentAll Centrum – úvodná stránka">
+        <img class="logo-light" src="/brand_assests/logo/dentall-centrum-logo-horizontal.svg" alt="" width="200" height="40">
+        <img class="logo-dark" src="/brand_assests/logo/dentall-centrum-logo-horizontal-dark.svg" alt="" width="200" height="40">
+    </a>
+</div></header>
+<main><div class="wrap">
+    <p class="code" aria-hidden="true">404</p>
+    <h1>Táto stránka <br>sa nenašla</h1>
+    <p class="lead">Adresa sa mohla zmeniť alebo je v nej preklep. Všetko podstatné nájdete na úvodnej stránke – alebo nám rovno zavolajte.</p>
+    <div class="acts">
+        <a class="btn" href="tel:+421484145196">Zavolajte <b>048 414 51 96</b></a>
+        <a class="ghost" href="/">Na úvodnú stránku</a>
+    </div>
+</div></main>
+<footer><div class="wrap">© 2026 DentAll Centrum · Horná 61/A, Banská Bystrica</div></footer>
+</body>
+</html>
