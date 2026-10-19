@@ -28,30 +28,263 @@
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
-        "@type": "Dentist",
-        "name": "DentAll Centrum",
-        "alternateName": "Zubná ambulancia MUDr. Otília Kohajdová",
-        "url": "https://zubnaambulanciabb.sk/",
-        "image": "https://zubnaambulanciabb.sk/img/og-dentall.jpg",
-        "logo": "https://zubnaambulanciabb.sk/brand_assests/favicon-512x512.png",
-        "telephone": "+421484145196",
-        "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "Horná 61/A",
-            "addressLocality": "Banská Bystrica",
-            "postalCode": "974 01",
-            "addressCountry": "SK"
-        },
-        "geo": { "@type": "GeoCoordinates", "latitude": 48.7390645, "longitude": 19.1531049 },
-        "hasMap": "https://www.google.com/maps?cid=7847389077967448944",
-        "openingHoursSpecification": [
-            { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday"], "opens": "07:30", "closes": "15:30" },
-            { "@type": "OpeningHoursSpecification", "dayOfWeek": "Thursday", "opens": "07:30", "closes": "16:00" },
-            { "@type": "OpeningHoursSpecification", "dayOfWeek": "Friday", "opens": "07:30", "closes": "14:00" }
-        ],
-        "employee": { "@type": "Person", "name": "MUDr. Otília Kohajdová", "jobTitle": "vedúca lekárka" },
-        "currenciesAccepted": "EUR",
-        "availableLanguage": "sk"
+        "@graph": [
+            {
+                "@type": "WebSite",
+                "@id": "https://zubnaambulanciabb.sk/#website",
+                "url": "https://zubnaambulanciabb.sk/",
+                "name": "DentAll Centrum",
+                "alternateName": [
+                    "Zubná ambulancia MUDr. Otília Kohajdová",
+                    "zubnaambulanciabb.sk"
+                ],
+                "inLanguage": "sk",
+                "publisher": {
+                    "@id": "https://zubnaambulanciabb.sk/#dentist"
+                }
+            },
+            {
+                "@type": "Dentist",
+                "@id": "https://zubnaambulanciabb.sk/#dentist",
+                "name": "DentAll Centrum",
+                "alternateName": "Zubná ambulancia MUDr. Otília Kohajdová",
+                "legalName": "Kohajda s.r.o.",
+                "description": "Zubná ambulancia v centre Banskej Bystrice s viac ako 20-ročnou tradíciou. Prevencia, dentálna hygiena podľa protokolu GBT, záchovná stomatológia, protetika, parodontológia, chirurgia, bielenie zubov a 3D röntgen CBCT. Prijímame nových pacientov, zmluvy so všetkými zdravotnými poisťovňami.",
+                "slogan": "Zdravý úsmev. Lepší život.",
+                "url": "https://zubnaambulanciabb.sk/",
+                "image": [
+                    "https://zubnaambulanciabb.sk/img/og-dentall.jpg",
+                    "https://zubnaambulanciabb.sk/img/foto/kontakt-budova.webp",
+                    "https://zubnaambulanciabb.sk/img/foto/scena-vybavenie-1920.webp"
+                ],
+                "logo": "https://zubnaambulanciabb.sk/brand_assests/favicon-512x512.png",
+                "telephone": "+421484145196",
+                "priceRange": "€€",
+                "currenciesAccepted": "EUR",
+                "knowsLanguage": "sk",
+                "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "Horná 61/A",
+                    "addressLocality": "Banská Bystrica",
+                    "postalCode": "974 01",
+                    "addressRegion": "Banskobystrický kraj",
+                    "addressCountry": "SK"
+                },
+                "geo": {
+                    "@type": "GeoCoordinates",
+                    "latitude": 48.7390645,
+                    "longitude": 19.1531049
+                },
+                "hasMap": "https://www.google.com/maps?cid=7847389077967448944",
+                "sameAs": [
+                    "https://www.google.com/maps?cid=7847389077967448944"
+                ],
+                "areaServed": {
+                    "@type": "City",
+                    "name": "Banská Bystrica"
+                },
+                "openingHoursSpecification": [
+                    {
+                        "@type": "OpeningHoursSpecification",
+                        "dayOfWeek": [
+                            "Monday",
+                            "Tuesday",
+                            "Wednesday"
+                        ],
+                        "opens": "07:30",
+                        "closes": "15:30"
+                    },
+                    {
+                        "@type": "OpeningHoursSpecification",
+                        "dayOfWeek": "Thursday",
+                        "opens": "07:30",
+                        "closes": "16:00"
+                    },
+                    {
+                        "@type": "OpeningHoursSpecification",
+                        "dayOfWeek": "Friday",
+                        "opens": "07:30",
+                        "closes": "14:00"
+                    }
+                ],
+                "medicalSpecialty": "Dentistry",
+                "isAcceptingNewPatients": true,
+                "founder": {
+                    "@id": "https://zubnaambulanciabb.sk/#kohajdova"
+                },
+                "employee": [
+                    {
+                        "@type": "Person",
+                        "@id": "https://zubnaambulanciabb.sk/#kohajdova",
+                        "name": "MUDr. Otília Kohajdová",
+                        "jobTitle": "vedúca lekárka",
+                        "knowsAbout": "Parodontológia"
+                    },
+                    {
+                        "@type": "Person",
+                        "name": "MDDr. Alexandra Diana Kišiková",
+                        "jobTitle": "zubná lekárka",
+                        "knowsAbout": "Endodoncia"
+                    },
+                    {
+                        "@type": "Person",
+                        "name": "MDDr. Ivana Polláková",
+                        "jobTitle": "zubná lekárka",
+                        "knowsAbout": "Záchovná stomatológia"
+                    },
+                    {
+                        "@type": "Person",
+                        "name": "Bc. Dominika Lisková",
+                        "jobTitle": "dentálna hygienička"
+                    },
+                    {
+                        "@type": "Person",
+                        "name": "Janka Ľachká",
+                        "jobTitle": "preventistka"
+                    }
+                ],
+                "hasOfferCatalog": {
+                    "@type": "OfferCatalog",
+                    "name": "Naše služby",
+                    "itemListElement": [
+                        {
+                            "@type": "Offer",
+                            "itemOffered": {
+                                "@type": "Service",
+                                "name": "Prevencia",
+                                "description": "Preventívne prehliadky, pečatenie zubov, fluoridácia"
+                            }
+                        },
+                        {
+                            "@type": "Offer",
+                            "itemOffered": {
+                                "@type": "Service",
+                                "name": "Dentálna hygiena",
+                                "description": "Švajčiarsky protokol GBT, AIRFLOW®, nácvik čistenia, odstránenie zubného kameňa"
+                            }
+                        },
+                        {
+                            "@type": "Offer",
+                            "itemOffered": {
+                                "@type": "Service",
+                                "name": "Bielenie zubov",
+                                "description": "Domáce Opalescence, ambulantné bielenie lampou BlancONE"
+                            }
+                        },
+                        {
+                            "@type": "Offer",
+                            "itemOffered": {
+                                "@type": "Service",
+                                "name": "Záchovná stomatológia",
+                                "description": "Výplne zubov, estetické dostavby, ošetrenie koreňových kanálikov"
+                            }
+                        },
+                        {
+                            "@type": "Offer",
+                            "itemOffered": {
+                                "@type": "Service",
+                                "name": "Protetika",
+                                "description": "Zirkónové a keramické korunky aj z 3D tlače, mostíky, fazety, snímateľné protézy"
+                            }
+                        },
+                        {
+                            "@type": "Offer",
+                            "itemOffered": {
+                                "@type": "Service",
+                                "name": "Parodontológia",
+                                "description": "Prevencia a liečba parodontitídy, operačné zákroky na parodonte"
+                            }
+                        },
+                        {
+                            "@type": "Offer",
+                            "itemOffered": {
+                                "@type": "Service",
+                                "name": "Chirurgia",
+                                "description": "Extrakcie, gingivoplastika, frenulektómia, osteoplastika"
+                            }
+                        },
+                        {
+                            "@type": "Offer",
+                            "itemOffered": {
+                                "@type": "Service",
+                                "name": "RTG",
+                                "description": "OPG a 3D CBCT – diagnostika začínajúcich kazov a ochorení ústnej dutiny"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "@type": "FAQPage",
+                "@id": "https://zubnaambulanciabb.sk/#otazky",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "Prijímate nových pacientov?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Áno, DentAll Centrum v Banskej Bystrici prijíma nových pacientov. Objednať sa môžete telefonicky na čísle 048 414 51 96. Spoluprácu začíname vstupným vyšetrením, ktoré trvá približne 45 minút – zhotovíme pri ňom RTG snímky a fotodokumentáciu a dohodneme sa na pláne liečby."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "S ktorými zdravotnými poisťovňami máte zmluvu?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Sme zmluvní partneri všetkých zdravotných poisťovní – Všeobecnej zdravotnej poisťovne (VšZP), Dôvery aj Unionu."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Koľko stojí vstupné vyšetrenie a dentálna hygiena?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Vstupné vyšetrenie stojí 50 €, dentálna hygiena 69 € a dentálna hygiena pre deti s farbením a nácvikom čistenia 48 €. Ďalšie ceny nájdete v orientačnom cenníku, presnú cenu liečby stanovíme po vstupnom vyšetrení."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Bolí ma zub. Čo mám robiť?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Zavolajte nám čo najskôr na 048 414 51 96 – akútne ošetrenie má u nás prednosť. Príčinu bolesti zistíme na RTG snímke a zub ošetríme výplňou alebo ošetrením koreňových kanálikov."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Kde vás nájdem a kde zaparkujem?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Sme v centre Banskej Bystrice na Hornej 61/A, v polyfunkčnom dome Gallery na 3. poschodí, oproti starému Prioru. Najbližšie parkovanie je v Parkovacom dome Centrum na Československej armády 24A, najbližšia zastávka MHD je Námestie slobody."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Aké máte ordinačné hodiny?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Pondelok až streda 7:30 – 15:30, štvrtok 7:30 – 16:00 a piatok 7:30 – 14:00."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Robíte dentálnu hygienu aj deťom?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Áno. Deťom zafarbíme zubný povlak a naučíme ich správne si čistiť zuby. Pozrite si, ako u nás prebieha dentálna hygiena podľa protokolu GBT."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Máte 3D röntgen CBCT?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Áno, OPG aj 3D CBCT snímku zhotovíme priamo v našom centre. CBCT zobrazí zuby, čeľustnú kosť a okolité štruktúry v troch rozmeroch a pomáha pri plánovaní implantátov, extrakcií a endodoncie."
+                        }
+                    }
+                ]
+            }
+        ]
     }
     </script>
 
@@ -396,7 +629,8 @@
         .hx-line { display: block; overflow: hidden; padding-top: 0.14em; margin-top: -0.14em; }
         .hx-line > span { display: block; }
         .hx-accent { color: var(--pink); }  /* vedomá výnimka (Richard 5. 10. 2026): posledný riadok ružový */
-        .hx-sub { margin-top: clamp(16px, 2.4vh, 24px); font-size: 1.0625rem; }
+        /* podnadpis je súčasťou h1 (kvôli Googlu: „zubár … Banskej Bystrice“), vizuálne ostáva malý text */
+        .hx-sub { display: block; margin-top: clamp(16px, 2.4vh, 24px); font-size: 1.0625rem; font-weight: 400; line-height: 1.7; letter-spacing: 0; text-transform: none; color: rgba(254,250,249,0.88); }
         @media (prefers-reduced-motion: no-preference) {
             .scene--hero .scene-media img { animation: hx-settle 1600ms var(--ease-out-strong) both; }
             .hx-line > span { animation: hx-rise 900ms var(--ease-out-strong) both; animation-delay: calc(260ms + var(--i, 0) * 80ms); }
@@ -715,6 +949,25 @@
         html[data-theme="dark"] .insurers-logos { background: #E6E1DE; border-color: transparent; }
         html[data-theme="dark"] .insurers-cap { color: #665750; }
         .call-block { margin-top: clamp(56px, 6vw, 96px); }
+
+        /* ══ ČASTÉ OTÁZKY (rozbaľovacie; texty čítajú aj Google a AI prehľady) ══ */
+        .faq { padding-top: 0; }
+        .faq-list { margin-top: clamp(40px, 5vw, 64px); max-width: 920px; border-bottom: 1px solid var(--line); }
+        .faq-item { border-top: 1px solid var(--line); }
+        .faq-item summary {
+            display: flex; align-items: center; justify-content: space-between; gap: 24px;
+            min-height: 44px; padding: 22px 0; cursor: pointer; list-style: none;
+            font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem); font-weight: 500; line-height: 1.4; color: var(--fg);
+        }
+        .faq-item summary::-webkit-details-marker { display: none; }
+        .faq-item summary::after {
+            content: ''; flex-shrink: 0; width: 14px; height: 14px;
+            background: linear-gradient(var(--pink) 0 0) center / 14px 1.5px no-repeat, linear-gradient(var(--pink) 0 0) center / 1.5px 14px no-repeat;
+            transition: transform 300ms var(--ease-out-strong);
+        }
+        .faq-item[open] summary::after { transform: rotate(45deg); }
+        .faq-a { max-width: 46em; padding-bottom: 26px; }
+        .faq-a a { color: var(--fg); text-decoration: underline; text-decoration-color: var(--pink); text-underline-offset: 4px; }
 
         /* ══ KONTAKT ══ */
         .contact-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(32px, 4vw, 72px); }
@@ -1080,8 +1333,8 @@
                 <span class="hx-line"><span style="--i:0">PRE VŠETKÝCH,</span></span>
                 <span class="hx-line"><span style="--i:1">KTORÍ MAJÚ ZÁUJEM</span></span>
                 <span class="hx-line hx-accent"><span style="--i:2">O SVOJE ZDRAVIE</span></span>
+                <span class="hx-sub">Zubár v centre Banskej Bystrice s viac ako 20-ročnou tradíciou</span>
             </h1>
-            <p class="hx-sub">S viac ako 20-ročnou tradíciou</p>
             <div class="hero-cta">
                 <a class="btn" href="tel:+421484145196"><span class="btn-label">Objednajte sa</span><span class="btn-number">048 414 51 96</span></a>
             </div>
@@ -1451,10 +1704,52 @@
             </ul>
         </div>
         <div class="insurers rise">
-            <figure class="rv rv--still"><div class="rv-frame insurers-logos"><img src="img/foto/poistovne-loga.webp" alt="Všeobecná zdravotná poisťovňa, Union, Dôvera" width="1170" height="205" loading="lazy"><p class="insurers-cap">Sme zmluvní partneri všetkých zdravotných poisťovní.</p></div></figure>
+            <figure class="rv rv--still"><div class="rv-frame insurers-logos"><img src="img/foto/poistovne-loga.webp" alt="Všeobecná zdravotná poisťovňa, Union, Dôvera" width="1170" height="205" loading="lazy"><p class="insurers-cap">Sme zmluvní partneri všetkých zdravotných poisťovní – VšZP, Dôvera aj Union.</p></div></figure>
         </div>
         <div class="call-block rise">
             <a class="btn" href="tel:+421484145196"><span class="btn-label">Zavolajte</span><span class="btn-number">048 414 51 96</span></a>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ ČASTÉ OTÁZKY (pri zmene textu upravte aj FAQPage v hlavičke) ═══ -->
+<section id="otazky" class="sec faq" aria-labelledby="faq-title">
+    <div class="wrap">
+        <p class="label rise">Otázky a odpovede</p>
+        <h2 id="faq-title" class="h2 rise">Časté otázky</h2>
+        <div class="faq-list rise">
+            <details class="faq-item">
+                <summary>Prijímate nových pacientov?</summary>
+                <div class="faq-a"><p>Áno, DentAll Centrum v Banskej Bystrici prijíma nových pacientov. Objednať sa môžete telefonicky na čísle <a href="tel:+421484145196">048&nbsp;414&nbsp;51&nbsp;96</a>. Spoluprácu začíname vstupným vyšetrením, ktoré trvá približne 45 minút – zhotovíme pri ňom RTG snímky a fotodokumentáciu a dohodneme sa na pláne liečby.</p></div>
+            </details>
+            <details class="faq-item">
+                <summary>S ktorými zdravotnými poisťovňami máte zmluvu?</summary>
+                <div class="faq-a"><p>Sme zmluvní partneri všetkých zdravotných poisťovní – Všeobecnej zdravotnej poisťovne (VšZP), Dôvery aj Unionu.</p></div>
+            </details>
+            <details class="faq-item">
+                <summary>Koľko stojí vstupné vyšetrenie a dentálna hygiena?</summary>
+                <div class="faq-a"><p>Vstupné vyšetrenie stojí 50&nbsp;€, dentálna hygiena 69&nbsp;€ a dentálna hygiena pre deti s farbením a nácvikom čistenia 48&nbsp;€. Ďalšie ceny nájdete v <a href="#cennik">orientačnom cenníku</a>, presnú cenu liečby stanovíme po vstupnom vyšetrení.</p></div>
+            </details>
+            <details class="faq-item">
+                <summary>Bolí ma zub. Čo mám robiť?</summary>
+                <div class="faq-a"><p>Zavolajte nám čo najskôr na <a href="tel:+421484145196">048&nbsp;414&nbsp;51&nbsp;96</a> – akútne ošetrenie má u nás prednosť. Príčinu bolesti zistíme na RTG snímke a zub ošetríme výplňou alebo ošetrením koreňových kanálikov.</p></div>
+            </details>
+            <details class="faq-item">
+                <summary>Kde vás nájdem a kde zaparkujem?</summary>
+                <div class="faq-a"><p>Sme v centre Banskej Bystrice na Hornej 61/A, v polyfunkčnom dome Gallery na 3. poschodí, oproti starému Prioru. Najbližšie parkovanie je v Parkovacom dome Centrum na Československej armády 24A, najbližšia zastávka MHD je Námestie slobody.</p></div>
+            </details>
+            <details class="faq-item">
+                <summary>Aké máte ordinačné hodiny?</summary>
+                <div class="faq-a"><p>Pondelok až streda 7:30 – 15:30, štvrtok 7:30 – 16:00 a piatok 7:30 – 14:00.</p></div>
+            </details>
+            <details class="faq-item">
+                <summary>Robíte dentálnu hygienu aj deťom?</summary>
+                <div class="faq-a"><p>Áno. Deťom zafarbíme zubný povlak a naučíme ich správne si čistiť zuby. Pozrite si, ako u nás prebieha <a href="dentalna-hygiena.html">dentálna hygiena podľa protokolu GBT</a>.</p></div>
+            </details>
+            <details class="faq-item">
+                <summary>Máte 3D röntgen CBCT?</summary>
+                <div class="faq-a"><p>Áno, OPG aj 3D CBCT snímku zhotovíme priamo v našom centre. CBCT zobrazí zuby, čeľustnú kosť a okolité štruktúry v troch rozmeroch a pomáha pri plánovaní implantátov, extrakcií a endodoncie.</p></div>
+            </details>
         </div>
     </div>
 </section>
