@@ -302,6 +302,8 @@
 
     <script>
       document.documentElement.classList.add('js');
+      // mobil a tablet: animácie sa spúšťajú raz pri zobrazení, nie počas scrollu (plynulé ako fotky pri dentálnej hygiene)
+      if (window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches) document.documentElement.classList.add('touch');
       (function(){
         var t=null; try{t=localStorage.getItem('dac-theme');}catch(e){}
         if(!t) t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';
@@ -671,6 +673,25 @@
         @media (prefers-reduced-motion: reduce) {
             .scene--hero { height: auto !important; }
             .scene--hero .scene-pin { position: relative; top: 0; height: auto; }
+        }
+
+        /* ══ DOTYKOVÉ ZARIADENIA ══ žiadne animácie viazané na scroll (na mobile sa sekali).
+           Úvod je obyčajná fotka nad tmavým pásom, scény a riadky pásu sa raz plynulo odhalia pri zobrazení –
+           len transform a opacity cez CSS prechody, rovnako ako fotky v časti dentálna hygiena. */
+        .touch .scene--hero { height: auto !important; }
+        .touch .scene--hero .scene-pin { position: relative; top: 0; height: auto; transform: none !important; will-change: auto; }
+        .touch .scene--hero .scene-media { will-change: auto; }
+        .touch .hero-fade { opacity: 1; will-change: auto; }
+        .touch .intro-body .w { opacity: 1 !important; }
+        @media (prefers-reduced-motion: no-preference) {
+            .touch .np-in { transform: translateY(125%); opacity: 0; transition: transform 1000ms var(--ease-out-strong), opacity 300ms ease; }
+            .touch .np-line + .np-line .np-in { transition-delay: 140ms; }
+            .touch .newpat.is-in .np-in { transform: none; opacity: 1; }
+            .touch .scene:not(.scene--hero) .scene-frame { transform: scale(0.92); transition: transform 1200ms var(--ease-out-strong); }
+            .touch .scene:not(.scene--hero) .scene-media img { transform: scale(1.12); transition: transform 1600ms var(--ease-out-strong); }
+            .touch .scene:not(.scene--hero) .scene-copy-in { opacity: 0; transform: translateY(24px); transition: opacity 900ms ease 250ms, transform 900ms var(--ease-out-strong) 250ms; }
+            .touch .scene.is-in .scene-frame, .touch .scene.is-in .scene-media img { transform: none; }
+            .touch .scene.is-in .scene-copy-in { opacity: 1; transform: none; }
         }
 
         /* ══ O NÁS ══ na stred: iskra, nadpis (riadky sa vysunú spoza masky), text sa pri scrolle rozsvieti slovo po slove,
@@ -1854,6 +1875,23 @@
         const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
         const easeOut = t => 1 - Math.pow(1 - t, 3);
         const easeInOut = t => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+        if (document.documentElement.classList.contains('touch')) {
+            // dotyk: nič sa neprepočítava pri scrolle – scény a pás sa raz odhalia (CSS prechody)
+            const show = el => el.classList.add('is-in');
+            if ('IntersectionObserver' in window) {
+                const io = new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting) { show(e.target); o.unobserve(e.target); } }), { threshold: 0.2 });
+                items.forEach(it => { if (!it.hero) io.observe(it.s); });
+                if (band) io.observe(band);
+            } else { items.forEach(it => show(it.s)); if (band) show(band); }
+            // hlavička je priehľadná len nad úvodnou fotkou
+            if (nav && band) {
+                let t = false;
+                const navUpd = () => { t = false; nav.classList.toggle('is-solid', band.getBoundingClientRect().top <= (nav.offsetHeight || 64)); };
+                window.addEventListener('scroll', () => { if (!t) { t = true; requestAnimationFrame(navUpd); } }, { passive: true });
+                navUpd();
+            }
+            return;
+        }
         let ticking = false;
 
         function reset(it) {
@@ -1993,6 +2031,7 @@
                 });
             });
         }, { rootMargin: '0px 0px -15% 0px' }).observe(stats);
+        if (document.documentElement.classList.contains('touch')) return;   // mobil: text je hneď celý (bez prepočtov pri scrolle)
         // text sa rozsvieti podľa toho, ako ďaleko je na obrazovke (slovo po slove)
         let ticking = false;
         const update = () => {
