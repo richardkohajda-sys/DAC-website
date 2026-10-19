@@ -288,11 +288,11 @@
     }
     </script>
 
-    <link rel="icon" type="image/png" sizes="16x16" href="brand_assests/favicon-16x16.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="brand_assests/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="48x48" href="brand_assests/favicon-48x48.png">
-    <link rel="icon" type="image/png" sizes="512x512" href="brand_assests/favicon-512x512.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="brand_assests/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="brand_assests/favicon-16x16.png?v=2">
+    <link rel="icon" type="image/png" sizes="32x32" href="brand_assests/favicon-32x32.png?v=2">
+    <link rel="icon" type="image/png" sizes="48x48" href="brand_assests/favicon-48x48.png?v=2">
+    <link rel="icon" type="image/png" sizes="512x512" href="brand_assests/favicon-512x512.png?v=2">
+    <link rel="apple-touch-icon" sizes="180x180" href="brand_assests/apple-touch-icon.png?v=2">
     <!-- farba lišty prehliadača na mobile (krémová, v tmavom režime charcoal) -->
     <meta name="theme-color" content="#FEFAF9" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#212121" media="(prefers-color-scheme: dark)">
@@ -665,7 +665,7 @@
         .np-rule { width: 40px; height: 13px; flex-shrink: 0; background: var(--pink); -webkit-mask: var(--sparkle) left center / 11px 13px no-repeat, linear-gradient(#000 0 0) 6px center / 34px 1px no-repeat; mask: var(--sparkle) left center / 11px 13px no-repeat, linear-gradient(#000 0 0) 6px center / 34px 1px no-repeat; }
         .newpat :focus-visible { outline-color: #FEFAF9; }
         @media (prefers-reduced-motion: no-preference) {
-            .js .np-in { transform: translateY(125%); }
+            .js .np-in { transform: translateY(125%); will-change: transform, opacity; }
             .js .np-sub { opacity: 0; }
         }
         @media (prefers-reduced-motion: reduce) {
@@ -1146,6 +1146,7 @@
             .scene--hero { height: 220vh; height: 220svh; }
             .scene:not(.scene--hero) { height: auto; }
             .scene:not(.scene--hero) .scene-pin { position: relative; height: auto; aspect-ratio: 4 / 5; }
+            .scene:not(.scene--hero) .scene-frame, .scene:not(.scene--hero) .scene-media img { will-change: transform; }
             /* tím a budova širšie (4:3), aby bolo vidieť všetkých ľudí a celý vchod */
             #tym .scene-pin { aspect-ratio: 4 / 3; }
             /* nižšia fotka tímu: tieň pod textom siaha vyššie, aby bol čitateľný aj štítok */
@@ -1648,7 +1649,7 @@
             <svg class="ico-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5v14M15 5v14"/></svg>
             <svg class="ico-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l11 7-11 7z"/></svg>
         </button>
-        <p class="rv-note">Recenzie s označením „Google recenzia“ sú prevzaté z Google Máp. <a href="https://www.google.com/maps?cid=7847389077967448944" target="_blank" rel="noopener">Všetky recenzie na Google</a></p>
+        <p class="rv-note"><a href="https://www.google.com/maps?cid=7847389077967448944" target="_blank" rel="noopener">Všetky recenzie na Google</a></p>
     </div>
 </section>
 
@@ -1849,6 +1850,7 @@
         const heroPin = document.querySelector('.scene--hero .scene-pin');
         let heroQ = null;   // vyhladený priebeh úvodu – dobieha k skutočnej polohe scrollu
         const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+        const touch = window.matchMedia('(pointer: coarse)');   // mobil: bez dobiehania, inak sa animácia oneskoruje za prstom a seká
         const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
         const easeOut = t => 1 - Math.pow(1 - t, 3);
         const easeInOut = t => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
@@ -1856,6 +1858,7 @@
 
         function reset(it) {
             it.frame.style.clipPath = '';
+            it.frame.style.transform = '';
             it.img.style.transform = '';
             it.copy.style.opacity = '';
             it.copy.style.transform = '';
@@ -1895,7 +1898,7 @@
                     if (r.bottom < -40) continue;
                     // q: 0 = začiatok stránky, qIn = pás celý v obraze (zastavenie), 1 = koniec zastavenia
                     const target = clamp(-r.top / Math.max(1, r.height - vh));
-                    if (heroQ === null || Math.abs(target - heroQ) > 0.25) heroQ = target;      // veľký skok (načítanie, kotva) bez dobiehania
+                    if (heroQ === null || touch.matches || Math.abs(target - heroQ) > 0.25) heroQ = target;      // veľký skok (načítanie, kotva) a dotyk bez dobiehania
                     else heroQ += (target - heroQ) * 0.16;
                     if (Math.abs(target - heroQ) > 0.0004) req(); else heroQ = target;          // dobiehaj ďalšie snímky, kým sa nezastaví
                     const q = heroQ;
@@ -1930,8 +1933,8 @@
                     // mobil: fotka nie je pripnutá; v strede obrazovky je cez celú šírku, k okrajom sa zúži (biele pásy po bokoch)
                     const d = clamp(Math.abs(r.top + r.height / 2 - vh / 2) / (vh / 2 + r.height / 2));
                     const k = easeInOut(clamp(d * 1.25));
-                    it.frame.style.clipPath = 'inset(' + (12 * k).toFixed(1) + 'px ' + (16 * k).toFixed(1) + 'px)';
-                    it.img.style.transform = 'scale(' + (1 + 0.1 * k).toFixed(4) + ')';
+                    it.frame.style.transform = 'scale(' + (1 - (32 / vw) * k).toFixed(4) + ')';
+                    it.img.style.transform = 'scale(' + (1 + 0.18 * k).toFixed(4) + ')';
                     // text pri spodnom okraji fotky sa ukáže, keď je spodok fotky v obraze
                     const cin = clamp(((vh - r.top) / r.height - 1) / 0.3);
                     it.copy.style.opacity = cin.toFixed(3);
@@ -1995,9 +1998,13 @@
         const update = () => {
             ticking = false;
             const r = body.getBoundingClientRect(), vh = window.innerHeight;
+            if (r.bottom < -vh * 0.5 || r.top > vh * 1.5) return;               // mimo obrazovky nič neprepočítavať
             const p = clamp((vh * 0.88 - r.top) / (vh * 0.5));
             const n = words.length;
-            words.forEach((w, i) => { w.style.opacity = (0.16 + 0.84 * clamp(p * (n + 6) / 1 - i, 0, 1)).toFixed(2); });
+            words.forEach((w, i) => {
+                const o = (0.16 + 0.84 * clamp(p * (n + 6) / 1 - i, 0, 1)).toFixed(2);
+                if (w._o !== o) { w._o = o; w.style.opacity = o; }               // zapisovať len zmenu
+            });
         };
         const req = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
         window.addEventListener('scroll', req, { passive: true });
