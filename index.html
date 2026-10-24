@@ -122,6 +122,11 @@
                     },
                     {
                         "@type": "Person",
+                        "name": "MUDr. Jozef Kohajda MBA",
+                        "jobTitle": "riaditeľ"
+                    },
+                    {
+                        "@type": "Person",
                         "name": "MDDr. Alexandra Diana Kišiková",
                         "jobTitle": "zubná lekárka",
                         "knowsAbout": "Endodoncia"
@@ -631,8 +636,9 @@
         .hx-line { display: block; overflow: hidden; padding-top: 0.14em; margin-top: -0.14em; }
         .hx-line > span { display: block; }
         .hx-accent { color: var(--pink); }  /* vedomá výnimka (Richard 5. 10. 2026): posledný riadok ružový */
-        /* podnadpis je súčasťou h1 (kvôli Googlu: „zubár … Banskej Bystrice“), vizuálne ostáva malý text */
+        /* podnadpis pod h1 – Richard 24. 10. 2026: „Zubné centrum s viac ako 20-ročnou tradíciou“ (nie „Zubár v centre Banskej Bystrice…“) */
         .hx-sub { display: block; margin-top: clamp(16px, 2.4vh, 24px); font-size: 1.0625rem; font-weight: 400; line-height: 1.7; letter-spacing: 0; text-transform: none; color: rgba(254,250,249,0.88); }
+        .hx-nowrap { white-space: nowrap; }  /* „20-ročnou“ sa na mobile nezalomí za spojovníkom */
         @media (prefers-reduced-motion: no-preference) {
             .scene--hero .scene-media img { animation: hx-settle 1600ms var(--ease-out-strong) both; }
             .hx-line > span { animation: hx-rise 900ms var(--ease-out-strong) both; animation-delay: calc(260ms + var(--i, 0) * 80ms); }
@@ -1355,8 +1361,8 @@
                 <span class="hx-line"><span style="--i:0">PRE VŠETKÝCH,</span></span>
                 <span class="hx-line"><span style="--i:1">KTORÍ MAJÚ ZÁUJEM</span></span>
                 <span class="hx-line hx-accent"><span style="--i:2">O SVOJE ZDRAVIE</span></span>
-                <span class="hx-sub">Zubár v centre Banskej Bystrice s viac ako 20-ročnou tradíciou</span>
             </h1>
+            <p class="hx-sub">Zubné centrum s viac ako <span class="hx-nowrap">20-ročnou</span> tradíciou</p>
             <div class="hero-cta">
                 <a class="btn" href="tel:+421484145196"><span class="btn-label">Objednajte sa</span><span class="btn-number">048 414 51 96</span></a>
             </div>
@@ -1598,6 +1604,7 @@
     <div class="wrap">
         <ul class="team-grid">
             <li class="member rise"><p class="member-name">MUDr. Otília Kohajdová</p><p class="member-role">Vedúca lekárka</p><p class="member-cert">Zakladateľka DentAll Centra s viac ako 30-ročnou praxou · Parodontológia</p></li>
+            <li class="member rise"><p class="member-name">MUDr. Jozef Kohajda MBA</p><p class="member-role">Riaditeľ</p></li>
             <li class="member rise"><p class="member-name">MDDr. Alexandra Diana Kišiková</p><p class="member-role">Lekárka</p><p class="member-cert">Zameranie — endodoncia</p></li>
             <li class="member rise"><p class="member-name">MDDr. Ivana Polláková</p><p class="member-role">Lekárka</p><p class="member-cert">Zameranie — záchovná stomatológia</p></li>
             <li class="member rise"><p class="member-name">Bc. Dominika Lisková</p><p class="member-role">Dentálna hygienička</p></li>
